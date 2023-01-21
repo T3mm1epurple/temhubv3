@@ -868,7 +868,7 @@ local mentotoggle = Drinking:CreateToggle({
     if mainid == gameids["level4"] then
         local Doctor = Window:CreateTab("Doctor", 4483362458)
 
-        local Button = Lottery:CreateButton({
+        local Button = Doctor:CreateButton({
             Name = "Fast Checkup",
             Callback = function()
                 plr.Character.HumanoidRootPart.CFrame = workspace["nurse waman"].HumanoidRootPart.CFrame
