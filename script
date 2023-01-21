@@ -9,6 +9,7 @@ local gameids = {
     local plr = game.Players.LocalPlayer
     local queueteleport = syn and syn.queue_on_teleport or queue_on_teleport or fluxus and fluxus.queue_on_teleport or function() end
 
+    local Players = game:GetService("Players")
     local GC = getconnections or get_signal_cons --Anti Afk
 	if GC then
 		for i,v in pairs(GC(Players.LocalPlayer.Idled)) do
@@ -98,7 +99,7 @@ local gameids = {
           FileName = "TemHubKey",
           SaveKey = true,
           GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
-          Key = "newkeysystemidk"
+          Key = "NEWV3"
        }
     })
     
