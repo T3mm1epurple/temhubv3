@@ -1,0 +1,540 @@
+local gameids = {
+    ["level1"] = 4050215579,
+    ["level3"] = 4472538305,
+    ["level4"] = 4684427971,
+    ["level5"] = 5248557397,
+    }
+    
+    local placeid = game.PlaceId
+    local plr = game.Players.LocalPlayer
+
+    local originaldata = {  
+        autobingo = false,
+        mysteryhat = false,
+        autosave = true,
+        supplytype = 3,
+        soda = "",
+        sodamode = 2,
+        autosoda = false,
+        autodrink = false,
+        automentos = false
+        }
+
+        print(originaldata["autosoda"])
+
+        if isfile("TemHubV3/data.txt") then
+            local data = game:GetService("HttpService"):JSONDecode(readfile("TemHubV3/data.txt"))
+            originaldata = data
+            print(originaldata)
+            print(data)
+            end
+    
+            local function savedata()
+                if isfolder("TemHubV3") == false then
+                    makefolder("TemHubV3")
+                    end
+                    local datatable = originaldata
+                    writefile("TemHubV3/data.txt", game:GetService("HttpService"):JSONEncode(datatable))
+                    local data = game:GetService("HttpService"):JSONDecode(readfile("TemHubV3/data.txt"))
+            end
+    
+    for i, mainid in pairs(gameids) do
+    if mainid == placeid then
+    local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/T3mm1epurple/rayfieldedit/main/script'))()
+        
+    local Window = Rayfield:CreateWindow({
+       Name = "Tem Hub V3",
+       LoadingTitle = "Tem Hub V3",
+       LoadingSubtitle = "Da amazing bunker simulator",
+       Discord = {
+          Enabled = true,
+          Invite = "n7fFChP5x5", -- The Discord invite code, do not include discord.gg/
+          RememberJoins = true -- Set this to false to make them join the discord every time they load it up
+       },
+       KeySystem = true, -- Set this to true to use our key system
+       KeySettings = {
+          Title = "Tem Hub V3",
+          Subtitle = "Key System",
+          Note = "Join the discord (discord.gg/n7fFChP5x5)",
+          FileName = "TemHubKey",
+          SaveKey = true,
+          GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
+          Key = "NEWV3"
+       }
+    })
+    
+    if mainid == gameids["level1"] then
+        local Bingo = Window:CreateTab("Bingo", 4483362458)
+        local Shop = Window:CreateTab("Canteen", 4483362458)
+        local Drinking = Window:CreateTab("7/11", 4483362458)  
+        local Cleaning = Window:CreateTab("Mop", 4483362458)
+
+        local Section = Bingo:CreateSection("Main")
+
+        local Button = Bingo:CreateButton({
+            Name = "Get bingo card",
+            Callback = function()
+                local args = {
+                    [1] = 1
+                }
+                
+                game:GetService("ReplicatedStorage").CardEvent:FireServer(unpack(args))   
+            end,
+        })
+
+        local Button = Bingo:CreateButton({
+            Name = "Throw away card",
+            Callback = function()
+                local args = {
+                    [1] = 2
+                }
+                
+                game:GetService("ReplicatedStorage").CardEvent:FireServer(unpack(args)) 
+            end,
+        })
+
+        local bingotggle = Bingo:CreateToggle({
+            Name = "Auto bingo",
+            CurrentValue = nil,
+            Flag = nil,
+            Callback = function(callback)
+            	local value = "autobingo"
+                    originaldata[value] = callback
+                    coroutine.resume(coroutine.create(function()
+                    while originaldata[value] do
+                                local args = {
+                                    [1] = 1
+                                }
+                                local val = 1
+                                local cont = true
+                                local failed = {}
+                                if originaldata["mysteryhat"] then
+                                    local letters = {
+                                    capm = {1,5,6,7,9,10,11,13,15,16,20,21,25},
+                                    capy = {1,5,7,9,13,18,23},
+                                    caps = {1,2,3,4,5,6,11,12,13,14,15,20,21,22,23,24,25},
+                                    capt = {1,2,3,4,5,8,13,18,23},
+                                    cape = {1,2,3,4,5,6,11,12,13,14,15,16,21,22,23,24,25},
+                                    capr = {1,2,3,4,6,10,11,12,13,14,16,20,21,25},
+                                    lowm = {2,4,6,8,10,11,13,15,16,20,21,25},
+                                    }
+                                    for i=1, 3 do
+                                        cont = true
+                                        local folder
+                                        if i == 1 then
+                                        folder = plr:FindFirstChild("paper")
+                                        else
+                                        folder = plr:FindFirstChild("paper"..i)
+                                        end
+                                        local wowyou = false
+                                            for i, letter in pairs(letters) do
+                                                wowyou = false
+                                                for v, num in pairs(letter) do
+                                                    local value = folder:FindFirstChild(tostring(num))
+                                                    if value.Tick.Value == false then
+                                                        cont = false
+                                                    end
+                                                end
+                                                if not table.find(failed, folder.Name) then
+                                                for i, otherval in pairs(folder:GetChildren()) do
+                                                    if not table.find(letter, tonumber(otherval.Name)) then
+                                                        if otherval.Tick.Value == true then
+                                                            wowyou = true
+                                                        end
+                                                    end
+                                                end
+                                                end
+                                            end
+                                            if wowyou then
+                                                if not table.find(failed, folder.Name) then
+                                                table.insert(failed, folder.Name)
+                                                end
+                                            end
+                                    end
+                                end
+                                if not plr.Backpack:FindFirstChild("BingoCard") and not plr.Character:FindFirstChild("BingoCard") then
+                                    --plr.Character.Humanoid.Jump = true
+                                    --wait(.5)
+                                    --local root = plr.Character.HumanoidRootPart
+                                    --local pos = root.CFrame
+                                    --repeat runservice.RenderStepped:Wait() 
+                                --root.CFrame = workspace["mr card man"].HumanoidRootPart.CFrame + Vector3.new(0, -10, 0)
+                                        local args = {
+                                            [1] = 1
+                                        }
+                                        
+                                        game:GetService("ReplicatedStorage").CardEvent:FireServer(unpack(args))   
+                                    --until plr.Backpack:FindFirstChild("BingoCard")
+                                    --root.CFrame = pos
+                                end
+                                local MarketplaceService = game:GetService("MarketplaceService")
+                                if cont or table.find(failed, "paper") and table.find(failed, "paper2") and not MarketplaceService:UserOwnsGamePassAsync(plr.UserId, 12676702) or table.find(failed, "paper") and table.find(failed, "paper2") and table.find(failed, "paper3") and MarketplaceService:UserOwnsGamePassAsync(plr.UserId, 12676702) then
+                                for i=1, 3 do
+                                    wait()
+                                local args = {
+                                    [1] = val
+                                }
+                                
+                                game:GetService("ReplicatedStorage").BingoEvent:FireServer(unpack(args))
+                                val += 1
+                                end
+                            end
+                            wait()
+                            end
+                        end))
+            end,
+         })
+         bingotggle:Set(originaldata["autobingo"])
+
+         local Section = Bingo:CreateSection("Extras")
+
+         local mystoggle = Bingo:CreateToggle({
+            Name = "Mystery hat checker",
+            CurrentValue = nil,
+            Flag = nil,
+            Callback = function(callback)
+            	local value = "mysteryhat"
+                    originaldata[value] = callback
+            end,
+         })
+         mystoggle:Set(originaldata["mysteryhat"])
+
+         local Section = Shop:CreateSection("Extras")
+
+         local Button = Shop:CreateButton({
+            Name = "Find seat",
+            Callback = function()
+                for i,shop in pairs(workspace.Shops:GetChildren()) do
+                    if game.Players.LocalPlayer.Character.Humanoid.Sit == true then
+                        break
+                    end
+                    if shop:FindFirstChild("ShopSeat") then
+                    if not shop.ShopSeat.SeatShop:FindFirstChild("SeatWeld") then
+                        shop.ShopSeat.SeatShop:Sit(game.Players.LocalPlayer.Character.Humanoid)
+                        break
+                    end
+                end
+            end
+            end,
+        })
+
+        local Section = Shop:CreateSection("Main")
+
+        local shoptable = {"1 (1 good)", "2 (5 goods)", "3 (20 goods)"}
+        if plr.attributes.SupplySold.Value >= 150 then
+            table.insert(shoptable, "4 (50 goods)")
+            end
+
+local Dropdown = Shop:CreateDropdown({
+   Name = "Supply amount",
+   Options = shoptable,
+   CurrentOption = "",
+   Flag = nil,
+   Callback = function(Option)
+    local newt = string.split(Option, " ")[1]
+    originaldata["supplytype"] = tonumber(newt)
+   end,
+})
+
+local Section = Drinking:CreateSection("Main")
+
+local sodatable = {}
+for i,sod in pairs(workspace["711Stuff"]:GetChildren()) do
+    if sod:IsA("Model") then
+        table.insert(sodatable, sod.Price.TextLabel.Text)
+    end
+ end
+
+local Dropdown = Drinking:CreateDropdown({
+Name = "Soda (turn off auto buy before changing)",
+Options = sodatable,
+CurrentOption = "",
+Flag = nil,
+Callback = function(Option)
+    local newt = string.split(Option, " ")[1]
+    originaldata["soda"] = newt
+end,
+})
+
+
+local Button = Drinking:CreateButton({
+    Name = "Buy selected soda",
+    Callback = function()
+        local pos = Vector3.new(0, 0, 0)
+        if originaldata["sodamode"] == 3 then
+        pos = workspace.RoofP.Position + Vector3.new(0, 10, 0)
+        elseif originaldata["sodamode"] == 2 then
+        pos = plr.Character.HumanoidRootPart.Position
+        end
+                    for i,object in pairs(workspace["711Stuff"]:GetChildren()) do
+                        if object.Name == originaldata["soda"] then
+                            plr.Character.HumanoidRootPart.CFrame = object.Source.CFrame
+                            fireproximityprompt(object.Source.Attachment.ProximityPrompt)
+                            repeat wait()
+                                fireproximityprompt(object.Source.Attachment.ProximityPrompt)
+                            until plr.Backpack:FindFirstChild(originaldata["soda"])
+                            if originaldata["sodamode"] > 1 then
+                            plr.Character.HumanoidRootPart.CFrame = CFrame.new(pos)
+                            end
+                        end
+                    end
+    end,
+})
+
+local Button = Drinking:CreateButton({
+    Name = "Set selected soda as autobuy",
+    Callback = function()
+        local pos = Vector3.new(0, 0, 0)
+        if originaldata["sodamode"] == 3 then
+        pos = workspace.RoofP.Position + Vector3.new(0, 10, 0)
+        elseif originaldata["sodamode"] == 2 then
+        pos = plr.Character.HumanoidRootPart.Position
+        end
+        for i,object in pairs(workspace["711Stuff"]:GetChildren()) do
+            if object.Name == originaldata["soda"] then
+                plr.Character.HumanoidRootPart.CFrame = object.Source.CFrame
+                fireproximityprompt(object.Source.Attachment2.ProximityPrompt)
+                repeat wait()
+                    fireproximityprompt(object.Source.Attachment2.ProximityPrompt)
+                until plr.PlayerGui:FindFirstChild("Message")
+                if originaldata["sodamode"] > 1 then
+                plr.Character.HumanoidRootPart.CFrame = CFrame.new(pos)
+                end
+            end
+        end
+    end,
+})
+
+local atthispoint = Drinking:CreateToggle({
+    Name = "Auto buy selected drink",
+    CurrentValue = nil,
+    Flag = nil,
+    Callback = function(callback)
+        local value = "autosoda"
+            originaldata[value] = callback
+            coroutine.resume(coroutine.create(function()
+                while originaldata[value] do
+                    if plr.Character ~= nil and plr.Character:FindFirstChild("Humanoid") then
+                        if plr.Character.Humanoid.Health > 0 then
+                if not plr.Backpack:FindFirstChild(originaldata["soda"]) and not plr.Character:FindFirstChild(originaldata["soda"]) then
+                    local pos = Vector3.new(0, 0, 0)
+        if originaldata["sodamode"] == 3 then
+        pos = workspace.RoofP.Position + Vector3.new(0, 10, 0)
+        elseif originaldata["sodamode"] == 2 then
+        pos = plr.Character.HumanoidRootPart.Position
+        end
+        for i,object in pairs(workspace["711Stuff"]:GetChildren()) do
+            if object.Name == originaldata["soda"] then
+                if plr.Character ~= nil and plr.Character:FindFirstChild("Humanoid") then
+                    if plr.Character.Humanoid.Health > 0 then
+                repeat wait(1)
+                until not plr.Character.Head:FindFirstChildOfClass("ParticleEmitter") or plr.Character.Humanoid.Health <= 0
+                plr.Character.HumanoidRootPart.CFrame = object.Source.CFrame
+                fireproximityprompt(object.Source.Attachment.ProximityPrompt)
+                repeat wait()
+                    if plr.Character ~= nil and plr.Character:FindFirstChild("Humanoid") then
+                        if plr.Character.Humanoid.Health > 0 then
+                    fireproximityprompt(object.Source.Attachment.ProximityPrompt)
+                    end
+                end
+                until plr.Backpack:FindFirstChild(originaldata["soda"]) or plr.Character.Humanoid.Health <= 0 or plr.Character:FindFirstChild(originaldata["soda"])
+                if plr.Character ~= nil and plr.Character:FindFirstChild("Humanoid") then
+                    if plr.Character.Humanoid.Health > 0 then
+                    if originaldata["sodamode"] > 1 then
+                plr.Character.HumanoidRootPart.CFrame = CFrame.new(pos)
+                    end
+                end
+                end
+            end
+            end
+            end
+        end
+                end
+            end
+        end
+                wait()
+                end
+            end))
+    end,
+ })
+ atthispoint:Set(originaldata["autosoda"])
+
+ local okaydrink = Drinking:CreateToggle({
+    Name = "Auto drink",
+    CurrentValue = nil,
+    Flag = nil,
+    Callback = function(callback)
+        local value = "autodrink"
+            originaldata[value] = callback
+            coroutine.resume(coroutine.create(function()
+                while originaldata[value] do
+                    if plr.Character ~= nil and plr.Character:FindFirstChild("Humanoid") then
+                        if plr.Character.Humanoid.Health > 0 then
+                if plr.Backpack:FindFirstChild(originaldata["soda"]) then
+                    plr.Backpack[originaldata["soda"]].Parent = plr.Character
+                end
+                for i,tool in pairs(plr.Character:GetChildren()) do
+                    if plr.Character ~= nil and plr.Character:FindFirstChild("Humanoid") then
+                        if plr.Character.Humanoid.Health > 0 then
+                    if tool:IsA("Tool") and tool.Name == originaldata["soda"] then
+                        tool:Activate()
+                    end
+                end
+                end
+            end
+        end
+            end
+                wait()
+                end
+            end))
+    end,
+ })
+ okaydrink:Set(originaldata["autodrink"])
+
+local Section = Drinking:CreateSection("Extras")
+
+local Label = Drinking:CreateLabel("1: dont tp, 2: tp back to old pos, 3: tp out of map")
+
+local sodaslider = Drinking:CreateSlider({
+   Name = "Return mode",
+   Range = {1, 3},
+   Increment = 1,
+   Suffix = "Number",
+   CurrentValue = 2,
+   Flag = nil,
+   Callback = function(Value)
+    local value = "sodamode"
+   originaldata[value] = Value
+   end,
+})
+sodaslider:Set(originaldata["sodamode"])
+
+local mentotoggle = Drinking:CreateToggle({
+    Name = "Auto mentos",
+    CurrentValue = nil,
+    Flag = nil,
+    Callback = function(callback)
+        local value = "automentos"
+            originaldata[value] = callback
+            coroutine.resume(coroutine.create(function()
+                while originaldata["automentos"] == true do
+                    if plr.Character ~= nil and plr.Character:FindFirstChild("Humanoid") then
+                        if plr.Character.Humanoid.Health > 0 then
+                if plr.Backpack:FindFirstChild("Mentos") then
+                    plr.Backpack.Mentos.Parent = plr.Character
+                end
+                for i,tool in pairs(plr.Character:GetChildren()) do
+                    if plr.Character ~= nil and plr.Character:FindFirstChild("Humanoid") then
+                        if plr.Character.Humanoid.Health > 0 then
+                    if tool:IsA("Tool") and tool.Name == "Mentos" then
+                        tool:Activate()
+                    end
+                end
+                end
+            end
+        end
+            end
+                wait()
+                end
+            end))
+    end,
+ })
+ mentotoggle:Set(originaldata["automentos"])
+
+ local Dropdown = Cleaning:CreateDropdown({
+    Name = "Clean tool",
+    Options = {"Broom", "Mop"},
+    CurrentOption = "",
+    Flag = nil,
+    Callback = function(Option)
+        for i,tool in pairs(workspace:GetChildren()) do
+            if tool.Name:lower() == Option:lower() then
+                print(Option)
+                fireclickdetector(tool:FindFirstChildOfClass("ClickDetector"))
+            end
+            end
+    end,
+ })
+    end
+    
+
+
+    local Settings = Window:CreateTab("Settings", 4483362458)
+
+    local Section = Settings:CreateSection("Saving")
+
+    local Button = Settings:CreateButton({
+        Name = "Save data",
+        Callback = function()
+            savedata()
+            Rayfield:Notify({
+                Title = "Notification",
+                Content = "Succesfully saved data!",
+                Duration = 1,
+                Image = 4483362458,
+                Actions = { -- Notification Buttons
+                   --[[Ignore = {
+                                  Name = "Okay!",
+                                  Callback = function()
+                                  print("The user tapped Okay!")
+                               end
+                            },]]--
+             },
+             })
+        end,
+    })
+
+    local Label = Settings:CreateLabel("Auto save data saves every 500 seconds")
+
+    local autosavetoggle = Settings:CreateToggle({
+        Name = "Auto save data",
+        CurrentValue = nil,
+        Flag = nil,
+        Callback = function(callback)
+            local value = "autosave"
+                originaldata[value] = callback
+                coroutine.resume(coroutine.create(function()
+                while originaldata[value] do
+                    wait(300)
+                    if originaldata[value] then
+                        savedata()
+                        Rayfield:Notify({
+                            Title = "Notification",
+                            Content = "Succesfully saved data!",
+                            Duration = 1,
+                            Image = 4483362458,
+                            Actions = { -- Notification Buttons
+                               --[[Ignore = {
+                                  Name = "Okay!",
+                                  Callback = function()
+                                  print("The user tapped Okay!")
+                               end
+                            },]]--
+                         },
+                         })
+                    end
+                end
+            end))
+end,
+})
+autosavetoggle:Set(originaldata["autosave"])
+
+    local Button = Settings:CreateButton({
+        Name = "Delete data",
+        Callback = function()
+            delfile("TemHubV3/data.txt")
+        end,
+    })
+ 
+    local Section = Settings:CreateSection("Other")
+
+    local Button = Settings:CreateButton({
+        Name = "Destroy UI",
+        Callback = function()
+            Rayfield:Destroy()
+        end,
+    })
+
+    end
+    end
+   
