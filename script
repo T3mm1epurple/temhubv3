@@ -20,6 +20,12 @@ local gameids = {
         autodrink = false,
         automentos = false,
         autosupplies = false,
+        automop = false,
+        getcleansolution = false,
+        disableseats = false,
+        autolaptop = false,
+        suitspeed = 5,
+        suitchange = false,
         }
 
         --FUNCTIONS
@@ -80,6 +86,8 @@ local gameids = {
         local Shop = Window:CreateTab("Canteen", 4483362458)
         local Drinking = Window:CreateTab("7/11", 4483362458)  
         local Cleaning = Window:CreateTab("Mop", 4483362458)
+        local Delivery = Window:CreateTab("Mail", 4483362458)
+        local FunTab = Window:CreateTab("Fun", 4483362458)
 
         local Section = Bingo:CreateSection("Main")
 
@@ -282,21 +290,6 @@ local autosupplytoggle = Shop:CreateToggle({
                                Name = "",
                                LoadingTitle = "Successfully got supplies!",
                                LoadingSubtitle = "just for notifications",
-                               Discord = {
-                                  Enabled = false,
-                                  Invite = "n7fFChP5x5", -- The Discord invite code, do not include discord.gg/
-                                  RememberJoins = true -- Set this to false to make them join the discord every time they load it up
-                               },
-                               KeySystem = false, -- Set this to true to use our key system
-                               KeySettings = {
-                                  Title = "Tem Hub V3",
-                                  Subtitle = "Key System",
-                                  Note = "Join the discord (discord.gg/n7fFChP5x5)",
-                                  FileName = "TemHubKey",
-                                  SaveKey = true,
-                                  GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
-                                  Key = "NEWV3"
-                               }
                             })
 
                             game:GetService("ReplicatedStorage").PurchaseEvent:FireServer(unpack(args))
@@ -595,6 +588,8 @@ local mentotoggle = Drinking:CreateToggle({
  })
  mentotoggle:Set(originaldata["automentos"])
 
+ local Section = Cleaning:CreateSection("Main")
+
  local Dropdown = Cleaning:CreateDropdown({
     Name = "Clean tool",
     Options = {"Broom", "Mop"},
@@ -607,6 +602,164 @@ local mentotoggle = Drinking:CreateToggle({
                 fireclickdetector(tool:FindFirstChildOfClass("ClickDetector"))
             end
             end
+    end,
+ })
+
+ local dog = false
+ local moptoggle = Cleaning:CreateToggle({
+    Name = "Auto mop",
+    CurrentValue = nil,
+    Flag = nil,
+    Callback = function(callback)
+        local value = "automop"
+            originaldata[value] = callback
+            coroutine.resume(coroutine.create(function()
+                while originaldata[value] == true do
+                    local moptppoint = workspace.RoofP.Position + Vector3.new(0, 10, 0)
+                for i,vomit in pairs(workspace:GetChildren()) do
+                    if originaldata[value] == true then
+                    if vomit.Name == "VomitPart" then
+                        if vomit.Parent ~= nil then
+                        plr.Character.HumanoidRootPart.CFrame = vomit.CFrame + Vector3.new(0, 5, 0)
+                        repeat wait()
+                            if vomit.Parent ~= nil then
+                            fireproximityprompt(vomit:FindFirstChildOfClass("ProximityPrompt"))
+                            end
+                        until plr.Character:FindFirstChild("MOPHATArm") or plr.Character:FindFirstChild("BROOOMHATArm") or vomit.Parent == nil
+                        plr.Character.HumanoidRootPart.CFrame = CFrame.new(moptppoint)
+                        repeat wait()
+                        until not plr.Character:FindFirstChild("MOPHATArm") and not plr.Character:FindFirstChild("BROOOMHATArm")
+                    end
+                end
+            else
+                break
+            end
+                end
+                if originaldata["getcleansolution"] == true then
+                    if plr.attributes.CleanWater.Value <= 0 then
+                        if dog == false then
+                            dog = true
+                        savedata()
+                        floorteleport(4)
+                                    queueteleport([[
+                                        wait(3) 
+                                        for i, model in pairs(workspace:GetChildren()) do
+                                        if model.Name == "Cleaning Solution" then
+                                            fireclickdetector(model:FindFirstChildOfClass("ClickDetector"))
+                                            local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/T3mm1epurple/rayfieldedit/main/script'))()
+        
+                            local Window = Rayfield:CreateWindow({
+                               Name = "",
+                               LoadingTitle = "Got cleaning solution, teleporting back to level 1/2",
+                               LoadingSubtitle = "just for notifications",
+                            })
+                                            wait(5)
+                                            local args = {
+                                                [1] = 1
+                                            }
+                                            
+                                            game:GetService("ReplicatedStorage").TeleportEvent:FireServer(unpack(args))
+                                                queueteleport([=[
+                                                    wait(5) 
+                                                    game.Players.LocalPlayer.PlayerGui.Menu.Enabled = false 
+                                                    workspace.CurrentCamera.CameraType = Enum.CameraType.Custom workspace.CurrentCamera.CameraSubject = game.Players.LocalPlayer.Character.Humanoid 
+                                                    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
+                                                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.CleanBucket.Bucket.CFrame 
+                                                    wait(1) 
+                                                    fireproximityprompt(workspace.CleanBucket.Bucket.Attachment.ProximityPrompt)
+                                                    wait(3)
+                                                    loadstring(game:HttpGet("https://raw.githubusercontent.com/kittenis/temhubv3/main/script", true))()
+                                                ]=])
+                                        end
+                                    end]])
+                    end
+                    end
+                end
+                wait()
+                end
+            end))
+    end,
+ })
+ moptoggle:Set(originaldata["automop"])
+
+ local Section = Cleaning:CreateSection("Extras")
+
+ local autosoluttoggle = Cleaning:CreateToggle({
+    Name = "Auto get cleaning solution",
+    CurrentValue = nil,
+    Flag = nil,
+    Callback = function(callback)
+        local value = "getcleansolution"
+            originaldata[value] = callback
+    end,
+ })
+ autosoluttoggle:Set(originaldata["getcleansolution"])
+
+ local Section = Delivery:CreateSection("Coming soon (making better than before)")
+
+ local Section = FunTab:CreateSection("Suits")
+
+ local suitspeedslider = FunTab:CreateSlider({
+    Name = "Suit change speed",
+    Range = {1, 100},
+    Increment = 1,
+    Suffix = "Number",
+    CurrentValue = 5,
+    Flag = nil,
+    Callback = function(Value)
+     local value = "suitspeed"
+    originaldata[value] = Value
+    end,
+ })
+ suitspeedslider:Set(originaldata["suitspeed"])
+
+ local suitchangetoggle = FunTab:CreateToggle({
+    Name = "Auto suit change",
+    CurrentValue = nil,
+    Flag = nil,
+    Callback = function(callback)
+        local value = "suitchange"
+            originaldata[value] = callback
+            coroutine.resume(coroutine.create(function()
+                while originaldata[value] == true do
+                    for i, part in pairs(workspace:GetChildren()) do
+                        if part:FindFirstChildOfClass("Decal") and part:FindFirstChild("Sound") and part:FindFirstChild("ClickDetector") and part:FindFirstChild("Price") then
+                            if originaldata[value] == true then
+                                fireclickdetector(part["ClickDetector"])
+                                wait(5/originaldata["suitspeed"])
+                            else
+                                break
+                            end
+                        end
+                    end
+                wait()
+                end
+            end))
+    end,
+ })
+ suitchangetoggle:Set(originaldata["suitchange"])
+
+ local Section = FunTab:CreateSection("Other")
+
+ local Input = FunTab:CreateInput({
+    Name = "Message",
+    PlaceholderText = "Text",
+    RemoveTextAfterFocusLost = true,
+    Callback = function(Text)
+        local message = game.ReplicatedStorage.Message:Clone()
+        message.Title.Text = Text
+        message.Parent = plr.PlayerGui
+    end,
+ })
+
+ local Input = FunTab:CreateInput({
+    Name = "Gui Message",
+    PlaceholderText = "Text",
+    RemoveTextAfterFocusLost = true,
+    Callback = function(Text)
+        local message = game.ReplicatedStorage["GuiMessage"]:Clone()
+        message.Frame.TextLabel.Text = Text
+        message.Parent = plr.PlayerGui
     end,
  })
     end
@@ -681,6 +834,57 @@ autosavetoggle:Set(originaldata["autosave"])
     })
  
     local Section = Settings:CreateSection("Other")
+
+    local disabseattoggle = Settings:CreateToggle({
+        Name = "Disable seats (dont enable while sitting)",
+        CurrentValue = nil,
+        Flag = nil,
+        Callback = function(callback)
+            local value = "disableseats"
+                originaldata[value] = callback
+                for i,seat in pairs(workspace:GetDescendants()) do
+                    if seat:IsA("Seat") then
+                        seat.Disabled = originaldata[value]
+                    end
+                 end
+        end,
+     })
+     disabseattoggle:Set(originaldata["disableseats"])
+
+     local laptoptoggle = Settings:CreateToggle({
+        Name = "Auto laptop",
+        CurrentValue = nil,
+        Flag = nil,
+        Callback = function(callback)
+            local value = "autolaptop"
+                originaldata[value] = callback
+                coroutine.resume(coroutine.create(function()
+                    while originaldata[value] == true do
+                        if plr.Backpack:FindFirstChild("Laptop") then
+                            plr.Backpack.Laptop.Parent = plr.Character           
+                        end
+                    wait()
+                    end
+                end))
+        end,
+     })
+     laptoptoggle:Set(originaldata["autolaptop"])
+     
+     local Dropdown = Settings:CreateDropdown({
+        Name = "Teleport to floor",
+        Options = {"1", "2", "3", "4", "5"},
+        CurrentOption = "",
+        Flag = nil,
+        Callback = function(Option)
+         floorteleport(Option)
+         queueteleport([[
+         wait(3)
+         loadstring(game:HttpGet("https://raw.githubusercontent.com/kittenis/temhubv3/main/script", true))()
+         ]])
+        end,
+     })
+
+     local Section = Settings:CreateSection("UI")
 
     local Button = Settings:CreateButton({
         Name = "Destroy UI",
