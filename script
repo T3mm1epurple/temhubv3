@@ -9,6 +9,23 @@ local gameids = {
     local plr = game.Players.LocalPlayer
     local queueteleport = syn and syn.queue_on_teleport or queue_on_teleport or fluxus and fluxus.queue_on_teleport or function() end
 
+    local GC = getconnections or get_signal_cons --Anti Afk
+	if GC then
+		for i,v in pairs(GC(Players.LocalPlayer.Idled)) do
+			if v["Disable"] then
+				v["Disable"](v)
+			elseif v["Disconnect"] then
+				v["Disconnect"](v)
+			end
+		end
+	else
+		Players.LocalPlayer.Idled:Connect(function()
+			local VirtualUser = game:GetService("VirtualUser")
+			VirtualUser:CaptureController()
+			VirtualUser:ClickButton2(Vector2.new())
+		end)
+	end
+
     local originaldata = {  
         autobingo = false,
         mysteryhat = false,
@@ -65,7 +82,7 @@ local gameids = {
     local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/T3mm1epurple/rayfieldedit/main/script'))()
         
     local Window = Rayfield:CreateWindow({
-       Name = "Tem Hub V3",
+       Name = "Tem Hub V3 (1.0)",
        LoadingTitle = "Tem Hub V3",
        LoadingSubtitle = "Da amazing bunker simulator",
        Discord = {
@@ -81,7 +98,7 @@ local gameids = {
           FileName = "TemHubKey",
           SaveKey = true,
           GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
-          Key = "NEWV3"
+          Key = "newkeysystemidk"
        }
     })
     
@@ -1116,6 +1133,8 @@ autosavetoggle:Set(originaldata["autosave"])
             Rayfield:Destroy()
         end,
     })
+
+    local Label = Settings:CreateLabel("Built in Anti-AFK")
 
     end
     end
