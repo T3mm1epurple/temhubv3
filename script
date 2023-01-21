@@ -26,6 +26,7 @@ local gameids = {
         autolaptop = false,
         suitspeed = 5,
         suitchange = false,
+        autolottery = false
         }
 
         --FUNCTIONS
@@ -763,6 +764,159 @@ local mentotoggle = Drinking:CreateToggle({
     end,
  })
     end
+
+    if mainid == gameids["level3"] then
+        local Lottery = Window:CreateTab("Lottery", 4483362458)
+
+        local Section = Lottery:CreateSection("Extras")
+
+        local Button = Lottery:CreateButton({
+            Name = "Get lottery ticket",
+            Callback = function()
+                local args = {
+                    [1] = 768,
+                    [2] = tostring(math.random(10, 99))
+                }
+                
+                game:GetService("ReplicatedStorage").BoomEvent:FireServer(unpack(args))   
+            end,
+        })
+
+        local Button = Lottery:CreateButton({
+            Name = "Throw away lottery ticket",
+            Callback = function()
+                game:GetService("ReplicatedStorage").ThrowEvent:FireServer()
+            end,
+        })
+
+        local Section = Lottery:CreateSection("Main")
+
+        local suitchangetoggle = Lottery:CreateToggle({
+            Name = "Auto Lottery ticket",
+            CurrentValue = nil,
+            Flag = nil,
+            Callback = function(callback)
+                local value = "autolottery"
+                    originaldata[value] = callback
+                    coroutine.resume(coroutine.create(function()
+                        while originaldata[value] == true do
+                                local args = {
+                                    [1] = 768,
+                                    [2] = tostring(math.random(10, 99))
+                                }
+                                
+                                game:GetService("ReplicatedStorage").BoomEvent:FireServer(unpack(args))   
+                        wait()
+                        end
+                    end))
+            end,
+         })
+         suitchangetoggle:Set(originaldata["autolottery"])
+
+         local Section = Lottery:CreateSection("Fun Stuff")
+         local sillycardamount = 1
+         local getcard = true
+
+         local cardamounttoggle = Lottery:CreateSlider({
+            Name = "Card amount",
+            Range = {1, 100},
+            Increment = 1,
+            Suffix = "Number",
+            CurrentValue = sillycardamount,
+            Flag = nil,
+            Callback = function(Value)
+             sillycardamount = Value
+            end,
+         })
+         cardamounttoggle:Set(sillycardamount)
+
+         local Button = Lottery:CreateButton({
+            Name = "Get card amount",
+            Callback = function()
+                for number=1, sillycardamount do
+                    if getcard then
+                    for i, tool in pairs(plr.Backpack:GetChildren()) do
+                        if tool.Name == "Card" then
+                        tool.Parent = plr.Character
+                    end
+                    end
+                    local toolamount = #plr.Backpack:GetChildren()
+                    local args = {
+                        [1] = 768,
+                        [2] = tostring(number)
+                    }
+                    
+                    game:GetService("ReplicatedStorage").BoomEvent:FireServer(unpack(args))
+                    repeat wait()
+                    until #plr.Backpack:GetChildren() > toolamount
+                    else
+                        getcard = true
+                        break
+                end
+                end
+            end,
+        })
+
+        local Button = Lottery:CreateButton({
+            Name = "Stop getting card count",
+            Callback = function()
+                getcard = false
+            end,
+        })
+    end
+
+    if mainid == gameids["level4"] then
+        local Doctor = Window:CreateTab("Doctor", 4483362458)
+
+        local Button = Lottery:CreateButton({
+            Name = "Fast Checkup",
+            Callback = function()
+                plr.Character.HumanoidRootPart.CFrame = workspace["nurse waman"].HumanoidRootPart.CFrame
+                        repeat wait()
+                        fireclickdetector(workspace["nurse waman"].ClickDetector)
+            until plr.PlayerGui:FindFirstChild("Nurse")
+                        for i, message in pairs(plr.PlayerGui:GetChildren()) do
+                if message.Name == "Nurse" then
+                    message:Destroy()
+                end
+		end
+            local args = {
+                [1] = 1
+            }
+            
+            game:GetService("ReplicatedStorage").DoctorEvent:FireServer(unpack(args))
+            repeat wait()
+            until plr.PlayerGui:FindFirstChild("GuiMessage")
+                                    for i, message in pairs(plr.PlayerGui:GetChildren()) do
+                if message.Name == "GuiMessage" then
+                	message:Destroy()
+            end
+		end
+            plr.Character.HumanoidRootPart.CFrame = workspace["intern kun man"].HumanoidRootPart.CFrame
+            wait(1)
+            repeat wait()
+            fireclickdetector(workspace["intern kun man"].ClickDetector)
+            until plr.PlayerGui:FindFirstChild("Message")
+            repeat wait()
+            until plr.PlayerGui:FindFirstChild("GuiMessage")
+            plr.Character.HumanoidRootPart.CFrame = workspace["other doc man"].HumanoidRootPart.CFrame
+            wait(1)
+            fireclickdetector(workspace["other doc man"].ClickDetector)
+            wait(0.5)
+            plr.Character.HumanoidRootPart.CFrame = workspace["head doc man"].HumanoidRootPart.CFrame
+            wait(1)
+            fireclickdetector(workspace["head doc man"].ClickDetector)
+            Rayfield:Notify({
+                Title = "Notification",
+                Content = "Completeted fast checkup!",
+                Duration = 1,
+                Image = 4483362458,
+                Actions = { -- Notification Buttons
+             },
+             })
+            end,
+        })
+    end
     
 
 
@@ -780,12 +934,6 @@ local mentotoggle = Drinking:CreateToggle({
                 Duration = 1,
                 Image = 4483362458,
                 Actions = { -- Notification Buttons
-                   --[[Ignore = {
-                                  Name = "Okay!",
-                                  Callback = function()
-                                  print("The user tapped Okay!")
-                               end
-                            },]]--
              },
              })
         end,
@@ -870,6 +1018,7 @@ autosavetoggle:Set(originaldata["autosave"])
      })
      laptoptoggle:Set(originaldata["autolaptop"])
      
+     local onlyonce = false
      local Dropdown = Settings:CreateDropdown({
         Name = "Teleport to floor",
         Options = {"1", "2", "3", "4", "5"},
@@ -877,10 +1026,13 @@ autosavetoggle:Set(originaldata["autosave"])
         Flag = nil,
         Callback = function(Option)
          floorteleport(Option)
+         if onlyonce == false then
+            onlyonce = true
          queueteleport([[
          wait(3)
          loadstring(game:HttpGet("https://raw.githubusercontent.com/kittenis/temhubv3/main/script", true))()
          ]])
+         end
         end,
      })
 
