@@ -72,10 +72,6 @@ local gameids = {
             print(originaldata)
             print(data)
             end
-
-            if _G.disableautomail then
-                originaldata["automail"] = false
-            end
     
             local function savedata()
                 if isfolder("TemHubV3") == false then
@@ -84,6 +80,11 @@ local gameids = {
                     local datatable = originaldata
                     writefile("TemHubV3/data.txt", game:GetService("HttpService"):JSONEncode(datatable))
                     local data = game:GetService("HttpService"):JSONDecode(readfile("TemHubV3/data.txt"))
+            end
+
+            if _G.disableautomail then
+                originaldata["automail"] = false
+                savedata()
             end
     
     for i, mainid in pairs(gameids) do
