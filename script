@@ -936,11 +936,7 @@ local mentotoggle = Drinking:CreateToggle({
                     coroutine.resume(coroutine.create(function()
                     while originaldata[value] do
                         if plr.attributes.Token.Value > 0 then
-                            for i, machine in pairs(workspace:GetChildren()) do
-                                if machine.Name == "Machine" then
-                                fireclickdetector(machine:FindFirstChildOfClass("ClickDetector"))
-                                end
-                            end
+                            fireclickdetector(workspace.Machine:FindFirstChildOfClass("ClickDetector"))
                         end
                         wait()
                     end
