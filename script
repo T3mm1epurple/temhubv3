@@ -49,7 +49,8 @@ local gameids = {
         autolottery = false,
         autousetokens = false,
         dailytokens = false,
-        converttokens = false
+        converttokens = false,
+        removeblur = false,
         }
 
         --FUNCTIONS
@@ -1115,14 +1116,27 @@ autosavetoggle:Set(originaldata["autosave"])
         end,
      })
      laptoptoggle:Set(originaldata["autolaptop"])
+
+     local blurtoggle = Settings:CreateToggle({
+        Name = "Remove blur",
+        CurrentValue = nil,
+        Flag = nil,
+        Callback = function(callback)
+            local value = "removeblur"
+                originaldata[value] = callback
+                game.Lighting:WaitForChild("Blur").Enabled = not originaldata[value]
+        end,
+     })
+     blurtoggle:Set(originaldata["removeblur"])
      
      local onlyonce = false
      local Dropdown = Settings:CreateDropdown({
-        Name = "Teleport to floor",
+        Name = "Teleport to floor (saves data)",
         Options = {"1", "2", "3", "4", "5"},
         CurrentOption = "",
         Flag = nil,
         Callback = function(Option)
+         savedata()
          floorteleport(Option)
          if onlyonce == false then
             onlyonce = true
@@ -1133,6 +1147,17 @@ autosavetoggle:Set(originaldata["autosave"])
          end
         end,
      })
+
+     local Button = Settings:CreateButton({
+        Name = "Fire all ClickDetectors",
+        Callback = function()
+            for i, detector in pairs(workspace:GetDescendants()) do
+                if detector:IsA("ClickDetector") then
+                fireclickdetector(detector)
+                end
+                end
+        end,
+    })
 
      local Section = Settings:CreateSection("UI")
 
@@ -1145,5 +1170,13 @@ autosavetoggle:Set(originaldata["autosave"])
 
     local Label = Settings:CreateLabel("Built in Anti-AFK")
 
+   --[[
+       local Values = Window:CreateTab("Values", 4483362458) 
+   local Label = Values:CreateLabel("Bingos: 0")
+    coroutine.resume(coroutine.create(function()
+        while wait() do
+            Label:Set("Bingoes: ")
+        end
+    end))]]--
     end
     end
