@@ -26,7 +26,10 @@ local gameids = {
         autolaptop = false,
         suitspeed = 5,
         suitchange = false,
-        autolottery = false
+        autolottery = false,
+        autousetokens = false,
+        dailytokens = false,
+        converttokens = false
         }
 
         --FUNCTIONS
@@ -916,6 +919,79 @@ local mentotoggle = Drinking:CreateToggle({
              })
             end,
         })
+    end
+
+    if mainid == gameids["level5"] then
+        local Gamble = Window:CreateTab("Gambling", 4483362458)
+
+        local Section = Gamble:CreateSection("Main")
+
+        local usetokentoggle = Gamble:CreateToggle({
+            Name = "Use tokens",
+            CurrentValue = nil,
+            Flag = nil,
+            Callback = function(callback)
+            	local value = "autousetokens"
+                    originaldata[value] = callback
+                    coroutine.resume(coroutine.create(function()
+                    while originaldata[value] do
+                        if plr.attributes.Token.Value > 0 then
+                            for i, machine in pairs(workspace:GetChildren()) do
+                                if machine.Name == "Machine" then
+                                fireclickdetector(machine:FindFirstChildOfClass("ClickDetector"))
+                                end
+                            end
+                        end
+                        wait()
+                    end
+                end))
+            end,
+         })
+         usetokentoggle:Set(originaldata["autousetokens"])
+
+         local Section = Gamble:CreateSection("Extras")
+
+         local collectokentoggle = Gamble:CreateToggle({
+            Name = "Auto claim daily tokens",
+            CurrentValue = nil,
+            Flag = nil,
+            Callback = function(callback)
+            	local value = "dailytokens"
+                    originaldata[value] = callback
+                    coroutine.resume(coroutine.create(function()
+                        while originaldata[value] == true do
+                            if plr.attributes.Token.Value <= 0 then
+                                local args = {
+                                    [1] = "DAILY_REWARD"
+                                }
+                                
+                                game:GetService("ReplicatedStorage").TimeRewardEvent:FireServer(unpack(args))                        
+                            end
+                        wait()
+                        end
+                    end))
+            end,
+         })
+         collectokentoggle:Set(originaldata["dailytokens"])
+
+         local collectokentoggle = Gamble:CreateToggle({
+            Name = "Auto convert tokens",
+            CurrentValue = nil,
+            Flag = nil,
+            Callback = function(callback)
+            	local value = "converttokens"
+                    originaldata[value] = callback
+                    coroutine.resume(coroutine.create(function()
+                        while originaldata[value] == true do
+                            if plr.attributes.Retry.Value >= 5 then
+                                game:GetService("ReplicatedStorage").ExchangeEvent:FireServer()                   
+                            end
+                        wait()
+                        end
+                    end))
+            end,
+         })
+         collectokentoggle:Set(originaldata["converttokens"])
     end
     
 
