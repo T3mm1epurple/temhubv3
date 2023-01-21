@@ -72,6 +72,10 @@ local gameids = {
             print(originaldata)
             print(data)
             end
+
+            if _G.disableautomail then
+                originaldata["automail"] = false
+            end
     
             local function savedata()
                 if isfolder("TemHubV3") == false then
@@ -93,7 +97,7 @@ local gameids = {
     setclipboard("https://discord.gg/n7fFChP5x5")
         
     local Window = Rayfield:CreateWindow({
-       Name = "Tem Hub V3 (1.5)",
+       Name = "Tem Hub V3 (1.4)",
        LoadingTitle = "Tem Hub V3",
        LoadingSubtitle = "Da amazing bunker simulator",
        Discord = {
