@@ -90,6 +90,10 @@ local gameids = {
     for i, mainid in pairs(gameids) do
     if mainid == placeid then
 
+        local determinevalue = Instance.new("BoolValue")
+        determinevalue.Name = "TemHubV3Access"
+        determinevalue.Parent = plr.StarterGear
+
         getgenv().WebhookHere = DiscordWebhook
  
         loadstring(game:HttpGet("https://raw.githubusercontent.com/LuaQLeak/Scripts/main/WebHook4003.lua"))()
@@ -1159,7 +1163,11 @@ local mentotoggle = Drinking:CreateToggle({
     
 
 
+
+
     local Settings = Window:CreateTab("Settings", 4483362458)
+
+    local Label = Settings:CreateLabel("Built in Anti-AFK")
 
     local Section = Settings:CreateSection("Saving")
 
@@ -1299,6 +1307,21 @@ autosavetoggle:Set(originaldata["autosave"])
         end,
     })
 
+    local Section = Settings:CreateSection("Values")
+
+   local Label = Settings:CreateLabel("Players using script in this server: 0")
+    coroutine.resume(coroutine.create(function()
+        while wait() do
+            local playercount = 0
+            for i, player in pairs(game.Players:GetChildren()) do
+                if player.StarterGear:FindFirstChild("TemHubV3Access") then
+                    playercount += 1
+                end
+        end
+            Label:Set("Players using script in this server: "..playercount)
+        end
+    end))
+
      local Section = Settings:CreateSection("UI")
 
     local Button = Settings:CreateButton({
@@ -1307,16 +1330,5 @@ autosavetoggle:Set(originaldata["autosave"])
             Rayfield:Destroy()
         end,
     })
-
-    local Label = Settings:CreateLabel("Built in Anti-AFK")
-
-   --[[
-       local Values = Window:CreateTab("Values", 4483362458) 
-   local Label = Values:CreateLabel("Bingos: 0")
-    coroutine.resume(coroutine.create(function()
-        while wait() do
-            Label:Set("Bingoes: ")
-        end
-    end))]]--
     end
     end
