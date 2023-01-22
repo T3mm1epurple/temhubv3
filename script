@@ -1437,6 +1437,7 @@ autosavetoggle:Set(originaldata["autosave"])
                 if cont then
                     local yes, no = pcall(function()
                     plrtable[player] = nil
+                    plrcount -= 1
                     Dropdown:Remove(player)
                     end)
                 end
@@ -1444,7 +1445,6 @@ autosavetoggle:Set(originaldata["autosave"])
             for i, player in pairs(game.Players:GetChildren()) do
                 if player.StarterGear:FindFirstChild("TemHubV3Access") then
                     if not table.find(plrtable, player.Name) then
-                        plrcount = 0
                         plrcount += 1
                     table.insert(plrtable, player.Name)
                     Dropdown:Add(player.Name)
