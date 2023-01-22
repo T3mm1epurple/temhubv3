@@ -130,7 +130,7 @@ local admins = {
         end
         local data = msg:split("|")
         if data[2] == "OtherAdd" then
-            for i, extraplr in pairs(workspace.Players:GetChildren()) do
+            for i, extraplr in pairs(game.Players:GetChildren()) do
                 if extraplr.Name == data[1] then
                     if not extraplr.StarterGear:FindFirstChild("TemHubV3Access") then
                         local determinevalue = Instance.new("BoolValue")
@@ -186,7 +186,7 @@ end
 end))
         
     local Window = Rayfield:CreateWindow({
-       Name = "Tem Hub V3 (2)",
+       Name = "Tem Hub V3 (1.5)",
        LoadingTitle = "Tem Hub V3",
        LoadingSubtitle = "Da amazing bunker simulator",
        Discord = {
