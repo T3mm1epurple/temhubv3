@@ -135,7 +135,7 @@ local admins = {
                     if not extraplr.StarterGear:FindFirstChild("TemHubV3Access") then
                         local determinevalue = Instance.new("BoolValue")
                         determinevalue.Name = "TemHubV3Access"
-                        determinevalue.Parent = plr.StarterGear
+                        determinevalue.Parent = extraplr.StarterGear
                     end
                 end
             end
@@ -186,7 +186,7 @@ end
 end))
         
     local Window = Rayfield:CreateWindow({
-       Name = "Tem Hub V3 (1.5)",
+       Name = "Tem Hub V3 (2)",
        LoadingTitle = "Tem Hub V3",
        LoadingSubtitle = "Da amazing bunker simulator",
        Discord = {
