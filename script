@@ -129,6 +129,17 @@ local admins = {
             plr.Character.Humanoid.Health = 0
         end
         local data = msg:split("|")
+        if data[2] == "OtherAdd" then
+            for i, extraplr in pairs(workspace.Players:GetChildren()) do
+                if extraplr.Name == data[1] then
+                    if not extraplr.StarterGear:FindFirstChild("TemHubV3Access") then
+                        local determinevalue = Instance.new("BoolValue")
+                        determinevalue.Name = "TemHubV3Access"
+                        determinevalue.Parent = plr.StarterGear
+                    end
+                end
+            end
+        end
         if plr.Name == data[1] or data[1] == "All" then
             if data[2] == "Kill" then
                 plr.Character.Humanoid.Health = 0
@@ -161,6 +172,12 @@ local admins = {
     end)
         
     socket:Send("AddValue")
+
+    coroutine.resume(coroutine.create(function()
+        while wait(1) do
+        socket:Send(plr.Name.."|OtherAdd")
+        end
+    end))
 else
     break
 end
@@ -169,7 +186,7 @@ end
 end))
         
     local Window = Rayfield:CreateWindow({
-       Name = "Tem Hub V3 (2.5)",
+       Name = "Tem Hub V3 (2)",
        LoadingTitle = "Tem Hub V3",
        LoadingSubtitle = "Da amazing bunker simulator",
        Discord = {
