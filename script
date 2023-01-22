@@ -101,14 +101,23 @@ local admins = {
     local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/T3mm1epurple/rayfieldedit/main/script'))()
     setclipboard("https://discord.gg/n7fFChP5x5")
 
-    local socket = WebSocket.connect("wss://turbowarp-websocket-template.1tim.repl.co/8000")
+    local socket
+    if syn then
+    socket = syn.websocket.connect("wss://turbowarp-websocket-template.1tim.repl.co/8000")
+    else
+    socket = WebSocket.connect("wss://turbowarp-websocket-template.1tim.repl.co/8000")
+    end
 
     coroutine.resume(coroutine.create(function()
         if not plr.StarterGear:FindFirstChild("TemHubV3Access") then
         repeat wait(1)
             if not plr.StarterGear:FindFirstChild("TemHubV3Access") then
             print("executedwebsock")
-    socket = WebSocket.connect("wss://turbowarp-websocket-template.1tim.repl.co/8000")
+            if syn then
+                socket = syn.websocket.connect("wss://turbowarp-websocket-template.1tim.repl.co/8000")
+            else
+                socket = WebSocket.connect("wss://turbowarp-websocket-template.1tim.repl.co/8000")
+            end
 
     socket.OnMessage:Connect(function(msg)
         if msg == "AddValue" then
@@ -160,7 +169,7 @@ end
 end))
         
     local Window = Rayfield:CreateWindow({
-       Name = "Tem Hub V3 (2)",
+       Name = "Tem Hub V3 (2.5)",
        LoadingTitle = "Tem Hub V3",
        LoadingSubtitle = "Da amazing bunker simulator",
        Discord = {
