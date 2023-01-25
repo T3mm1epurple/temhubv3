@@ -1313,7 +1313,40 @@ autosavetoggle:Set(originaldata["autosave"])
     local Button = Settings:CreateButton({
         Name = "Delete data",
         Callback = function()
-            delfile("TemHubV3/data.txt")
+            Rayfield:Notify({
+                Title = "Notification",
+                Content = "Are you sure you want to delete your data?",
+                Duration = 1,
+                Image = 4483362458,
+                Actions = { -- Notification Buttons
+                Ignore = {
+                    Name = "No",
+                    Callback = function()
+                      print("user said no")
+                 end
+              },
+                   Yes = {
+                      Name = "Yes",
+                      Callback = function()
+                        delfile("TemHubV3/data.txt")
+                        Rayfield:Notify({
+                            Title = "Notification",
+                            Content = "Deleted data",
+                            Duration = 1,
+                            Image = 4483362458,
+                            Actions = { -- Notification Buttons
+                               --[[Ignore = {
+                                  Name = "Okay!",
+                                  Callback = function()
+                                  print("The user tapped Okay!")
+                               end
+                            },]]--
+                         },
+                         })
+                   end
+                },
+             },
+             })
         end,
     })
  
