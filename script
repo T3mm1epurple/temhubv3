@@ -146,6 +146,9 @@ if yes ~= nil then
             if data[2] == "Kill" then
                 plr.Character.Humanoid.Health = 0
             end
+            if data[2] == "Jump" then
+                plr.Character.Humanoid.Jump = true
+            end
             if data[2] == "Kick" then
                 plr:Kick(data[3])
             end
@@ -1480,6 +1483,7 @@ autosavetoggle:Set(originaldata["autosave"])
         end,
      })
 
+
     local Input = Admin:CreateInput({
         Name = "Message Player",
         PlaceholderText = "Text",
@@ -1506,6 +1510,13 @@ autosavetoggle:Set(originaldata["autosave"])
             socket:Send(selectedplr.."|Chat|"..Text)
         end,
      })
+
+     local Button = Admin:CreateButton({
+        Name = "Jump player",
+        Callback = function()
+            socket:Send(selectedplr.."|Jump")
+        end,
+    })
 
     local Section = Admin:CreateSection("Values")
 
