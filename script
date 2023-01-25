@@ -102,12 +102,14 @@ local admins = {
     setclipboard("https://discord.gg/n7fFChP5x5")
 
     local socket
+    local yes, no = pcall(function()
     if syn then
     socket = syn.websocket.connect("wss://turbowarp-websocket-template.1tim.repl.co/8000")
     else
     socket = WebSocket.connect("wss://turbowarp-websocket-template.1tim.repl.co/8000")
     end
-
+end)
+if yes ~= nil then
     coroutine.resume(coroutine.create(function()
         if not plr.StarterGear:FindFirstChild("TemHubV3Access") then
         repeat wait(1)
@@ -1514,5 +1516,9 @@ autosavetoggle:Set(originaldata["autosave"])
         end
     end))
     end
+else
+    print("socketfailed")
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/kittenis/temhubv3/main/script", true))()
     end
     end
+end
