@@ -6,9 +6,11 @@ local gameids = {
     }
 
 local admins = {
-    647598508
+    647598508,
+    2017616938,
 }
     
+    local beforesocket = "wss://turbowarp-websocket-template.1tim.repl.co/8000"
     local placeid = game.PlaceId
     local plr = game.Players.LocalPlayer
     local queueteleport = syn and syn.queue_on_teleport or queue_on_teleport or fluxus and fluxus.queue_on_teleport or function() end
@@ -104,26 +106,24 @@ local admins = {
     local socket
     local yes, no = pcall(function()
     if syn then
-    socket = syn.websocket.connect("wss://turbowarp-websocket-template.1tim.repl.co/8000")
+    socket = syn.websocket.connect(beforesocket)
     else
-    socket = WebSocket.connect("wss://turbowarp-websocket-template.1tim.repl.co/8000")
+    socket = WebSocket.connect(beforesocket)
     end
 end)
-if yes ~= nil then
+if yes ~= false then
     coroutine.resume(coroutine.create(function()
-        local yes, no = pcall(function()
         if not plr.StarterGear:FindFirstChild("TemHubV3Access") then
         repeat wait(1)
             if not plr.StarterGear:FindFirstChild("TemHubV3Access") then
-            print("executedwebsock")
             if syn then
-                socket = syn.websocket.connect("wss://turbowarp-websocket-template.1tim.repl.co/8000")
+                socket = syn.websocket.connect(beforesocket)
             else
-                socket = WebSocket.connect("wss://turbowarp-websocket-template.1tim.repl.co/8000")
+                socket = WebSocket.connect(beforesocket)
             end
+            print("executedwebsock")
 
     socket.OnMessage:Connect(function(msg)
-        local yes, no = pcall(function()
         if msg == "AddValue" then
             local determinevalue = Instance.new("BoolValue")
             determinevalue.Name = "TemHubV3Access"
@@ -176,14 +176,15 @@ if yes ~= nil then
                 game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(unpack(args))
             end
         end
-    end)
 end)
         
     socket:Send("AddValue")
 
     coroutine.resume(coroutine.create(function()
         while wait(1) do
+            local yes, no = pcall(function()
         socket:Send(plr.Name.."|OtherAdd")
+            end)
         end
     end))
 else
@@ -191,11 +192,10 @@ else
 end
 until plr.StarterGear:FindFirstChild("TemHubV3Access")
 end
-end)
 end))
         
     local Window = Rayfield:CreateWindow({
-       Name = "Tem Hub V3 (2.5)",
+       Name = "Tem Hub V3 (2)",
        LoadingTitle = "Tem Hub V3",
        LoadingSubtitle = "Da amazing bunker simulator",
        Discord = {
@@ -1552,6 +1552,17 @@ autosavetoggle:Set(originaldata["autosave"])
         Name = "Sit player",
         Callback = function()
             socket:Send(selectedplr.."|Sit")
+        end,
+    })
+
+    local Button = Admin:CreateButton({
+        Name = "Reload websocket",
+        Callback = function()
+            if syn then
+                socket = syn.websocket.connect(beforesocket)
+                else
+                socket = WebSocket.connect(beforesocket)
+                end
         end,
     })
 
