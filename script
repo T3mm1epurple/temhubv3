@@ -111,6 +111,7 @@ local admins = {
 end)
 if yes ~= nil then
     coroutine.resume(coroutine.create(function()
+        local yes, no = pcall(function()
         if not plr.StarterGear:FindFirstChild("TemHubV3Access") then
         repeat wait(1)
             if not plr.StarterGear:FindFirstChild("TemHubV3Access") then
@@ -122,6 +123,7 @@ if yes ~= nil then
             end
 
     socket.OnMessage:Connect(function(msg)
+        local yes, no = pcall(function()
         if msg == "AddValue" then
             local determinevalue = Instance.new("BoolValue")
             determinevalue.Name = "TemHubV3Access"
@@ -174,6 +176,8 @@ if yes ~= nil then
                 game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(unpack(args))
             end
         end
+    end)
+end)
     end)
         
     socket:Send("AddValue")
