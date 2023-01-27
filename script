@@ -178,7 +178,6 @@ if yes ~= nil then
         end
     end)
 end)
-    end)
         
     socket:Send("AddValue")
 
@@ -192,6 +191,7 @@ else
 end
 until plr.StarterGear:FindFirstChild("TemHubV3Access")
 end
+end)
 end))
         
     local Window = Rayfield:CreateWindow({
