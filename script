@@ -1,3 +1,14 @@
+local executeid = game:GetService("HttpService"):GenerateGUID(false)
+_G.currentexecute = executeid
+local scriptrunning = true
+coroutine.resume(coroutine.create(function()
+    while wait() do
+        if _G.currentexecute ~= executeid then
+            scriptrunning = false
+        end
+    end
+end))
+
 local gameids = {
     ["level1"] = 4050215579,
     ["level3"] = 4472538305,
@@ -72,12 +83,28 @@ local admins = {
 
         --FUNCTIONS
 
+        if isfolder("TemHubV3") == false then
+            makefolder("TemHubV3")
+            end
+
         if isfile("TemHubV3/data.txt") then
             local data = game:GetService("HttpService"):JSONDecode(readfile("TemHubV3/data.txt"))
             originaldata = data
             print(originaldata)
             print(data)
             end
+	    
+	    if not isfile("TemHubV3/timeingame.txt") then
+            writefile("TemHubV3/timeingame.txt", "0")
+            end
+            coroutine.resume(coroutine.create(function()
+                while wait(1) do
+                    if scriptrunning then
+                    local thing = readfile("TemHubV3/timeingame.txt")
+                writefile("TemHubV3/timeingame.txt", tostring(tonumber(thing) + 1))
+                    end
+                end
+            end))
     
             local function savedata()
                 if isfolder("TemHubV3") == false then
@@ -175,7 +202,7 @@ if yes ~= false then
                 
                 game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(unpack(args))
             end
-        end
+    end
 end)
         
     socket:Send("AddValue")
@@ -185,7 +212,7 @@ end)
             local yes, no = pcall(function()
         socket:Send(plr.Name.."|OtherAdd")
             end)
-        end
+    end
     end))
 else
     break
@@ -256,6 +283,7 @@ end))
                     originaldata[value] = callback
                     coroutine.resume(coroutine.create(function()
                     while originaldata[value] do
+                        if scriptrunning then
                                 local args = {
                                     [1] = 1
                                 }
@@ -333,6 +361,7 @@ end))
                                 val += 1
                                 end
                             end
+                        end
                             wait()
                             end
                         end))
@@ -400,6 +429,7 @@ local autosupplytoggle = Shop:CreateToggle({
             originaldata[value] = callback
             coroutine.resume(coroutine.create(function()
                 while originaldata[value] == true do
+                    if scriptrunning then
                     if plr.attributes.SupplyShop.Value <= 0 then
                         if dog2 == false then
                             dog2 = true
@@ -510,6 +540,7 @@ local autosupplytoggle = Shop:CreateToggle({
                             ]]) -- script there
                     end
                     end
+                end
                 wait()
                 end
             end))
@@ -595,6 +626,7 @@ local atthispoint = Drinking:CreateToggle({
             originaldata[value] = callback
             coroutine.resume(coroutine.create(function()
                 while originaldata[value] do
+                    if scriptrunning then
                     if plr.Character ~= nil and plr.Character:FindFirstChild("Humanoid") then
                         if plr.Character.Humanoid.Health > 0 then
                 if not plr.Backpack:FindFirstChild(originaldata["soda"]) and not plr.Character:FindFirstChild(originaldata["soda"]) then
@@ -633,6 +665,7 @@ local atthispoint = Drinking:CreateToggle({
                 end
             end
         end
+    end
                 wait()
                 end
             end))
@@ -649,6 +682,7 @@ local atthispoint = Drinking:CreateToggle({
             originaldata[value] = callback
             coroutine.resume(coroutine.create(function()
                 while originaldata[value] do
+                    if scriptrunning then
                     if plr.Character ~= nil and plr.Character:FindFirstChild("Humanoid") then
                         if plr.Character.Humanoid.Health > 0 then
                 if plr.Backpack:FindFirstChild(originaldata["soda"]) then
@@ -665,6 +699,7 @@ local atthispoint = Drinking:CreateToggle({
             end
         end
             end
+        end
                 wait()
                 end
             end))
@@ -699,6 +734,7 @@ local mentotoggle = Drinking:CreateToggle({
             originaldata[value] = callback
             coroutine.resume(coroutine.create(function()
                 while originaldata["automentos"] == true do
+                    if scriptrunning then
                     if plr.Character ~= nil and plr.Character:FindFirstChild("Humanoid") then
                         if plr.Character.Humanoid.Health > 0 then
                 if plr.Backpack:FindFirstChild("Mentos") then
@@ -715,6 +751,7 @@ local mentotoggle = Drinking:CreateToggle({
             end
         end
             end
+        end
                 wait()
                 end
             end))
@@ -749,6 +786,7 @@ local mentotoggle = Drinking:CreateToggle({
             originaldata[value] = callback
             coroutine.resume(coroutine.create(function()
                 while originaldata[value] == true do
+                    if scriptrunning then
                     local moptppoint = workspace.RoofP.Position + Vector3.new(0, 10, 0)
                 for i,vomit in pairs(workspace:GetChildren()) do
                     if originaldata[value] == true then
@@ -809,6 +847,7 @@ local mentotoggle = Drinking:CreateToggle({
                     end
                     end
                 end
+            end
                 wait()
                 end
             end))
@@ -838,6 +877,7 @@ local mentotoggle = Drinking:CreateToggle({
             originaldata[value] = callback
             coroutine.resume(coroutine.create(function()
                 while originaldata[value] == true do
+                    if scriptrunning then
                     local hastool = false
                     for i, tool in pairs(plr.Backpack:GetChildren()) do
                         if tool:FindFirstChild("To") then
@@ -958,6 +998,7 @@ local mentotoggle = Drinking:CreateToggle({
                         end
                     end
                 end
+            end
                 wait()
                 end
             end))
@@ -990,6 +1031,7 @@ local mentotoggle = Drinking:CreateToggle({
             originaldata[value] = callback
             coroutine.resume(coroutine.create(function()
                 while originaldata[value] == true do
+                    if scriptrunning then
                     for i, part in pairs(workspace:GetChildren()) do
                         if part:FindFirstChildOfClass("Decal") and part:FindFirstChild("Sound") and part:FindFirstChild("ClickDetector") and part:FindFirstChild("Price") then
                             if originaldata[value] == true then
@@ -1000,6 +1042,7 @@ local mentotoggle = Drinking:CreateToggle({
                             end
                         end
                     end
+                end
                 wait()
                 end
             end))
@@ -1067,12 +1110,14 @@ local mentotoggle = Drinking:CreateToggle({
                     originaldata[value] = callback
                     coroutine.resume(coroutine.create(function()
                         while originaldata[value] == true do
+                            if scriptrunning then
                                 local args = {
                                     [1] = 768,
                                     [2] = tostring(math.random(10, 99))
                                 }
                                 
                                 game:GetService("ReplicatedStorage").BoomEvent:FireServer(unpack(args))   
+                            end
                         wait()
                         end
                     end))
@@ -1199,9 +1244,11 @@ local mentotoggle = Drinking:CreateToggle({
                     originaldata[value] = callback
                     coroutine.resume(coroutine.create(function()
                     while originaldata[value] do
+                        if scriptrunning then
                         if plr.attributes.Token.Value > 0 then
                             fireclickdetector(workspace.Machine:FindFirstChildOfClass("ClickDetector"))
                         end
+                    end
                         wait()
                     end
                 end))
@@ -1220,6 +1267,7 @@ local mentotoggle = Drinking:CreateToggle({
                     originaldata[value] = callback
                     coroutine.resume(coroutine.create(function()
                         while originaldata[value] == true do
+                            if scriptrunning then
                             if plr.attributes.Token.Value <= 0 then
                                 local args = {
                                     [1] = "DAILY_REWARD"
@@ -1227,8 +1275,9 @@ local mentotoggle = Drinking:CreateToggle({
                                 
                                 game:GetService("ReplicatedStorage").TimeRewardEvent:FireServer(unpack(args))                        
                             end
-                        wait()
                         end
+                        wait()
+                    end
                     end))
             end,
          })
@@ -1243,11 +1292,13 @@ local mentotoggle = Drinking:CreateToggle({
                     originaldata[value] = callback
                     coroutine.resume(coroutine.create(function()
                         while originaldata[value] == true do
+                            if scriptrunning then
                             if plr.attributes.Retry.Value >= 5 then
                                 game:GetService("ReplicatedStorage").ExchangeEvent:FireServer()                   
                             end
-                        wait()
                         end
+                        wait()
+                    end
                     end))
             end,
          })
@@ -1290,8 +1341,10 @@ local mentotoggle = Drinking:CreateToggle({
                 originaldata[value] = callback
                 coroutine.resume(coroutine.create(function()
                 while originaldata[value] do
+                    if scriptrunning then
                     wait(300)
                     if originaldata[value] then
+                        if scriptrunning then
                         savedata()
                         Rayfield:Notify({
                             Title = "Notification",
@@ -1309,6 +1362,9 @@ local mentotoggle = Drinking:CreateToggle({
                          })
                     end
                 end
+                end
+                wait()
+            end
             end))
 end,
 })
@@ -1381,9 +1437,11 @@ autosavetoggle:Set(originaldata["autosave"])
                 originaldata[value] = callback
                 coroutine.resume(coroutine.create(function()
                     while originaldata[value] == true do
+                        if scriptrunning then
                         if plr.Backpack:FindFirstChild("Laptop") then
                             plr.Backpack.Laptop.Parent = plr.Character           
                         end
+                    end
                     wait()
                     end
                 end))
@@ -1441,6 +1499,18 @@ autosavetoggle:Set(originaldata["autosave"])
             Rayfield:Destroy()
         end,
     })
+
+    local Section = Settings:CreateSection("Other")
+
+    local Label = Settings:CreateLabel("Time using script: 0")
+    coroutine.resume(coroutine.create(function()
+        while wait() do
+            if scriptrunning then
+            local thing = readfile("TemHubV3/timeingame.txt")
+            Label:Set("Time using script: "..thing)
+            end
+        end
+    end))
 
     if table.find(admins, plr.UserId) then
     local Admin = Window:CreateTab("Admin", 4483362458)
