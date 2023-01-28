@@ -1508,8 +1508,7 @@ autosavetoggle:Set(originaldata["autosave"])
     local Button = Settings:CreateButton({
         Name = "Destroy UI",
         Callback = function()
-	local newid = game:GetService("HttpService"):GenerateGUID(false)
-	_G.newid = executeid
+	scriptrunning = false
             Rayfield:Destroy()
         end,
     })
