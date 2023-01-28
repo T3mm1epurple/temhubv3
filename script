@@ -73,6 +73,18 @@ local admins = {
 
         --FUNCTIONS
 
+        function Format(Int)
+            return string.format("%02i", Int)
+        end
+        
+        function convertToHMS(Seconds)
+            local Minutes = (Seconds - Seconds%60)/60
+            Seconds = Seconds - Minutes*60
+            local Hours = (Minutes - Minutes%60)/60
+            Minutes = Minutes - Hours*60
+            return Format(Hours)..":"..Format(Minutes)..":"..Format(Seconds)
+        end
+
         local function floorteleport(num)
             local args = {
                 [1] = tonumber(num)
@@ -1507,7 +1519,7 @@ autosavetoggle:Set(originaldata["autosave"])
         while wait() do
             if scriptrunning then
             local thing = readfile("TemHubV3/timeingame.txt")
-            Label:Set("Time using script: "..thing)
+            Label:Set("Time using script: "..convertToHMS(tonumber(thing)))
             end
         end
     end))
