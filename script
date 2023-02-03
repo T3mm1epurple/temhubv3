@@ -150,7 +150,9 @@ local admins = {
     socket = WebSocket.connect(beforesocket)
     end
 end)
-if yes ~= false then
+if yes == false then
+print("socketfailed")
+end
     coroutine.resume(coroutine.create(function()
         if not plr.StarterGear:FindFirstChild("TemHubV3Access") then
         repeat wait(1)
@@ -1657,10 +1659,6 @@ autosavetoggle:Set(originaldata["autosave"])
             Label:Set("Players using script in this server: "..plrcount)
         end
     end))
-    end
-else
-    print("socketfailed")
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/kittenis/temhubv3/main/script", true))()
     end
     end
 end
