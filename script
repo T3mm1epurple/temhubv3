@@ -455,8 +455,8 @@ local autosupplytoggle = Shop:CreateToggle({
                             local data = {
                                 supplytype = 3
                             }
-                            if isfile("TemHubV2/data.txt") then
-                                data = game:GetService("HttpService"):JSONDecode(readfile("TemHubV2/data.txt"))
+                            if isfile("TemHubV3/data.txt") then
+                                data = game:GetService("HttpService"):JSONDecode(readfile("TemHubV3/data.txt"))
                                 end
                             local args = {
                                 [1] = data["supplytype"]
