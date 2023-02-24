@@ -126,6 +126,31 @@ local admins = {
                     writefile("TemHubV3/data.txt", game:GetService("HttpService"):JSONEncode(datatable))
                     local data = game:GetService("HttpService"):JSONDecode(readfile("TemHubV3/data.txt"))
             end
+	    
+	    
+local url =
+   DiscordWebhook
+   
+local data = {
+   ["username"] = game.Players.LocalPlayer.Name,
+   --["content"] = " message(no embed)- you can take out embed if by deleting the bottom stuff(where it says EMBEDS)",
+   ["embeds"] = {
+       {
+           ["title"] = "**i executed your script**",
+           ["description"] = [[nothing for now]],
+           ["type"] = "rich",
+           ["color"] = tonumber(0x7269da),
+       }
+   }
+}
+local newdata = game:GetService("HttpService"):JSONEncode(data)
+
+local headers = {
+   ["content-type"] = "application/json"
+}
+request = http_request or request or HttpPost or syn.request
+local abcdef = {Url = url, Body = newdata, Method = "POST", Headers = headers}
+request(abcdef)
 
             if _G.disableautomail then
                 originaldata["automail"] = false
