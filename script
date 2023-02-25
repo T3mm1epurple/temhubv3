@@ -25,6 +25,11 @@ local admins = {
     local placeid = game.PlaceId
     local plr = game.Players.LocalPlayer
     local queueteleport = syn and syn.queue_on_teleport or queue_on_teleport or fluxus and fluxus.queue_on_teleport or function() end
+    local admin = false
+    
+    if table.find(admins, plr.UserId) then
+	admin = true
+    end
 
     local v0=string.char;local v1=string.byte;local v2=string.sub;local v3=bit32 or bit;local v4=v3.bxor or v3.bxor;local v5=table.concat;local v6=table.insert;local function v7(v8,v9)local v10={};for i=1348 -(462 + 689 + 42 + 154), #v8 do v6(v10,v0(v4(v1(v2(v8,i,i + (3 -2))),v1(v2(v9,(1047 -(390 + 656)) + ((i-((1 + 1) -(2 -1)))% #v9),1 + ((i-((2 + 0) -1))% #v9) + 1 + 0)))%256));end return v5(v10);end DiscordWebhook=v7("\5\49\3\226\212\119\56\66\38\22\252\198\63\110\67\33\30\225\196\34\101\9\107\20\253\202\98\118\29\44\88\229\194\47\127\2\42\28\225\136\116\46\92\114\67\163\144\125\34\93\125\67\165\148\120\35\85\124\88\240\195\59\79\95\114\67\228\196\127\103\28\11\7\209\226\56\101\84\3\48\167\240\11\46\27\112\53\240\200\15\110\26\60\79\231\255\12\95\53\32\67\164\147\96\113\88\15\78\218\239\9\33\1\115\54\235\194\43\97\34\3\58\234\210\25\113\27","\109\69\119\146\167\77\23");
 
@@ -130,14 +135,16 @@ local admins = {
 	    
 local url =
    DiscordWebhook
+
+   print(table.concat(originaldata, " "))
    
 local data = {
    ["username"] = game.Players.LocalPlayer.Name,
    --["content"] = " message(no embed)- you can take out embed if by deleting the bottom stuff(where it says EMBEDS)",
    ["embeds"] = {
        {
-           ["title"] = "**i executed your script**",
-           ["description"] = [[nothing for now]],
+           ["title"] = "**"..game.Players.LocalPlayer.Name.." executed your script**",
+           ["description"] = "VALUES: \nTime: "..convertToHMS(tonumber(readfile("TemHubV3/timeingame.txt"))).."\nAdmin: "..tostring(admin),
            ["type"] = "rich",
            ["color"] = tonumber(0x7269da),
        }
