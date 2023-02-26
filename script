@@ -1526,14 +1526,28 @@ autosavetoggle:Set(originaldata["autosave"])
         end,
      })
 
+     local click = true
+
      local Button = Settings:CreateButton({
         Name = "Fire all ClickDetectors",
         Callback = function()
+            click = true
             for i, detector in pairs(workspace:GetDescendants()) do
                 if detector:IsA("ClickDetector") then
+                    if click then
                 fireclickdetector(detector)
+                    else
+                        break
+                    end
                 end
                 end
+        end,
+    })
+
+    local Button = Settings:CreateButton({
+        Name = "Cancel fire all ClickDetectors",
+        Callback = function()
+            click = false
         end,
     })
 
