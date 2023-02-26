@@ -74,6 +74,7 @@ local admins = {
         converttokens = false,
         removeblur = false,
         automail = false,
+        mysteryletter = "M",
         }
 
         --FUNCTIONS
@@ -320,6 +321,8 @@ end))
             end,
         })
 
+        local findinghat = false
+
         local bingotggle = Bingo:CreateToggle({
             Name = "Auto bingo",
             CurrentValue = nil,
@@ -334,8 +337,9 @@ end))
                                     [1] = 1
                                 }
                                 local val = 1
-                                local cont = true
+                                local cont = false
                                 local failed = {}
+                                findinghat = false
                                 if originaldata["mysteryhat"] then
                                     local letters = {
                                     capm = {1,5,6,7,9,10,11,13,15,16,20,21,25},
@@ -345,33 +349,57 @@ end))
                                     cape = {1,2,3,4,5,6,11,12,13,14,15,16,21,22,23,24,25},
                                     capr = {1,2,3,4,6,10,11,12,13,14,16,20,21,25},
                                     lowm = {2,4,6,8,10,11,13,15,16,20,21,25},
+                                    lowe = {1,2,3,4,5,6,10,11,12,13,14,15,16,21,22,23,24,25},
+                                    lowr = {1,2,3,4,5,6,10,11,12,13,14,15,16,19,21,25},
                                     }
                                     for i=1, 3 do
-                                        cont = true
+                                        cont = false
                                         local folder
                                         if i == 1 then
                                         folder = plr:FindFirstChild("paper")
                                         else
                                         folder = plr:FindFirstChild("paper"..i)
                                         end
+                                        local ermm = 0
                                         local wowyou = false
                                             for i, letter in pairs(letters) do
+                                                local count = table.getn(letter)
+                                                local originalnum = 0
                                                 wowyou = false
                                                 for v, num in pairs(letter) do
                                                     local value = folder:FindFirstChild(tostring(num))
-                                                    if value.Tick.Value == false then
-                                                        cont = false
+                                                    if value.Tick.Value == true then
+                                                        originalnum += 1
                                                     end
                                                 end
+                                                if count > originalnum then
+                                                    ermm += 1
+                                                end
+                                                local wrongtotal = 0
+                                                local wrongcount = 0
                                                 if not table.find(failed, folder.Name) then
                                                 for i, otherval in pairs(folder:GetChildren()) do
                                                     if not table.find(letter, tonumber(otherval.Name)) then
+                                                        wrongtotal += 1
                                                         if otherval.Tick.Value == true then
-                                                            wowyou = true
+                                                            wrongcount += 1
                                                         end
                                                     end
                                                 end
                                                 end
+                                                print("wrongtotal: "..wrongtotal)
+                                                print("wrongcount: "..wrongcount)
+                                                if wrongcount == wrongtotal then
+                                                    wowyou = true
+                                                    else
+                                                        wowyou = false
+                                            end
+                                            end
+                                            if ermm == 0 then
+                                                cont = true
+                                            end
+                                            if cont == false then
+                                                findinghat = true
                                             end
                                             if wowyou then
                                                 if not table.find(failed, folder.Name) then
@@ -379,6 +407,8 @@ end))
                                                 end
                                             end
                                     end
+                                    else
+                                        cont = true
                                 end
                                 if not plr.Backpack:FindFirstChild("BingoCard") and not plr.Character:FindFirstChild("BingoCard") then
                                     --plr.Character.Humanoid.Jump = true
@@ -406,6 +436,7 @@ end))
                                 game:GetService("ReplicatedStorage").BingoEvent:FireServer(unpack(args))
                                 val += 1
                                 end
+                                findinghat = false
                             end
                         end
                             wait()
@@ -427,6 +458,16 @@ end))
             end,
          })
          mystoggle:Set(originaldata["mysteryhat"])
+
+         local Label = Bingo:CreateLabel("Finding MYSTERY letters: false")
+         coroutine.resume(coroutine.create(function()
+             while wait() do
+                if originaldata["autobingo"] == false then
+                    findinghat = false
+                end
+                 Label:Set("Finding MYSTERY letters: "..tostring(findinghat))
+             end
+         end))
 
          local Section = Shop:CreateSection("Extras")
 
