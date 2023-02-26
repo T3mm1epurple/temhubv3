@@ -1544,13 +1544,6 @@ autosavetoggle:Set(originaldata["autosave"])
         end,
     })
 
-    local Button = Settings:CreateButton({
-        Name = "Cancel fire all ClickDetectors",
-        Callback = function()
-            click = false
-        end,
-    })
-
      local Section = Settings:CreateSection("UI")
 
     local Button = Settings:CreateButton({
