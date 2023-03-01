@@ -323,6 +323,7 @@ end))
 
         local findinghat = false
         local bingoing = false
+        local currentbingo = nil
 
         local bingotggle = Bingo:CreateToggle({
             Name = "Auto bingo",
@@ -363,10 +364,10 @@ end))
                                         local ermm = 0
                                         local uhhl = 0
                                         local uhhlcount = 0
-                                        for i, erwmr in pairs(letters) do
+                                        for blehh, erwmr in pairs(letters) do
                                             uhhl += 1
                                         end
-                                            for i, letter in pairs(letters) do
+                                            for what, letter in pairs(letters) do
                                                 local count = table.getn(letter)
                                                 local originalnum = 0
                                                 wowyou = false
@@ -382,7 +383,7 @@ end))
                                                 local wrongtotal = 0
                                                 local wrongcount = 0
                                                 if not table.find(failed, folder.Name) then
-                                                for i, otherval in pairs(folder:GetChildren()) do
+                                                for test, otherval in pairs(folder:GetChildren()) do
                                                     if not table.find(letter, tonumber(otherval.Name)) then
                                                         wrongtotal += 1
                                                         if otherval.Tick.Value == true then
@@ -397,22 +398,23 @@ end))
                                             end
                                             if ermm == 0 then
                                                 cont = true
+                                                currentbingo = i
+                                                print(currentbingo)
                                             end
                                             if uhhl == uhhlcount then
                                                 wowyou = true
-                                                cont = true
                                             end
                                             if wowyou then
                                                 if not table.find(failed, folder.Name) then
                                                 table.insert(failed, folder.Name)
                                                 end
+                                            else
+                                                findinghat = true
                                             end
                                     end
                                     else
                                         cont = true
-                                end
-                                if cont == false then
-                                    findinghat = true
+                                        currentbingo = nil
                                 end
                                 if not plr.Backpack:FindFirstChild("BingoCard") and not plr.Character:FindFirstChild("BingoCard") then
                                     if bingoing then
@@ -442,8 +444,8 @@ end))
                                     --root.CFrame = pos
                                 end
                                 local MarketplaceService = game:GetService("MarketplaceService")
-                                print(#failed)
                                 if cont or table.find(failed, "paper") and table.find(failed, "paper2") and not MarketplaceService:UserOwnsGamePassAsync(plr.UserId, 12676702) or table.find(failed, "paper") and table.find(failed, "paper2") and table.find(failed, "paper3") and MarketplaceService:UserOwnsGamePassAsync(plr.UserId, 12676702) then
+                                if currentbingo == nil then
                                 for i=1, 3 do
                                     wait()
                                 local args = {
@@ -453,6 +455,13 @@ end))
                                 game:GetService("ReplicatedStorage").BingoEvent:FireServer(unpack(args))
                                 val += 1
                                 end
+                            else
+                                local args = {
+                                    [1] = currentbingo
+                                }
+                                
+                                game:GetService("ReplicatedStorage").BingoEvent:FireServer(unpack(args))
+                            end
                                 bingoing = true
                                 findinghat = false
                             end
