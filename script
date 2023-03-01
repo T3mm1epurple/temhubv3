@@ -390,18 +390,19 @@ end))
                                                     end
                                                 end
                                                 end
-                                                if wrongcount == wrongtotal then
+                                                if wrongcount > 0 then
                                                     uhhlcount += 1
                                             end
                                             end
                                             if ermm == 0 then
                                                 cont = true
                                             end
-                                            if cont == false then
-                                                findinghat = true
-                                            end
                                             if uhhl == uhhlcount then
                                                 wowyou = true
+                                                cont = true
+                                            end
+                                            if cont == false then
+                                                findinghat = true
                                             end
                                             if wowyou then
                                                 if not table.find(failed, folder.Name) then
