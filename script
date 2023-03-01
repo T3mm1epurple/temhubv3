@@ -324,6 +324,7 @@ end))
         local findinghat = false
         local bingoing = false
         local currentbingo = nil
+        local bingosgotten = 0
 
         local bingotggle = Bingo:CreateToggle({
             Name = "Auto bingo",
@@ -419,6 +420,7 @@ end))
                                 if not plr.Backpack:FindFirstChild("BingoCard") and not plr.Character:FindFirstChild("BingoCard") then
                                     if bingoing then
                                         bingoing = false
+                                        bingosgotten += 1
                                         for i=1, 3 do
                                             local sheetgui = plr.PlayerGui:FindFirstChild("Sheet"..i)
                                             if i == 1 then
@@ -493,6 +495,15 @@ end))
                     findinghat = false
                 end
                  Label:Set("Finding MYSTERY letters: "..tostring(findinghat))
+             end
+         end))
+
+         local Section = Bingo:CreateSection("Values")
+
+         local Label = Bingo:CreateLabel("Bingos gotten since script execute: ")
+         coroutine.resume(coroutine.create(function()
+             while wait() do
+                 Label:Set("Bingos gotten since script execute: "..bingosgotten)
              end
          end))
 
