@@ -401,9 +401,6 @@ end))
                                                 wowyou = true
                                                 cont = true
                                             end
-                                            if cont == false then
-                                                findinghat = true
-                                            end
                                             if wowyou then
                                                 if not table.find(failed, folder.Name) then
                                                 table.insert(failed, folder.Name)
@@ -412,6 +409,9 @@ end))
                                     end
                                     else
                                         cont = true
+                                end
+                                if cont == false then
+                                    findinghat = true
                                 end
                                 if not plr.Backpack:FindFirstChild("BingoCard") and not plr.Character:FindFirstChild("BingoCard") then
                                     --plr.Character.Humanoid.Jump = true
