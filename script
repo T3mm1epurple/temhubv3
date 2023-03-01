@@ -458,6 +458,19 @@ end))
                                 val += 1
                                 end
                             else
+                                coroutine.resume(coroutine.create(function()
+                                    for i=1, 10 do
+                                Rayfield:Notify({
+                                    Title = "OH MY GOD OH MY GOD",
+                                    Content = "YOU GOT THE FORCEFIELD HAT BRO",
+                                    Duration = 1,
+                                    Image = 4483362458,
+                                    Actions = { -- Notification Buttons
+                                    
+                                 },
+                                 })
+                                end
+                                end))
                                 local args = {
                                     [1] = currentbingo
                                 }
