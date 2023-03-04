@@ -296,6 +296,7 @@ end))
         local Cleaning = Window:CreateTab("Mop", 4483362458)
         local Delivery = Window:CreateTab("Mail", 4483362458)
         local FunTab = Window:CreateTab("Fun", 4483362458)
+        local LeaderTab = Window:CreateTab("Leaderboards", 4483362458)
 
         local Section = Bingo:CreateSection("Main")
 
@@ -1222,6 +1223,279 @@ local mentotoggle = Drinking:CreateToggle({
         message.Parent = plr.PlayerGui
     end,
  })
+
+ local Section = LeaderTab:CreateSection("Bingo")
+ 
+ local Label = LeaderTab:CreateLabel("Leaderboard place: #")
+ coroutine.resume(coroutine.create(function()
+     while wait() do
+        for i, mainvalidk in pairs(workspace.HighScore.ScoreBlock.SurfaceGui.Frame:GetChildren()) do
+        local value = string.split(mainvalidk.Player.Text, ".")
+        local place = value[1]
+        local player = value[2]
+        if player == plr.Name then
+         Label:Set("Leaderboard place: #"..place)
+         return
+        end
+     end
+     Label:Set("Leaderboard place: not on leaderboard")
+    end
+ end))
+
+ local Label = LeaderTab:CreateLabel("Bingos needed to get to ")
+ coroutine.resume(coroutine.create(function()
+     while wait() do
+        for i, mainvalidk in pairs(workspace.HighScore.ScoreBlock.SurfaceGui.Frame:GetChildren()) do
+        local value = string.split(mainvalidk.Player.Text, ".")
+        local place = value[1]
+        local player = value[2]
+        local count = mainvalidk.Score.Text
+        if player == plr.Name then
+            if place ~= "1" then
+         local beforevalue = workspace.HighScore.ScoreBlock.SurfaceGui.Frame:FindFirstChild("Name"..tostring(tonumber(place) - 1))
+         local value2 = string.split(beforevalue.Player.Text, ".")
+        local place2 = value2[1]
+        local player2 = value2[2]
+        local count2 = beforevalue.Score.Text
+        local convert = tonumber(count2) - tonumber(count)
+         Label:Set("Bingos needed to get to #"..place2..": "..convert)
+         return
+            else
+                Label:Set("Youre in first!")
+                return
+            end
+        end
+     end
+     local total = #workspace.HighScore.ScoreBlock.SurfaceGui.Frame:GetChildren()
+     local value = workspace.HighScore.ScoreBlock.SurfaceGui.Frame:FindFirstChild("Name"..total)
+     local count2 = value.Score.Text
+     local count = tostring(plr.leaderstats.Wins.Value)
+     local convert = tonumber(count2) - tonumber(count)
+     Label:Set("Bingos needed to get to #"..total..": "..convert)
+    end
+ end))
+
+ local Section = LeaderTab:CreateSection("Cash")
+ 
+ local Label = LeaderTab:CreateLabel("Leaderboard place: #")
+ coroutine.resume(coroutine.create(function()
+     while wait() do
+        for i, mainvalidk in pairs(workspace.HighScore7.ScoreBlock.SurfaceGui.Frame:GetChildren()) do
+        local value = string.split(mainvalidk.Player.Text, ".")
+        local place = value[1]
+        local player = value[2]
+        if player == plr.Name then
+         Label:Set("Leaderboard place: #"..place)
+         return
+        end
+     end
+     Label:Set("Leaderboard place: not on leaderboard")
+    end
+ end))
+
+ local Label = LeaderTab:CreateLabel("Cash needed to get to ")
+ coroutine.resume(coroutine.create(function()
+     while wait() do
+        for i, mainvalidk in pairs(workspace.HighScore7.ScoreBlock.SurfaceGui.Frame:GetChildren()) do
+        local value = string.split(mainvalidk.Player.Text, ".")
+        local place = value[1]
+        local player = value[2]
+        local count = (string.gsub(mainvalidk.Score.Text, "$", ""))
+        if player == plr.Name then
+            if place ~= "1" then
+         local beforevalue = workspace.HighScore7.ScoreBlock.SurfaceGui.Frame:FindFirstChild("Name"..tostring(tonumber(place) - 1))
+         local value2 = string.split(beforevalue.Player.Text, ".")
+        local place2 = value2[1]
+        local player2 = value2[2]
+        local count2 = string.split(value.Score.Text, "$")[2]
+        local count2 = (string.gsub(beforevalue.Score.Text, "$", ""))
+        local convert = tonumber(count2) - tonumber(count)
+         Label:Set("Cash needed to get to #"..place2..": "..convert)
+         return
+            else
+                Label:Set("Youre in first!")
+                return
+            end
+        end
+     end
+     local total = #workspace.HighScore7.ScoreBlock.SurfaceGui.Frame:GetChildren()
+     local value = workspace.HighScore7.ScoreBlock.SurfaceGui.Frame:FindFirstChild("Name"..total)
+     local count2 = string.split(value.Score.Text, "$")[2]
+     local count = tostring(plr.attributes.Cash.Value)
+     print(count)
+     print(count2)
+     local convert = tonumber(count2) - tonumber(count)
+     Label:Set("Cash needed to get to #"..total..": "..convert)
+    end
+ end))
+
+ local Section = LeaderTab:CreateSection("Mail Delivery")
+ 
+ local Label = LeaderTab:CreateLabel("Leaderboard place: #")
+ coroutine.resume(coroutine.create(function()
+     while wait() do
+        for i, mainvalidk in pairs(workspace.HighScore5.ScoreBlock.SurfaceGui.Frame:GetChildren()) do
+        local value = string.split(mainvalidk.Player.Text, ".")
+        local place = value[1]
+        local player = value[2]
+        if player == plr.Name then
+         Label:Set("Leaderboard place: #"..place)
+         return
+        end
+     end
+     Label:Set("Leaderboard place: not on leaderboard")
+    end
+ end))
+
+ local Label = LeaderTab:CreateLabel("Deliveries needed to get to ")
+ coroutine.resume(coroutine.create(function()
+     while wait() do
+        for i, mainvalidk in pairs(workspace.HighScore5.ScoreBlock.SurfaceGui.Frame:GetChildren()) do
+        local value = string.split(mainvalidk.Player.Text, ".")
+        local place = value[1]
+        local player = value[2]
+        local count = mainvalidk.Score.Text
+        if player == plr.Name then
+            if place ~= "1" then
+         local beforevalue = workspace.HighScore5.ScoreBlock.SurfaceGui.Frame:FindFirstChild("Name"..tostring(tonumber(place) - 1))
+         local value2 = string.split(beforevalue.Player.Text, ".")
+        local place2 = value2[1]
+        local player2 = value2[2]
+        local count2 = beforevalue.Score.Text
+        local convert = tonumber(count2) - tonumber(count)
+         Label:Set("Deliveries needed to get to #"..place2..": "..convert)
+         return
+            else
+                Label:Set("Youre in first!")
+                return
+            end
+        end
+     end
+     local total = #workspace.HighScore5.ScoreBlock.SurfaceGui.Frame:GetChildren()
+     local value = workspace.HighScore5.ScoreBlock.SurfaceGui.Frame:FindFirstChild("Name"..total)
+     local count2 = value.Score.Text
+     local count = tostring(plr.attributes.Mailboy.Value)
+     local convert = tonumber(count2) - tonumber(count)
+     Label:Set("Deliveries needed to get to #"..total..": "..convert)
+    end
+ end))
+
+ local Section = LeaderTab:CreateSection("Canteen")
+ 
+ local Label = LeaderTab:CreateLabel("Leaderboard place: #")
+ coroutine.resume(coroutine.create(function()
+     while wait() do
+        for i, mainvalidk in pairs(workspace.HighScore8.ScoreBlock.SurfaceGui.Frame:GetChildren()) do
+        local value = string.split(mainvalidk.Player.Text, ".")
+        local place = value[1]
+        local player = value[2]
+        if player == plr.Name then
+         Label:Set("Leaderboard place: #"..place)
+         return
+        end
+     end
+     Label:Set("Leaderboard place: not on leaderboard")
+    end
+ end))
+
+ local Label = LeaderTab:CreateLabel("Selling needed to get to ")
+ coroutine.resume(coroutine.create(function()
+     while wait() do
+        for i, mainvalidk in pairs(workspace.HighScore8.ScoreBlock.SurfaceGui.Frame:GetChildren()) do
+        local value = string.split(mainvalidk.Player.Text, ".")
+        local place = value[1]
+        local player = value[2]
+        local count = mainvalidk.Score.Text
+        if player == plr.Name then
+            if place ~= "1" then
+         local beforevalue = workspace.HighScore8.ScoreBlock.SurfaceGui.Frame:FindFirstChild("Name"..tostring(tonumber(place) - 1))
+         local value2 = string.split(beforevalue.Player.Text, ".")
+        local place2 = value2[1]
+        local player2 = value2[2]
+        local count2 = beforevalue.Score.Text
+        local convert = tonumber(count2) - tonumber(count)
+         Label:Set("Selling needed to get to #"..place2..": "..convert)
+         return
+            else
+                Label:Set("Youre in first!")
+                return
+            end
+        end
+     end
+     local total = #workspace.HighScore8.ScoreBlock.SurfaceGui.Frame:GetChildren()
+     local value = workspace.HighScore8.ScoreBlock.SurfaceGui.Frame:FindFirstChild("Name"..total)
+     local count2 = value.Score.Text
+     local count = tostring(plr.attributes.SupplySold.Value)
+     local convert = tonumber(count2) - tonumber(count)
+     Label:Set("Selling needed to get to #"..total..": "..convert)
+    end
+ end))
+
+ local Section = LeaderTab:CreateSection("Mopping")
+ 
+ local Label = LeaderTab:CreateLabel("Leaderboard place: #")
+ coroutine.resume(coroutine.create(function()
+     while wait() do
+        for i, mainvalidk in pairs(workspace.HighScore6.ScoreBlock.SurfaceGui.Frame:GetChildren()) do
+        local value = string.split(mainvalidk.Player.Text, ".")
+        local place = value[1]
+        local player = value[2]
+        if player == plr.Name then
+         Label:Set("Leaderboard place: #"..place)
+         return
+        end
+     end
+     Label:Set("Leaderboard place: not on leaderboard")
+    end
+ end))
+
+ local Label = LeaderTab:CreateLabel("Selling needed to get to ")
+ coroutine.resume(coroutine.create(function()
+     while wait() do
+        for i, mainvalidk in pairs(workspace.HighScore6.ScoreBlock.SurfaceGui.Frame:GetChildren()) do
+        local value = string.split(mainvalidk.Player.Text, ".")
+        local place = value[1]
+        local player = value[2]
+        local count = mainvalidk.Score.Text
+        if player == plr.Name then
+            if place ~= "1" then
+         local beforevalue = workspace.HighScore6.ScoreBlock.SurfaceGui.Frame:FindFirstChild("Name"..tostring(tonumber(place) - 1))
+         local value2 = string.split(beforevalue.Player.Text, ".")
+        local place2 = value2[1]
+        local player2 = value2[2]
+        local count2 = beforevalue.Score.Text
+        local convert = tonumber(count2) - tonumber(count)
+         Label:Set("Mopping needed to get to #"..place2..": "..convert)
+         return
+            else
+                Label:Set("Youre in first!")
+                return
+            end
+        end
+     end
+     local total = #workspace.HighScore6.ScoreBlock.SurfaceGui.Frame:GetChildren()
+     local value = workspace.HighScore6.ScoreBlock.SurfaceGui.Frame:FindFirstChild("Name"..total)
+     local count2 = value.Score.Text
+     local count = tostring(plr.attributes.Broomed.Value)
+     local convert = tonumber(count2) - tonumber(count)
+     Label:Set("Mopping needed to get to #"..total..": "..convert)
+    end
+ end))
+
+ local Section = LeaderTab:CreateSection("Other")
+
+ local Button = LeaderTab:CreateButton({
+    Name = "Update leaderboards",
+    Callback = function()
+        workspace:WaitForChild("RemoteScore8"):WaitForChild("UploadScore8"):InvokeServer()
+        workspace:WaitForChild("RemoteScore7"):WaitForChild("UploadScore7"):InvokeServer()
+        workspace:WaitForChild("RemoteScore6"):WaitForChild("UploadScore6"):InvokeServer()
+        workspace:WaitForChild("RemoteScore5"):WaitForChild("UploadScore5"):InvokeServer()
+        workspace:WaitForChild("RemoteScore"):WaitForChild("UploadScore"):InvokeServer()
+    end,
+})
+
+
     end
 
     if mainid == gameids["level3"] then
