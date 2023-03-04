@@ -1322,8 +1322,6 @@ local mentotoggle = Drinking:CreateToggle({
      local value = workspace.HighScore7.ScoreBlock.SurfaceGui.Frame:FindFirstChild("Name"..total)
      local count2 = string.split(value.Score.Text, "$")[2]
      local count = tostring(plr.attributes.Cash.Value)
-     print(count)
-     print(count2)
      local convert = tonumber(count2) - tonumber(count)
      Label:Set("Cash needed to get to #"..total..": "..convert)
     end
