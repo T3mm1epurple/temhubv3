@@ -338,6 +338,7 @@ end))
                     originaldata[value] = callback
                     coroutine.resume(coroutine.create(function()
                     while originaldata[value] do
+                        local yes, no = pcall(function()
                         if scriptrunning then
                                 local args = {
                                     [1] = 1
@@ -484,6 +485,7 @@ end))
                                 findinghat = false
                             end
                         end
+                    end)
                             wait()
                             end
                         end))
@@ -581,6 +583,7 @@ local autosupplytoggle = Shop:CreateToggle({
             originaldata[value] = callback
             coroutine.resume(coroutine.create(function()
                 while originaldata[value] == true do
+                    local yes, no = pcall(function()
                     if scriptrunning then
                     if plr.attributes.SupplyShop.Value <= 0 then
                         if dog2 == false then
@@ -693,6 +696,7 @@ local autosupplytoggle = Shop:CreateToggle({
                     end
                     end
                 end
+            end)
                 wait()
                 end
             end))
@@ -778,6 +782,7 @@ local atthispoint = Drinking:CreateToggle({
             originaldata[value] = callback
             coroutine.resume(coroutine.create(function()
                 while originaldata[value] do
+                    local yes, no = pcall(function()
                     if scriptrunning then
                     if plr.Character ~= nil and plr.Character:FindFirstChild("Humanoid") then
                         if plr.Character.Humanoid.Health > 0 then
@@ -818,6 +823,7 @@ local atthispoint = Drinking:CreateToggle({
             end
         end
     end
+end)
                 wait()
                 end
             end))
@@ -834,6 +840,7 @@ local atthispoint = Drinking:CreateToggle({
             originaldata[value] = callback
             coroutine.resume(coroutine.create(function()
                 while originaldata[value] do
+                    local yes, no = pcall(function()
                     if scriptrunning then
                     if plr.Character ~= nil and plr.Character:FindFirstChild("Humanoid") then
                         if plr.Character.Humanoid.Health > 0 then
@@ -852,6 +859,7 @@ local atthispoint = Drinking:CreateToggle({
         end
             end
         end
+    end)
                 wait()
                 end
             end))
@@ -886,6 +894,7 @@ local mentotoggle = Drinking:CreateToggle({
             originaldata[value] = callback
             coroutine.resume(coroutine.create(function()
                 while originaldata["automentos"] == true do
+                    local yes, no = pcall(function()
                     if scriptrunning then
                     if plr.Character ~= nil and plr.Character:FindFirstChild("Humanoid") then
                         if plr.Character.Humanoid.Health > 0 then
@@ -904,6 +913,7 @@ local mentotoggle = Drinking:CreateToggle({
         end
             end
         end
+    end)
                 wait()
                 end
             end))
@@ -986,6 +996,7 @@ local autofoodsupply = Drinking:CreateToggle({
             originaldata[value] = callback
             coroutine.resume(coroutine.create(function()
                 while originaldata[value] == true do
+                    local yes, no = pcall(function()
                     if scriptrunning then
                     if plr.attributes.FoodSupply.Value <= 0 then
                         if dog65 == false then
@@ -1132,6 +1143,7 @@ local autofoodsupply = Drinking:CreateToggle({
                     end
                     end
                 end
+            end)
                 wait()
                 end
             end))
@@ -1166,6 +1178,7 @@ local autofoodsupply = Drinking:CreateToggle({
             originaldata[value] = callback
             coroutine.resume(coroutine.create(function()
                 while originaldata[value] == true do
+                    local yes, no = pcall(function()
                     if scriptrunning then
                     local moptppoint = workspace.RoofP.Position + Vector3.new(0, 10, 0)
                 for i,vomit in pairs(workspace:GetChildren()) do
@@ -1228,6 +1241,7 @@ local autofoodsupply = Drinking:CreateToggle({
                     end
                 end
             end
+        end)
                 wait()
                 end
             end))
@@ -1248,6 +1262,8 @@ local autofoodsupply = Drinking:CreateToggle({
  })
  autosoluttoggle:Set(originaldata["getcleansolution"])
 
+ local ermmwhat = false
+
  local automailtoggle = Delivery:CreateToggle({
     Name = "Auto deliver mail",
     CurrentValue = nil,
@@ -1257,6 +1273,7 @@ local autofoodsupply = Drinking:CreateToggle({
             originaldata[value] = callback
             coroutine.resume(coroutine.create(function()
                 while originaldata[value] == true do
+                    local yes, no = pcall(function()
                     if scriptrunning then
                     local hastool = false
                     for i, tool in pairs(plr.Backpack:GetChildren()) do
@@ -1316,6 +1333,8 @@ local autofoodsupply = Drinking:CreateToggle({
                                                             end
                                                         end
                                                     else
+                                                        if ermmwhat == false then
+                                                            ermmwhat = true
                                                         savedata()
                                                         floorteleport(newlevel)
                                                         queueteleport([[
@@ -1367,6 +1386,7 @@ local autofoodsupply = Drinking:CreateToggle({
                                                             end
                                                             end
                                                         ]])
+                                                        end
                                                     end
                                                 end
                                             end
@@ -1379,6 +1399,7 @@ local autofoodsupply = Drinking:CreateToggle({
                     end
                 end
             end
+        end)
                 wait()
                 end
             end))
@@ -1411,6 +1432,7 @@ local autofoodsupply = Drinking:CreateToggle({
             originaldata[value] = callback
             coroutine.resume(coroutine.create(function()
                 while originaldata[value] == true do
+                    local yes, no = pcall(function()
                     if scriptrunning then
                     for i, part in pairs(workspace:GetChildren()) do
                         if part:FindFirstChildOfClass("Decal") and part:FindFirstChild("Sound") and part:FindFirstChild("ClickDetector") and part:FindFirstChild("Price") then
@@ -1423,6 +1445,7 @@ local autofoodsupply = Drinking:CreateToggle({
                         end
                     end
                 end
+            end)
                 wait()
                 end
             end))
@@ -1761,6 +1784,7 @@ local autofoodsupply = Drinking:CreateToggle({
                     originaldata[value] = callback
                     coroutine.resume(coroutine.create(function()
                         while originaldata[value] == true do
+                            local yes, no = pcall(function()
                             if scriptrunning then
                                 local args = {
                                     [1] = 768,
@@ -1769,6 +1793,7 @@ local autofoodsupply = Drinking:CreateToggle({
                                 
                                 game:GetService("ReplicatedStorage").BoomEvent:FireServer(unpack(args))   
                             end
+                        end)
                         wait()
                         end
                     end))
@@ -1895,11 +1920,13 @@ local autofoodsupply = Drinking:CreateToggle({
                     originaldata[value] = callback
                     coroutine.resume(coroutine.create(function()
                     while originaldata[value] do
+                        local yes, no = pcall(function()
                         if scriptrunning then
                         if plr.attributes.Token.Value > 0 then
                             fireclickdetector(workspace.Machine:FindFirstChildOfClass("ClickDetector"))
                         end
                     end
+                end)
                         wait()
                     end
                 end))
@@ -1918,6 +1945,7 @@ local autofoodsupply = Drinking:CreateToggle({
                     originaldata[value] = callback
                     coroutine.resume(coroutine.create(function()
                         while originaldata[value] == true do
+                            local yes, no = pcall(function()
                             if scriptrunning then
                             if plr.attributes.Token.Value <= 0 then
                                 local args = {
@@ -1927,6 +1955,7 @@ local autofoodsupply = Drinking:CreateToggle({
                                 game:GetService("ReplicatedStorage").TimeRewardEvent:FireServer(unpack(args))                        
                             end
                         end
+                    end)
                         wait()
                     end
                     end))
@@ -1943,11 +1972,13 @@ local autofoodsupply = Drinking:CreateToggle({
                     originaldata[value] = callback
                     coroutine.resume(coroutine.create(function()
                         while originaldata[value] == true do
+                            local yes, no = pcall(function()
                             if scriptrunning then
                             if plr.attributes.Retry.Value >= 5 then
                                 game:GetService("ReplicatedStorage").ExchangeEvent:FireServer()                   
                             end
                         end
+                    end)
                         wait()
                     end
                     end))
@@ -2088,11 +2119,13 @@ autosavetoggle:Set(originaldata["autosave"])
                 originaldata[value] = callback
                 coroutine.resume(coroutine.create(function()
                     while originaldata[value] == true do
+                        local yes, no = pcall(function()
                         if scriptrunning then
                         if plr.Backpack:FindFirstChild("Laptop") then
                             plr.Backpack.Laptop.Parent = plr.Character           
                         end
                     end
+                end)
                     wait()
                     end
                 end))
