@@ -75,6 +75,8 @@ local admins = {
         removeblur = false,
         automail = false,
         mysteryletter = "M",
+        sellsoda = "",
+        autofoodsupplies = false,
         }
 
         --FUNCTIONS
@@ -561,7 +563,7 @@ end))
 local Dropdown = Shop:CreateDropdown({
    Name = "Supply amount",
    Options = shoptable,
-   CurrentOption = "",
+   CurrentOption = originaldata["supplytype"],
    Flag = nil,
    Callback = function(Option)
     local newt = string.split(Option, " ")[1]
@@ -708,9 +710,9 @@ for i,sod in pairs(workspace["711Stuff"]:GetChildren()) do
  end
 
 local Dropdown = Drinking:CreateDropdown({
-Name = "Soda (turn off auto buy before changing)",
+Name = "Soda (turn off auto buy first)",
 Options = sodatable,
-CurrentOption = "",
+CurrentOption = originaldata["soda"],
 Flag = nil,
 Callback = function(Option)
     local newt = string.split(Option, " ")[1]
@@ -908,6 +910,234 @@ local mentotoggle = Drinking:CreateToggle({
     end,
  })
  mentotoggle:Set(originaldata["automentos"])
+
+ local Section = Drinking:CreateSection("7/11 Supply (MAY NOT WORK)")
+
+ local supplytable = {"Random"}
+for i,sod in pairs(workspace["711Stuff"]:GetChildren()) do
+    if sod:IsA("Part") then
+        local sodname = string.sub(sod.Name, 6)
+        table.insert(supplytable, sodname)
+    end
+ end
+
+local Dropdown = Drinking:CreateDropdown({
+Name = "Soda to sell",
+Options = supplytable,
+CurrentOption = originaldata["sellsoda"],
+Flag = nil,
+Callback = function(Option)
+    originaldata["sellsoda"] = Option
+    local obj = plr.Character.HumanoidRootPart
+                local originalcframe = obj.CFrame
+    for i,sod in pairs(workspace["711Stuff"]:GetChildren()) do
+        if sod:IsA("Part") then
+            if sod.SurfaceGui.Frame.EmployeeName.Text == plr.Name then
+                local obj = plr.Character.HumanoidRootPart
+                    local originalcframe = obj.CFrame
+                    obj.CFrame = sod.CFrame
+                    wait(0.5)
+                    fireproximityprompt(sod.Attachment.ProximityPrompt)
+            end
+        end
+    end
+    local function getrandom()
+        for i,sod in pairs(workspace["711Stuff"]:GetChildren()) do
+            if sod:IsA("Part") then
+                if sod.SurfaceGui.Frame.EmployeeName.Text == "Vacant" then
+                    local obj = plr.Character.HumanoidRootPart
+                    obj.CFrame = sod.CFrame
+                    wait(0.5)
+                    fireproximityprompt(sod.Attachment.ProximityPrompt)
+                    wait(0.5)
+                    obj.CFrame = originalcframe
+                    break
+                end
+            end
+        end
+    end
+    if Option == "Random" then
+       getrandom()
+    else
+        local sod = workspace["711Stuff"]:FindFirstChild("Award"..Option)
+        if sod ~= nil then
+            if sod.SurfaceGui.Frame.EmployeeName.Text == "Vacant" then
+                local obj = plr.Character.HumanoidRootPart
+                    obj.CFrame = sod.CFrame
+                    wait(0.5)
+                    fireproximityprompt(sod.Attachment.ProximityPrompt)
+                    wait(0.5)
+                    obj.CFrame = originalcframe
+            else
+                getrandom()
+            end
+        end 
+    end
+end,
+})
+
+local dog65 = false
+local autofoodsupply = Drinking:CreateToggle({
+    Name = "Auto get food supply",
+    CurrentValue = nil,
+    Flag = nil,
+    Callback = function(callback)
+        local value = "autofoodsupplies"
+            originaldata[value] = callback
+            coroutine.resume(coroutine.create(function()
+                while originaldata[value] == true do
+                    if scriptrunning then
+                    if plr.attributes.FoodSupply.Value <= 0 then
+                        if dog65 == false then
+                            dog65 = true
+                            savedata()
+                            floorteleport(3)
+                            queueteleport([[
+                            wait(3)
+                            print("loaded")
+                            local data = {
+                            }
+                            if isfile("TemHubV3/data.txt") then
+                                data = game:GetService("HttpService"):JSONDecode(readfile("TemHubV3/data.txt"))
+                                end
+                            local args = {
+                                [1] = 3
+                            }
+                            
+                            local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/T3mm1epurple/rayfieldedit/main/script'))()
+        
+                            local Window = Rayfield:CreateWindow({
+                               Name = "",
+                               LoadingTitle = "Successfully got supplies!",
+                               LoadingSubtitle = "just for notifications",
+                            })
+
+                            game:GetService("ReplicatedStorage").PurchaseEvent:FireServer(unpack(args))
+                            local plr = game.Players.LocalPlayer
+                            if not plr.PlayerGui:FindFirstChild("PurchaseSupply") then
+                            game.ReplicatedStorage.PurchaseSupply:Clone().Parent = plr.PlayerGui
+                            end
+                            local dog = false
+                            repeat wait()
+                                coroutine.resume(coroutine.create(function()
+                                    wait(5)
+                                    if plr.PlayerGui.PurchaseSupply.Frame.TimeLeft.TextLabel.TextLabel.Timer.Value == 0 then
+                                        dog = true
+                                    end
+                                end))
+                                if dog == true then
+                                    break
+                                end
+                            until plr.PlayerGui.PurchaseSupply.Frame.TimeLeft.TextLabel.TextLabel.Timer.Value > 0
+                            local args = {
+                                [1] = 1
+                            }
+                            
+                            game:GetService("ReplicatedStorage").TeleportEvent:FireServer(unpack(args))
+                            local dog = false
+                                    if dog == false then
+                                        dog = true
+                                        local queueteleport = syn and syn.queue_on_teleport or queue_on_teleport or fluxus and fluxus.queue_on_teleport or function() end
+                                queueteleport([=[
+                                    wait(7)
+                                    game.Players.LocalPlayer.PlayerGui:WaitForChild("Menu").Enabled = false 
+                                    workspace.CurrentCamera.CameraType = Enum.CameraType.Custom 
+                                    workspace.CurrentCamera.CameraSubject = game.Players.LocalPlayer.Character:WaitForChild("Humanoid") 
+                                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace:WaitForChild("SupplyTimerThing"):WaitForChild("Sensor1").CFrame
+                                    wait(1)
+                                    repeat wait()
+                                    fireproximityprompt(workspace:WaitForChild("SupplyTimerThing"):WaitForChild("Sensor1"):WaitForChild("ProximityPrompt"))
+                                    until game.Players.LocalPlayer.PlayerGui:FindFirstChild("GuiMessageCountdown2")
+                                    wait(1)
+                                    game.Players.LocalPlayer.attributes.FoodSupply.Value = 19
+                                    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
+                                    loadstring(game:HttpGet("https://raw.githubusercontent.com/kittenis/temhubv3/main/script", true))()
+                                    if game.Players.LocalPlayer.PlayerGui:FindFirstChild("GuiMessageCountdown2") then
+                                        game.Players.LocalPlayer.PlayerGui.GuiMessageCountdown2.Frame.Visible = false
+                                    local StarterGui = game:GetService("StarterGui")
+                                    local bindable = Instance.new("BindableFunction")
+                                    StarterGui:SetCore("SendNotification", {
+                                            Title = "Auto get supply",
+                                            Text = "Waiting until timer is over, then will get supplies",
+                                            Duration = game.Players.LocalPlayer.PlayerGui.GuiMessageCountdown2.Frame.Left.Value,
+                                            Callback = bindable,
+                                    })
+                                    repeat wait()
+                                    until game.Players.LocalPlayer.PlayerGui.GuiMessageCountdown2.Frame.Left.Value <= 0
+                                    game.Players.LocalPlayer.Character.Humanoid.Jump = true
+                                    game.Players.LocalPlayer.PlayerGui.GuiMessageCountdown2:Destroy()
+                                    StarterGui:SetCore("SendNotification", {
+                                        Title = "Auto get supply",
+                                        Text = "Got supplies!",
+                                        Duration = 5,
+                                        Callback = bindable,
+                                })
+                                    wait(1)
+                                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.SupplyTimerThing.Sensor2.CFrame
+                                    wait(1)
+                                    fireproximityprompt(workspace.SupplyTimerThing.Sensor2.ProximityPrompt)
+                                    wait(1)
+                                    local plr = game.Players.LocalPlayer
+                                    print(data["sellsoda"])
+                                    local Option = data["sellsoda"]
+                                    local obj = plr.Character.HumanoidRootPart
+                                    local originalcframe = obj.CFrame
+                        for i,sod in pairs(workspace["711Stuff"]:GetChildren()) do
+                            if sod:IsA("Part") then
+                                if sod.SurfaceGui.Frame.EmployeeName.Text == plr.Name then
+                                    local obj = plr.Character.HumanoidRootPart
+                                        local originalcframe = obj.CFrame
+                                        obj.CFrame = sod.CFrame
+                                        wait(0.5)
+                                        fireproximityprompt(sod.Attachment.ProximityPrompt)
+                                end
+                            end
+                        end
+                        local function getrandom()
+                            for i,sod in pairs(workspace["711Stuff"]:GetChildren()) do
+                                if sod:IsA("Part") then
+                                    if sod.SurfaceGui.Frame.EmployeeName.Text == "Vacant" then
+                                        local obj = plr.Character.HumanoidRootPart
+                                        obj.CFrame = sod.CFrame
+                                        wait(0.5)
+                                        fireproximityprompt(sod.Attachment.ProximityPrompt)
+                                        wait(0.5)
+                                        obj.CFrame = originalcframe
+                                        break
+                                    end
+                                end
+                            end
+                        end
+                        if Option == "Random" then
+                           getrandom()
+                        else
+                            local sod = workspace["711Stuff"]:FindFirstChild("Award"..Option)
+                            if sod ~= nil then
+                                if sod.SurfaceGui.Frame.EmployeeName.Text == "Vacant" then
+                                    local obj = plr.Character.HumanoidRootPart
+                                        obj.CFrame = sod.CFrame
+                                        wait(0.5)
+                                        fireproximityprompt(sod.Attachment.ProximityPrompt)
+                                        wait(0.5)
+                                        obj.CFrame = originalcframe
+                                else
+                                    getrandom()
+                                end
+                            end 
+                        end
+                                    end
+                                ]=])
+                                end
+                            ]]) -- script there
+                    end
+                    end
+                end
+                wait()
+                end
+            end))
+    end,
+ })
+ autofoodsupply:Set(originaldata["autofoodsupplies"])
 
  local Section = Cleaning:CreateSection("Main")
 
