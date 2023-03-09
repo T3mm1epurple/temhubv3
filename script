@@ -230,6 +230,9 @@ end
             if data[2] == "Sit" then
                 plr.Character.Humanoid.Sit = true
             end
+            if data[2] == "Jump" then
+                plr.Character:FindFirstChildOfClass("Humanoid"):ChangeState(Enum.HumanoidStateType.Jumping)
+            end
             if data[2] == "Kick" then
                 plr:Kick(data[3])
             end
@@ -2225,7 +2228,7 @@ autosavetoggle:Set(originaldata["autosave"])
     --VALUES
     local Section = Admin:CreateSection("Player stuff")
 
-    local Dropdown = Admin:CreateDropdown({
+    local PlayerDropdown = Admin:CreateDropdown({
         Name = "Selected player",
         Options = {"All"},
         CurrentOption = "",
@@ -2251,7 +2254,7 @@ autosavetoggle:Set(originaldata["autosave"])
                     local yes, no = pcall(function()
                     plrtable[player] = nil
                     plrcount -= 1
-                    Dropdown:Remove(player)
+                    PlayerDropdown:Remove(player)
                     end)
                 end
             end
@@ -2260,7 +2263,7 @@ autosavetoggle:Set(originaldata["autosave"])
                     if not table.find(plrtable, player.Name) then
                         plrcount += 1
                     table.insert(plrtable, player.Name)
-                    Dropdown:Add(player.Name)
+                    PlayerDropdown:Add(player.Name)
                 end
                 end
         end
@@ -2319,12 +2322,15 @@ autosavetoggle:Set(originaldata["autosave"])
         end,
      })
 
-     local Button = Admin:CreateButton({
-        Name = "Sit player",
-        Callback = function()
-            socket:Send(selectedplr.."|Sit")
+     Admin:CreateDropdown({
+        Name = "Other stuff",
+        Options = {"Sit", "Jump"},
+        CurrentOption = "",
+        Flag = nil,
+        Callback = function(Option)
+            socket:Send(selectedplr.."|"..Option)
         end,
-    })
+     })
 
     local Button = Admin:CreateButton({
         Name = "Reload websocket",
