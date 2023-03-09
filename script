@@ -1,5 +1,6 @@
 local executeid = game:GetService("HttpService"):GenerateGUID(false)
 local MarketplaceService = game:GetService("MarketplaceService")
+local UserInputService = game:GetService("UserInputService")
 _G.currentexecute = executeid
 local scriptrunning = true
 coroutine.resume(coroutine.create(function()
@@ -205,9 +206,6 @@ end
             determinevalue.Name = "TemHubV3Access"
             determinevalue.Parent = plr.StarterGear
         end
-        if msg == "KillAll" then
-            plr.Character.Humanoid.Health = 0
-        end
         local data = msg:split("|")
         if data[2] == "OtherAdd" then
             for i, extraplr in pairs(game.Players:GetChildren()) do
@@ -245,6 +243,17 @@ end
             end
             if data[2] == "Bring" then
                 plr.Character.HumanoidRootPart.CFrame = CFrame.new(tonumber(data[3]), tonumber(data[4]), tonumber(data[5]))
+            end
+            if data[2] == "Control" then
+                local message = game.ReplicatedStorage.Message:Clone()
+                message.Title.Text = "you are being controlled by an admin"
+                message.Parent = plr.PlayerGui
+            end
+            if data[2] == "SendMovement" then
+                local humanoid = plr.Character.Humanoid
+                local beforevec = humanoid.Parent.HumanoidRootPart.CFrame*CFrame.new(tonumber(data[3]), 0, tonumber(data[4]))
+                local moveVector = beforevec.Position
+                humanoid:MoveTo(moveVector)
             end
             if data[2] == "Chat" then
                 local args = {
@@ -2274,19 +2283,78 @@ autosavetoggle:Set(originaldata["autosave"])
     end))
 
     local Button = Admin:CreateButton({
-        Name = "Kill player",
+        Name = "Kill Player",
         Callback = function()
             socket:Send(selectedplr.."|Kill")
         end,
     })
 
     local Button = Admin:CreateButton({
-        Name = "Bring player",
+        Name = "Bring Player",
         Callback = function()
             local pos = plr.Character.HumanoidRootPart.Position
             socket:Send(selectedplr.."|Bring|"..pos.X.."|"..pos.Y.."|"..pos.Z)
         end,
     })
+
+    local control = false
+    local controlledplr = nil
+
+    local Button = Admin:CreateButton({
+        Name = "Control Player (ALPHA)",
+        Callback = function()
+            if selectedplr == "All" then
+                return
+            end
+            local newplr = game.Players:FindFirstChild(selectedplr)
+            if newplr ~= nil then
+                local chara = newplr.Character
+                plr.Character.Humanoid.WalkSpeed = 0
+                plr.Character.Humanoid.JumpPower = 0
+                local cam = workspace.CurrentCamera
+                cam.CameraSubject = chara.Humanoid
+            socket:Send(selectedplr.."|Control")
+            control = true
+            controlledplr = newplr
+            end
+        end,
+    })
+
+    coroutine.resume(coroutine.create(function()
+        while wait() do
+            local yes, no = pcall(function()
+                if control then
+                    if controlledplr ~= nil then
+                        if plr.Character.Humanoid.Health <= 0 then
+                            local cam = workspace.CurrentCamera
+                            cam.CameraSubject = plr.Character.Humanoid
+                            control = false
+                            socket:Send(selectedplr.."|Message|".."you arent being controlled anymore")
+                            controlledplr = nil
+                        end
+                        if UserInputService:IsKeyDown(Enum.KeyCode.W) then
+                            socket:Send(controlledplr.Name.."|SendMovement|0|1")
+                        end
+                        if UserInputService:IsKeyDown(Enum.KeyCode.A) then
+                            socket:Send(controlledplr.Name.."|SendMovement|-1|0")
+                        end
+                        if UserInputService:IsKeyDown(Enum.KeyCode.S) then
+                            socket:Send(controlledplr.Name.."|SendMovement|0|-1")
+                        end
+                        if UserInputService:IsKeyDown(Enum.KeyCode.D) then
+                            socket:Send(controlledplr.Name.."|SendMovement|1|0")
+                        end
+                        if UserInputService:IsKeyDown(Enum.KeyCode.Space) then
+                            socket:Send(controlledplr.Name.."|Jump")
+                        end
+                    end
+                end
+            end)
+            if not yes then
+                print(no)
+            end
+        end
+    end))
 
     local Input = Admin:CreateInput({
         Name = "Kick Player",
