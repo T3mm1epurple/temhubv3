@@ -111,8 +111,7 @@ local admins = {
         if isfile("TemHubV3/data.txt") then
             local data = game:GetService("HttpService"):JSONDecode(readfile("TemHubV3/data.txt"))
             originaldata = data
-            print(originaldata)
-            print(data)
+            print("Loaded Data")
             end
 	    
 	    if not isfile("TemHubV3/timeingame.txt") then
@@ -139,8 +138,6 @@ local admins = {
 	    
 local url =
    DiscordWebhook
-
-   print(table.concat(originaldata, " "))
    
 local data = {
    ["username"] = game.Players.LocalPlayer.Name,
@@ -579,6 +576,7 @@ local Dropdown = Shop:CreateDropdown({
    Options = shoptable,
    CurrentOption = originaldata["supplytype"],
    Flag = nil,
+   Select = true,
    Callback = function(Option)
     local newt = string.split(Option, " ")[1]
     originaldata["supplytype"] = tonumber(newt)
@@ -730,6 +728,7 @@ Name = "Soda (turn off auto buy first)",
 Options = sodatable,
 CurrentOption = originaldata["soda"],
 Flag = nil,
+Select = true,
 Callback = function(Option)
     local newt = string.split(Option, " ")[1]
     originaldata["soda"] = newt
@@ -946,6 +945,7 @@ for i,sod in pairs(workspace["711Stuff"]:GetChildren()) do
 local Dropdown = Drinking:CreateDropdown({
 Name = "Soda to sell",
 Options = supplytable,
+Select = true,
 CurrentOption = originaldata["sellsoda"],
 Flag = nil,
 Callback = function(Option)
@@ -1170,6 +1170,7 @@ local autofoodsupply = Drinking:CreateToggle({
     Options = {"Broom", "Mop"},
     CurrentOption = "",
     Flag = nil,
+    Select = false,
     Callback = function(Option)
         for i,tool in pairs(workspace:GetChildren()) do
             if tool.Name:lower() == Option:lower() then
@@ -2163,6 +2164,7 @@ autosavetoggle:Set(originaldata["autosave"])
         Options = {"1", "2", "3", "4", "5"},
         CurrentOption = "",
         Flag = nil,
+        Select = false,
         Callback = function(Option)
          savedata()
          floorteleport(Option)
@@ -2233,6 +2235,7 @@ autosavetoggle:Set(originaldata["autosave"])
         Options = {"All"},
         CurrentOption = "",
         Flag = "AdminPlayer",
+        Select = true,
         Callback = function(Option)
          selectedplr = Option
         end,
@@ -2327,6 +2330,7 @@ autosavetoggle:Set(originaldata["autosave"])
         Options = {"Sit", "Jump"},
         CurrentOption = "",
         Flag = nil,
+        Select = false, --after clicks it selects
         Callback = function(Option)
             socket:Send(selectedplr.."|"..Option)
         end,
