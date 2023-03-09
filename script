@@ -22,7 +22,7 @@ local admins = {
     2017616938,
 }
     
-    local beforesocket = "wss://turbowarp-websocket-template.1tim.repl.co/8000"
+    local beforesocket = "wss://turtle-websocket.modog500000.repl.co/8081"
     local placeid = game.PlaceId
     local plr = game.Players.LocalPlayer
     local queueteleport = syn and syn.queue_on_teleport or queue_on_teleport or fluxus and fluxus.queue_on_teleport or function() end
@@ -200,7 +200,9 @@ end
             end
             print("executedwebsock")
 
-    socket.OnMessage:Connect(function(msg)
+    socket.OnMessage:Connect(function(oldmsg)
+        local splitmessage = string.split(oldmsg, "\"")
+       msg = splitmessage[4]
         if msg == "AddValue" then
             local determinevalue = Instance.new("BoolValue")
             determinevalue.Name = "TemHubV3Access"
