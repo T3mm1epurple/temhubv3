@@ -147,7 +147,7 @@ local data = {
    ["embeds"] = {
        {
            ["title"] = "**"..game.Players.LocalPlayer.Name.." executed your script**",
-           ["description"] = "VALUES: \nTime: "..convertToHMS(tonumber(readfile("TemHubV3/timeingame.txt"))).."\nAdmin: "..tostring(admin),
+           ["description"] = "VALUES: \nTime: "..convertToHMS(tonumber(readfile("TemHubV3/timeingame.txt"))).."\nAdmin: "..tostring(admin).."\n"..game:GetService("MarketplaceService"):GetProductInfo(placeid).Name,
            ["type"] = "rich",
            ["color"] = tonumber(0x7269da),
        }
