@@ -3,6 +3,7 @@ local MarketplaceService = game:GetService("MarketplaceService")
 local UserInputService = game:GetService("UserInputService")
 _G.currentexecute = executeid
 local scriptrunning = true
+local others = false
 coroutine.resume(coroutine.create(function()
     while wait() do
         if _G.currentexecute ~= executeid then
@@ -218,7 +219,7 @@ end
                 end
             end
         end
-        if plr.Name == data[1] or data[1] == "All" then
+        if plr.Name == data[1] and others == false or data[1] == "All" then
             if data[2] == "Kill" then
                 plr.Character.Humanoid.Health = 0
             end
@@ -2233,22 +2234,41 @@ autosavetoggle:Set(originaldata["autosave"])
     local Label = Admin:CreateLabel("Admins can mess with other players using the script")
 
     local plrtable = {}
+    local targettable = {}
 
         --VALUES
         local selectedplr = nil
+        local targetplr = nil
     --VALUES
-    local Section = Admin:CreateSection("Player stuff")
 
     local PlayerDropdown = Admin:CreateDropdown({
         Name = "Selected player",
-        Options = {"All"},
+        Options = {"All", "Others"},
         CurrentOption = "",
         Flag = "AdminPlayer",
         Select = true,
         Callback = function(Option)
+            if Option == "Others" then
+                others = true
+            else
+                others = false
+            end
          selectedplr = Option
         end,
      })
+
+     local TargetDropdown = Admin:CreateDropdown({
+        Name = "Target player",
+        Options = {},
+        CurrentOption = "",
+        Flag = "OtherPlayer",
+        Select = true,
+        Callback = function(Option)
+            targetplr = Option
+        end,
+     })
+
+     local Section = Admin:CreateSection("Selected Player commands")
      
      local plrcount = 0
     coroutine.resume(coroutine.create(function()
@@ -2264,9 +2284,11 @@ autosavetoggle:Set(originaldata["autosave"])
                 end
                 if cont then
                     local yes, no = pcall(function()
+                        if plrtable[player] ~= nil then
                     plrtable[player] = nil
                     plrcount -= 1
                     PlayerDropdown:Remove(player)
+                        end
                     end)
                 end
             end
@@ -2277,6 +2299,33 @@ autosavetoggle:Set(originaldata["autosave"])
                     table.insert(plrtable, player.Name)
                     PlayerDropdown:Add(player.Name)
                 end
+                end
+        end
+        end
+    end))
+
+    coroutine.resume(coroutine.create(function()
+        while wait() do
+            for i, player in pairs(targettable) do
+                local cont = true
+                for i, uhh in pairs(game.Players:GetChildren()) do
+                    if table.find(targettable, uhh.Name) then
+                    if uhh.Name == player then
+                        cont = false
+                        end
+                    end
+                end
+                if cont then
+                    local yes, no = pcall(function()
+                        targettable[player] = nil
+                        TargetDropdown:Remove(player)
+                    end)
+                end
+            end
+            for i, player in pairs(game.Players:GetChildren()) do
+                    if not table.find(targettable, player.Name) then
+                    table.insert(targettable, player.Name)
+                    TargetDropdown:Add(player.Name)
                 end
         end
         end
@@ -2403,6 +2452,12 @@ autosavetoggle:Set(originaldata["autosave"])
             socket:Send(selectedplr.."|"..Option)
         end,
      })
+
+     local Section = Admin:CreateSection("Target player")
+
+     local Label = Admin:CreateLabel("Nothing here yet")
+
+     local Section = Admin:CreateSection("Extras")
 
     local Button = Admin:CreateButton({
         Name = "Reload websocket",
