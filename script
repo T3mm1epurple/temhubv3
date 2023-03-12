@@ -2188,7 +2188,6 @@ autosavetoggle:Set(originaldata["autosave"])
             onlyonce = true
          queueteleport([[
          wait(3)
-         _G.erg5437654634t3gbergjwoi4tOITGJERIOGHERg43 = true
          loadstring(game:HttpGet("https://raw.githubusercontent.com/kittenis/temhubv3/main/script", true))()
          ]])
          end
