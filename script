@@ -286,7 +286,7 @@ end
 end))
         
     local Window = Rayfield:CreateWindow({
-       Name = "Tem Hub V3 (3)",
+       Name = "Tem Hub V3 (v3.5)",
        LoadingTitle = "Tem Hub V3",
        LoadingSubtitle = "Da amazing bunker simulator",
        Discord = {
@@ -737,7 +737,7 @@ for i,sod in pairs(workspace["711Stuff"]:GetChildren()) do
  end
 
 local Dropdown = Drinking:CreateDropdown({
-Name = "Soda (turn off auto buy first)",
+Name = "Drink (turn off auto buy first)",
 Options = sodatable,
 CurrentOption = originaldata["soda"],
 Flag = nil,
@@ -750,8 +750,50 @@ end,
 
 
 local Button = Drinking:CreateButton({
-    Name = "Buy selected soda",
+    Name = "Buy selected drink",
     Callback = function()
+        if plr.attributes.Sick.Value > 0 then
+            Rayfield:Notify({
+                Title = "Sick!",
+                Content = "you arent able to buy the drink because youre sick, go to level 4?",
+                Duration = 1,
+                Image = 4483362458,
+                Actions = { -- Notification Buttons
+                Ignore = {
+                    Name = "No",
+                    Callback = function()
+                      print("user said no")
+                 end
+              },
+                   Yes = {
+                      Name = "Yes",
+                      Callback = function()
+                        savedata()
+                        floorteleport("4")
+                        queueteleport([[
+                        wait(3)
+                        loadstring(game:HttpGet("https://raw.githubusercontent.com/kittenis/temhubv3/main/script", true))()
+                        ]])
+                        Rayfield:Notify({
+                            Title = "Notification",
+                            Content = "Teleporting to floor 4..",
+                            Duration = 1,
+                            Image = 4483362458,
+                            Actions = { -- Notification Buttons
+                               --[[Ignore = {
+                                  Name = "Okay!",
+                                  Callback = function()
+                                  print("The user tapped Okay!")
+                               end
+                            },]]--
+                         },
+                         })
+                   end
+                },
+             },
+             })
+            return
+        end
         local pos = Vector3.new(0, 0, 0)
         if originaldata["sodamode"] == 3 then
         pos = workspace.RoofP.Position + Vector3.new(0, 10, 0)
@@ -774,7 +816,7 @@ local Button = Drinking:CreateButton({
 })
 
 local Button = Drinking:CreateButton({
-    Name = "Set selected soda as autobuy",
+    Name = "Set selected drink as autobuy",
     Callback = function()
         local pos = Vector3.new(0, 0, 0)
         if originaldata["sodamode"] == 3 then
@@ -797,6 +839,7 @@ local Button = Drinking:CreateButton({
     end,
 })
 
+local goto4 = false
 local atthispoint = Drinking:CreateToggle({
     Name = "Auto buy selected drink",
     CurrentValue = nil,
@@ -808,6 +851,50 @@ local atthispoint = Drinking:CreateToggle({
                 while originaldata[value] do
                     local yes, no = pcall(function()
                     if scriptrunning then
+                    if plr.attributes.Sick.Value > 0 then
+                        goto4 = true
+                        originaldata[value] = false
+                        Rayfield:Notify({
+                            Title = "Sick!",
+                            Content = "you arent able to buy the drink because youre sick, go to level 4?",
+                            Duration = 1,
+                            Image = 4483362458,
+                            Actions = { -- Notification Buttons
+                            Ignore = {
+                                Name = "No",
+                                Callback = function()
+                                  print("user said no")
+                             end
+                          },
+                               Yes = {
+                                  Name = "Yes",
+                                  Callback = function()
+                                    savedata()
+                                    floorteleport("4")
+                                    queueteleport([[
+                                    wait(3)
+                                    loadstring(game:HttpGet("https://raw.githubusercontent.com/kittenis/temhubv3/main/script", true))()
+                                    ]])
+                                    Rayfield:Notify({
+                                        Title = "Notification",
+                                        Content = "Teleporting to floor 4..",
+                                        Duration = 1,
+                                        Image = 4483362458,
+                                        Actions = { -- Notification Buttons
+                                           --[[Ignore = {
+                                              Name = "Okay!",
+                                              Callback = function()
+                                              print("The user tapped Okay!")
+                                           end
+                                        },]]--
+                                     },
+                                     })
+                               end
+                            },
+                         },
+                         })
+                        return
+                    end
                     if plr.Character ~= nil and plr.Character:FindFirstChild("Humanoid") then
                         if plr.Character.Humanoid.Health > 0 then
                 if not plr.Backpack:FindFirstChild(originaldata["soda"]) and not plr.Character:FindFirstChild(originaldata["soda"]) then
@@ -831,7 +918,7 @@ local atthispoint = Drinking:CreateToggle({
                     fireproximityprompt(object.Source.Attachment.ProximityPrompt)
                     end
                 end
-                until plr.Backpack:FindFirstChild(originaldata["soda"]) or plr.Character.Humanoid.Health <= 0 or plr.Character:FindFirstChild(originaldata["soda"])
+                until plr.Backpack:FindFirstChild(originaldata["soda"]) or plr.Character.Humanoid.Health <= 0 or plr.Character:FindFirstChild(originaldata["soda"]) or originaldata[value] == false
                 if plr.Character ~= nil and plr.Character:FindFirstChild("Humanoid") then
                     if plr.Character.Humanoid.Health > 0 then
                     if originaldata["sodamode"] > 1 then
@@ -854,6 +941,14 @@ end)
     end,
  })
  atthispoint:Set(originaldata["autosoda"])
+ coroutine.resume(coroutine.create(function()
+    while wait() do
+        if goto4 == true then
+            goto4 = false
+        atthispoint:Set(false)
+        end
+    end
+end))
 
  local okaydrink = Drinking:CreateToggle({
     Name = "Auto drink",
