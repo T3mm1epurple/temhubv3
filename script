@@ -2333,13 +2333,33 @@ autosavetoggle:Set(originaldata["autosave"])
         end,
      })
      blurtoggle:Set(originaldata["removeblur"])
+     
+     local onlyonce = false
+     local Dropdown = Settings:CreateDropdown({
+        Name = "Teleport to floor (saves data)",
+        Options = {"1", "2", "3", "4", "5"},
+        CurrentOption = "",
+        Flag = nil,
+        Select = false,
+        Callback = function(Option)
+         savedata()
+         floorteleport(Option)
+         if onlyonce == false then
+            onlyonce = true
+         queueteleport([[
+         wait(3)
+         loadstring(game:HttpGet("https://raw.githubusercontent.com/kittenis/temhubv3/main/script", true))()
+         ]])
+         end
+        end,
+     })
+
      local newtab = {}
      for i,v in next, gameids do
          table.insert(newtab, i.." ("..v..")")
         end
-     local onlyonce = false
      local Dropdown = Settings:CreateDropdown({
-        Name = "Teleport to floor (saves data)",
+        Name = "Other teleports (saves data)",
         Options = newtab,
         CurrentOption = "",
         Flag = nil,
