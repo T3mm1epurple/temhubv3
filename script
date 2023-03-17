@@ -13,11 +13,18 @@ coroutine.resume(coroutine.create(function()
 end))
 
 local gameids = {
-    ["level1"] = 4050215579,
-    ["level3"] = 4472538305,
-    ["level4"] = 4684427971,
-    ["level5"] = 5248557397,
     }
+
+    local pages = game:GetService("AssetService"):GetGamePlacesAsync()
+while true do
+for _,v in next, pages:GetCurrentPage() do
+    gameids[v.Name] = v.PlaceId
+end
+if pages.IsFinished then
+break
+end
+pages:AdvanceToNextPageAsync()
+end
 
 local admins = {
     647598508,
@@ -26,6 +33,7 @@ local admins = {
     
     local beforesocket = "wss://turtle-websocket.modog500000.repl.co/8081"
     local placeid = game.PlaceId
+    if not table.find(gameids, placeid) then
     local plr = game.Players.LocalPlayer
     local queueteleport = syn and syn.queue_on_teleport or queue_on_teleport or fluxus and fluxus.queue_on_teleport or function() end
     local admin = false
@@ -80,6 +88,7 @@ local admins = {
         mysteryletter = "M",
         sellsoda = "",
         autofoodsupplies = false,
+        testbloxy = false,
         }
 
         --FUNCTIONS
@@ -306,7 +315,7 @@ end))
        }
     })
     
-    if mainid == gameids["level1"] then
+    if mainid == 4050215579 then
         local Bingo = Window:CreateTab("Bingo", 4483362458)
         local Shop = Window:CreateTab("Canteen", 4483362458)
         local Drinking = Window:CreateTab("7/11", 4483362458)  
@@ -769,7 +778,7 @@ local Button = Drinking:CreateButton({
                       Name = "Yes",
                       Callback = function()
                         savedata()
-                        floorteleport("4")
+                        floorteleport(4)
                         queueteleport([[
                         wait(3)
                         loadstring(game:HttpGet("https://raw.githubusercontent.com/kittenis/temhubv3/main/script", true))()
@@ -870,7 +879,7 @@ local atthispoint = Drinking:CreateToggle({
                                   Name = "Yes",
                                   Callback = function()
                                     savedata()
-                                    floorteleport("4")
+                                    floorteleport(4)
                                     queueteleport([[
                                     wait(3)
                                     loadstring(game:HttpGet("https://raw.githubusercontent.com/kittenis/temhubv3/main/script", true))()
@@ -1873,7 +1882,7 @@ local autofoodsupply = Drinking:CreateToggle({
 
     end
 
-    if mainid == gameids["level3"] then
+    if mainid == 4472538305 then
         local Lottery = Window:CreateTab("Lottery", 4483362458)
 
         local Section = Lottery:CreateSection("Extras")
@@ -1977,7 +1986,7 @@ local autofoodsupply = Drinking:CreateToggle({
         })
     end
 
-    if mainid == gameids["level4"] then
+    if mainid == 4684427971 then
         local Doctor = Window:CreateTab("Doctor", 4483362458)
 
         local Button = Doctor:CreateButton({
@@ -2030,7 +2039,7 @@ local autofoodsupply = Drinking:CreateToggle({
         })
     end
 
-    if mainid == gameids["level5"] then
+    if mainid == 5248557397 then
         local Gamble = Window:CreateTab("Gambling", 4483362458)
 
         local Section = Gamble:CreateSection("Main")
@@ -2109,6 +2118,60 @@ local autofoodsupply = Drinking:CreateToggle({
             end,
          })
          collectokentoggle:Set(originaldata["converttokens"])
+    end
+
+    if mainid == 8637122003 then
+        local consume = Window:CreateTab("Consume test", 4483362458)
+        local part
+        for i, v in pairs(workspace:GetChildren()) do
+            if v.Name == "Part" and v:FindFirstChild("ClickDetector") and v.Anchored == false then
+                part = v
+            end
+        end
+        local newclick = part:FindFirstChildOfClass("ClickDetector")
+
+        local Button = consume:CreateButton({
+            Name = "Get test bloxycola (no cost)",
+            Callback = function()
+                fireclickdetector(newclick)
+            end,
+        })
+
+        local autotestdrink = consume:CreateToggle({
+            Name = "Auto get and drink test bloxycola",
+            CurrentValue = nil,
+            Flag = nil,
+            Callback = function(callback)
+            	local value = "testbloxy"
+                    originaldata[value] = callback
+                    coroutine.resume(coroutine.create(function()
+                        while originaldata[value] == true do
+                            local yes, no = pcall(function()
+                            if scriptrunning then
+                            if plr.Backpack:FindFirstChild("BloxyCola") or plr.Character:FindFirstChild("BloxyCola") then
+                                if plr.Backpack:FindFirstChild("BloxyCola") then
+                                    plr.Backpack.BloxyCola.Parent = plr.Character
+                                end
+                                for i,tool in pairs(plr.Character:GetChildren()) do
+                                    if plr.Character ~= nil and plr.Character:FindFirstChild("Humanoid") then
+                                        if plr.Character.Humanoid.Health > 0 then
+                                    if tool:IsA("Tool") and tool.Name == "BloxyCola" then
+                                        tool:Activate()
+                                    end
+                                end
+                                end
+                            end
+                            else
+                                fireclickdetector(newclick)
+                            end
+                        end
+                    end)
+                        wait()
+                    end
+                    end))
+            end,
+         })
+         autotestdrink:Set(originaldata["testbloxy"])
     end
     
 
@@ -2262,23 +2325,33 @@ autosavetoggle:Set(originaldata["autosave"])
         CurrentValue = nil,
         Flag = nil,
         Callback = function(callback)
+            coroutine.resume(coroutine.create(function()
             local value = "removeblur"
                 originaldata[value] = callback
                 game.Lighting:WaitForChild("Blur").Enabled = not originaldata[value]
+            end))
         end,
      })
      blurtoggle:Set(originaldata["removeblur"])
-     
+     local newtab = {}
+     for i,v in next, gameids do
+         table.insert(newtab, i.." ("..v..")")
+        end
      local onlyonce = false
      local Dropdown = Settings:CreateDropdown({
         Name = "Teleport to floor (saves data)",
-        Options = {"1", "2", "3", "4", "5"},
+        Options = newtab,
         CurrentOption = "",
         Flag = nil,
         Select = false,
         Callback = function(Option)
          savedata()
-         floorteleport(Option)
+         local newt = string.split(Option, "(")[2]
+         local evennew = string.gsub(newt, "%D", "")
+         print(evennew)
+         local teleportService = game:GetService("TeleportService")
+
+teleportService:Teleport(tonumber(evennew), plr)
          if onlyonce == false then
             onlyonce = true
          queueteleport([[
@@ -2589,4 +2662,7 @@ autosavetoggle:Set(originaldata["autosave"])
     end))
     end
     end
+end
+else
+    game.Players.LocalPlayer:Kick("this script only supports da amazing bunker simulator")
 end
