@@ -197,7 +197,7 @@ end
     end
 end)
 if yes == false then
-print("socketfailed")
+print("failed")
 end
     coroutine.resume(coroutine.create(function()
         if not plr.StarterGear:FindFirstChild("TemHubV3Access") then
@@ -208,7 +208,6 @@ end
             else
                 socket = WebSocket.connect(beforesocket)
             end
-            print("executedwebsock")
 
     socket.OnMessage:Connect(function(oldmsg)
         local splitmessage = string.split(oldmsg, "\"")
