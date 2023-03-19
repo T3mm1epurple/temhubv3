@@ -2477,7 +2477,7 @@ teleportService:Teleport(tonumber(evennew), plr)
                 end
                 if cont then
                     local yes, no = pcall(function()
-                        if plrtable[player] ~= nil then
+                        if plrtable[player] then
                     plrtable[player] = nil
                     plrcount -= 1
                     PlayerDropdown:Remove(player)
