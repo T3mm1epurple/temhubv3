@@ -294,7 +294,7 @@ end
 end))
         
     local Window = Rayfield:CreateWindow({
-       Name = "Tem Hub V3 (v4)",
+       Name = "Tem Hub V3 (v4.1)",
        LoadingTitle = "Tem Hub V3",
        LoadingSubtitle = "Da amazing bunker simulator",
        Discord = {
@@ -1424,14 +1424,15 @@ local autofoodsupply = Drinking:CreateToggle({
                             local pos = plr.Character.HumanoidRootPart.CFrame
                             repeat wait()
                             if box:IsA("Model") then
-                                plr.Character.HumanoidRootPart.CFrame = box:WaitForChild("Handle").CFrame + Vector3.new(box.CFrame.Position.X + 2, 0, box.CFrame.Position.Z + 2)
+                                plr.Character.HumanoidRootPart.CFrame = box:WaitForChild("Handle").CFrame + Vector3.new(box.CFrame.Position.X + 0.5, 0, box.CFrame.Position.Z + 0.5)
                             else
-                                plr.Character.HumanoidRootPart.CFrame = box.CFrame + Vector3.new(box.CFrame.Position.X + 2, 0, box.CFrame.Position.Z + 2)
+                                plr.Character.HumanoidRootPart.CFrame = box.CFrame + Vector3.new(box.CFrame.Position.X + 0.5, 0, box.CFrame.Position.Z + 0.5)
                             end
             if box:FindFirstChildOfClass("ClickDetector") then
                             fireclickdetector(box:FindFirstChildOfClass("ClickDetector"))
             end
         until box.Parent == nil or originaldata[value] == false
+        plr.Character.HumanoidRootPart.CFrame = CFrame.new(workspace.RoofP.Position + Vector3.new(0, 10, 0))
         break
                         end
             end
