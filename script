@@ -1470,7 +1470,27 @@ local autofoodsupply = Drinking:CreateToggle({
                                                         floorteleport(newlevel)
                                                         queueteleport([[
                                                             wait(3)
+                                                            coroutine.resume(coroutine.create(function()
+                                                                wait(10)
+                                                                local args = {
+                                                                    [1] = 1
+                                                                }
+                                                                
+                                                                game:GetService("ReplicatedStorage").TeleportEvent:FireServer(unpack(args))
+                                                                            local queueteleport = syn and syn.queue_on_teleport or queue_on_teleport or fluxus and fluxus.queue_on_teleport or function() end
+                                                                            queueteleport([=[
+                                                                                wait(7)
+                                                                                game.Players.LocalPlayer.PlayerGui:WaitForChild("Menu").Enabled = false 
+                                                                                workspace.CurrentCamera.CameraType = Enum.CameraType.Custom 
+                                                                                workspace.CurrentCamera.CameraSubject = game.Players.LocalPlayer.Character.Humanoid 
+                                                                                wait(1)
+                                                                                game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
+                                                                                _G.erg5437654634t3gbergjwoi4tOITGJERIOGHERg43 = true
+                                                                                loadstring(game:HttpGet("https://raw.githubusercontent.com/kittenis/temhubv3/main/script", true))()
+                                                                            ]=])
+                                                            end))
                                                             local plr = game.Players.LocalPlayer
+                                                            
                                                             while wait() do
                                                                 if plr:FindFirstChild("Backpack") then
                                                             for i, tool in pairs(plr.Backpack:GetChildren()) do
