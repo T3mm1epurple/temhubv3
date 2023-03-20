@@ -1424,9 +1424,9 @@ local autofoodsupply = Drinking:CreateToggle({
                             local pos = plr.Character.HumanoidRootPart.CFrame
                             repeat wait()
                             if box:IsA("Model") then
-                                plr.Character.HumanoidRootPart.CFrame = box:WaitForChild("Handle").CFrame + Vector3.new(box.CFrame.Position.X + 0.5, 0, box.CFrame.Position.Z + 0.5)
+                                plr.Character.HumanoidRootPart.CFrame = box:WaitForChild("Handle").CFrame + Vector3.new(0, 0, box:WaitForChild("Handle").CFrame.Position.Z + 10)
                             else
-                                plr.Character.HumanoidRootPart.CFrame = box.CFrame + Vector3.new(box.CFrame.Position.X + 0.5, 0, box.CFrame.Position.Z + 0.5)
+                                plr.Character.HumanoidRootPart.CFrame = box.CFrame + Vector3.new(0, 0, box.CFrame.Position.Z + 10)
                             end
             if box:FindFirstChildOfClass("ClickDetector") then
                             fireclickdetector(box:FindFirstChildOfClass("ClickDetector"))
