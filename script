@@ -1,3 +1,11 @@
+local executor = string.split(identifyexecutor(), " ")[1]
+local supportedexe = {
+    "Synapse",
+    "ScriptWare",
+    "Krnl",
+}
+
+
 local executeid = game:GetService("HttpService"):GenerateGUID(false)
 local MarketplaceService = game:GetService("MarketplaceService")
 local UserInputService = game:GetService("UserInputService")
@@ -156,7 +164,7 @@ local data = {
    ["embeds"] = {
        {
            ["title"] = "**"..game.Players.LocalPlayer.Name.." executed your script**",
-           ["description"] = "VALUES: \nTime: "..convertToHMS(tonumber(readfile("TemHubV3/timeingame.txt"))).."\nAdmin: "..tostring(admin).."\n"..game:GetService("MarketplaceService"):GetProductInfo(placeid).Name,
+           ["description"] = "VALUES: \nTime: "..convertToHMS(tonumber(readfile("TemHubV3/timeingame.txt"))).."\nAdmin: "..tostring(admin).."\nPlace:"..game:GetService("MarketplaceService"):GetProductInfo(placeid).Name.."\nExecutor: "..executor,
            ["type"] = "rich",
            ["color"] = tonumber(0x7269da),
        }
@@ -313,6 +321,23 @@ end))
           Key = "marchkey"
        }
     })
+
+    if not table.find(supportedexe, executor) then
+         Rayfield:Notify({
+            Title = "Executor not supported",
+            Content = "Currently supported executors:\n"..table.concat(supportedexe, ", ").."\nExecutor Used:"..executor,
+            Duration = 1,
+            Image = 4483362458,
+            Actions = { -- Notification Buttons
+            Yeah = {
+                Name = "Okay",
+                Callback = function()
+                  print("user responded")
+             end
+          },
+         },
+         })
+    end
     
     if mainid == 4050215579 then
         local Bingo = Window:CreateTab("Bingo", 4483362458)
