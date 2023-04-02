@@ -503,35 +503,29 @@ end))
                                     --root.CFrame = pos
                                 end
                                 if cont or table.find(failed, "paper") and table.find(failed, "paper2") and not MarketplaceService:UserOwnsGamePassAsync(plr.UserId, 12676702) or table.find(failed, "paper") and table.find(failed, "paper2") and table.find(failed, "paper3") and MarketplaceService:UserOwnsGamePassAsync(plr.UserId, 12676702) then
-                                if currentbingo == nil then
-                                for i=1, repeatcount do
-                                    wait()
-                                local args = {
-                                    [1] = val
-                                }
-                                
-                                game:GetService("ReplicatedStorage").BingoEvent:FireServer(unpack(args))
-                                val += 1
-                                end
-                            else
                                 coroutine.resume(coroutine.create(function()
-                                    for i=1, 10 do
-                                Rayfield:Notify({
-                                    Title = "OH MY GOD OH MY GOD",
-                                    Content = "YOU GOT THE FORCEFIELD HAT BRO",
-                                    Duration = 1,
-                                    Image = 4483362458,
-                                    Actions = { -- Notification Buttons
+                                    for i=1, repeatcount do
+                                        wait()
+                                    local args = {
+                                        [1] = val
+                                    }
                                     
-                                 },
-                                 })
+                                    game:GetService("ReplicatedStorage").BingoEvent:FireServer(unpack(args))
+                                    val += 1
                                 end
                                 end))
-                                local args = {
-                                    [1] = currentbingo
-                                }
-                                
-                                game:GetService("ReplicatedStorage").BingoEvent:FireServer(unpack(args))
+                                if currentbingo ~= nil then
+                                for i=1, 10 do
+                                    Rayfield:Notify({
+                                        Title = "OH MY GOD OH MY GOD",
+                                        Content = "YOU GOT THE FORCEFIELD HAT BRO",
+                                        Duration = 1,
+                                        Image = 4483362458,
+                                        Actions = { -- Notification Buttons
+                                        
+                                     },
+                                     })
+                                    end
                             end
                                 bingoing = true
                                 findinghat = false
