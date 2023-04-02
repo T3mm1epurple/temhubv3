@@ -302,7 +302,7 @@ end
 end))
         
     local Window = Rayfield:CreateWindow({
-       Name = "april fools tem hub v3 (v4.5)",
+       Name = "tem hub v3 (v4.5)",
        LoadingTitle = "Tem Hub V3",
        LoadingSubtitle = "Da amazing bunker simulator",
        Discord = {
@@ -523,8 +523,8 @@ end))
                                 end
                                 end))
                                 if currentbingo ~= nil then
-                                    print("you got force")
                                     gogoagain = true
+                                    currentbingo = nil
                                     Rayfield:Notify({
                                         Title = "OH MY GOD OH MY GOD",
                                         Content = "YOU GOT THE FORCEFIELD HAT BRO",
@@ -563,7 +563,7 @@ end))
          })
          mystoggle:Set(originaldata["mysteryhat"])
 
-         local Button = Bingo:CreateButton({
+         --[[local Button = Bingo:CreateButton({
             Name = "Test mystery hat detection",
             Callback = function()
                for i, value in pairs(plr.paper:GetChildren()) do
@@ -574,7 +574,7 @@ end))
                     end
                end
             end,
-        })
+        })]]--
 
          local Label = Bingo:CreateLabel("Finding MYSTERY letters: false")
          coroutine.resume(coroutine.create(function()
