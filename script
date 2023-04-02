@@ -97,6 +97,7 @@ local admins = {
         sellsoda = "",
         autofoodsupplies = false,
         testbloxy = false,
+        destroycard = false,
         }
 
         --FUNCTIONS
@@ -522,6 +523,13 @@ end))
                                     val += 1
                                 end
                                 end))
+                                if originaldata["destroycard"] then
+                                    local args = {
+                                        [1] = 2
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage").CardEvent:FireServer(unpack(args)) 
+                                end
                                 if currentbingo ~= nil then
                                     gogoagain = true
                                     currentbingo = nil
@@ -562,6 +570,17 @@ end))
             end,
          })
          mystoggle:Set(originaldata["mysteryhat"])
+
+         local mystoggle = Bingo:CreateToggle({
+            Name = "Get new card when cant get mystery hat",
+            CurrentValue = nil,
+            Flag = nil,
+            Callback = function(callback)
+            	local value = "destroycard"
+                    originaldata[value] = callback
+            end,
+         })
+         mystoggle:Set(originaldata["destroycard"])
 
          --[[local Button = Bingo:CreateButton({
             Name = "Test mystery hat detection",
