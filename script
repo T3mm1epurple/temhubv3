@@ -13,7 +13,7 @@ _G.currentexecute = executeid
 local scriptrunning = true
 local others = false
 coroutine.resume(coroutine.create(function()
-    while wait() do
+    while wait(1) do
         if _G.currentexecute ~= executeid then
             scriptrunning = false
         end
@@ -124,12 +124,21 @@ local admins = {
 
         --FUNCTIONS
 
+        function CheckTableEquality(t1,t2)
+            for i,v in next, t1 do if t2[i]~=v then return false end end
+            for i,v in next, t2 do if t1[i]~=v then return false end end
+            return true
+        end
+
         if isfolder("TemHubV3") == false then
             makefolder("TemHubV3")
             end
 
+            local databefore = nil
+
         if isfile("TemHubV3/data.txt") then
             local data = game:GetService("HttpService"):JSONDecode(readfile("TemHubV3/data.txt"))
+            databefore = data
             originaldata = data
             print("Loaded Data")
             end
@@ -153,6 +162,7 @@ local admins = {
                     local datatable = originaldata
                     writefile("TemHubV3/data.txt", game:GetService("HttpService"):JSONEncode(datatable))
                     local data = game:GetService("HttpService"):JSONDecode(readfile("TemHubV3/data.txt"))
+                    databefore = data
             end
 	    
 	    
@@ -323,6 +333,38 @@ end))
        }
     })
 
+    
+    coroutine.resume(coroutine.create(function()
+        while wait() do
+            local data = game:GetService("HttpService"):JSONDecode(readfile("TemHubV3/data.txt"))
+            print(data)
+            if not CheckTableEquality(data, databefore) or data == nil then
+                --[[Rayfield:Notify({
+                    Title = "Data altered",
+                    Content = "File data has been altered, reload script?",
+                    Duration = 1,
+                    Image = 4483362458,
+                    Actions = { -- Notification Buttons
+                  No = {
+                    Name = "No",
+                    Callback = function()
+                      print("no")
+                 end
+              },
+              Yes = {
+                Name = "Yes",
+                Callback = function()
+                    _G.erg5437654634t3gbergjwoi4tOITGJERIOGHERg43 = true
+                    loadstring(game:HttpGet("https://raw.githubusercontent.com/kittenis/temhubv3/main/script", true))()
+             end
+          },
+                 },
+                 })]]--
+                 break
+            end
+        end
+    end))
+
     if not table.find(supportedexe, executor) then
          Rayfield:Notify({
             Title = "Executor not supported",
@@ -486,7 +528,9 @@ end))
                                 if not plr.Backpack:FindFirstChild("BingoCard") and not plr.Character:FindFirstChild("BingoCard") then
                                     if bingoing then
                                         bingoing = false
+                                        if originaldata["destroycard"] == false and originaldata["mysteryhat"] == false then
                                         bingosgotten += 1
+                                        end
                                         for i=1, repeatcount do
                                             local sheetgui = plr.PlayerGui:FindFirstChild("Sheet"..i)
                                             if i == 1 then
@@ -2322,6 +2366,7 @@ autosavetoggle:Set(originaldata["autosave"])
     local Button = Settings:CreateButton({
         Name = "Delete data",
         Callback = function()
+            if isfile("TemHubV3/data.txt") then
             Rayfield:Notify({
                 Title = "Notification",
                 Content = "Are you sure you want to delete your data?",
@@ -2338,24 +2383,22 @@ autosavetoggle:Set(originaldata["autosave"])
                       Name = "Yes",
                       Callback = function()
                         delfile("TemHubV3/data.txt")
-                        Rayfield:Notify({
-                            Title = "Notification",
-                            Content = "Deleted data",
-                            Duration = 1,
-                            Image = 4483362458,
-                            Actions = { -- Notification Buttons
-                               --[[Ignore = {
-                                  Name = "Okay!",
-                                  Callback = function()
-                                  print("The user tapped Okay!")
-                               end
-                            },]]--
-                         },
-                         })
+                        _G.erg5437654634t3gbergjwoi4tOITGJERIOGHERg43 = true
+                    loadstring(game:HttpGet("https://raw.githubusercontent.com/kittenis/temhubv3/main/script", true))()
                    end
                 },
              },
              })
+            else
+                Rayfield:Notify({
+                    Title = "Notification",
+                    Content = "You have no data to delete!",
+                    Duration = 1,
+                    Image = 4483362458,
+                    Actions = { -- Notification Buttons
+                 },
+                 })
+            end
         end,
     })
  
