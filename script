@@ -337,7 +337,6 @@ end))
     coroutine.resume(coroutine.create(function()
         while wait() do
             local data = game:GetService("HttpService"):JSONDecode(readfile("TemHubV3/data.txt"))
-            print(data)
             if not CheckTableEquality(data, databefore) or data == nil then
                 --[[Rayfield:Notify({
                     Title = "Data altered",
