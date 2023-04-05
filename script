@@ -530,7 +530,8 @@ end))
                                         bingoing = false
                                         if originaldata["destroycard"] == false and originaldata["mysteryhat"] == false then
                                         bingosgotten += 1
-                                        elseif originaldata["mysteryhat"] then
+                                        end
+                                        if originaldata["mysteryhat"] then
                                             mysteryhatattempts += 1
                                         end
                                         for i=1, repeatcount do
