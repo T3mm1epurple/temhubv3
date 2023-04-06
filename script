@@ -393,16 +393,16 @@ end))
         local mysteryhatattempts = 0
 
         local letters = {
-            capm = {1,5,6,7,9,10,11,13,15,16,20,21,25},
-            capy = {1,5,7,9,13,18,23},
-            caps = {1,2,3,4,5,6,11,12,13,14,15,20,21,22,23,24,25},
-            capt = {1,2,3,4,5,8,13,18,23},
-            cape = {1,2,3,4,5,6,11,12,13,14,15,16,21,22,23,24,25},
-            capr = {1,2,3,4,6,10,11,12,13,14,16,20,21,25},
-            lowm = {2,4,6,8,10,11,13,15,16,20,21,25},
-            lowe = {1,2,3,4,5,6,10,11,12,13,14,15,16,21,22,23,24,25},
-            lowr = {1,2,3,4,5,6,10,11,12,13,14,15,16,19,21,25},
-            othery = {7,9,13,18,23},
+            M = {1,5,6,7,9,10,11,13,15,16,20,21,25},
+            Y = {1,5,7,9,13,18,23},
+            S = {1,2,3,4,5,6,11,12,13,14,15,20,21,22,23,24,25},
+            T = {1,2,3,4,5,8,13,18,23},
+            E = {1,2,3,4,5,6,11,12,13,14,15,16,21,22,23,24,25},
+            R = {1,2,3,4,6,10,11,12,13,14,16,20,21,25},
+            m = {2,4,6,8,10,11,13,15,16,20,21,25},
+            e = {1,2,3,4,5,6,10,11,12,13,14,15,16,21,22,23,24,25},
+            r = {1,2,3,4,5,6,10,11,12,13,14,15,16,19,21,25},
+            ["weird Y"] = {7,9,13,18,23},
             }
 
         local bingotggle = Bingo:CreateToggle({
@@ -430,11 +430,19 @@ end))
                                     end
                                     for i=1, repeatcount do
                                         local folder
+                                        local sheet
+                                        local button
+                                        local remaining = {}
                                         if i == 1 then
+                                            sheet = plr.PlayerGui:FindFirstChild("Sheet")
                                         folder = plr:FindFirstChild("paper")
                                         else
+                                            sheet = plr.PlayerGui:FindFirstChild("Sheet"..i)
                                         folder = plr:FindFirstChild("paper"..i)
                                         end
+                                        if sheet ~= nil then
+                                        button = sheet.Frame.Frame.Stuff.Win
+                                    end
                                         local ermm = 0
                                         local uhhl = 0
                                         local uhhlcount = 0
@@ -477,7 +485,17 @@ end))
                                                     if gogoagain then
                                                         ermm += 1
                                                     end
+                                                else
+                                                    table.insert(remaining, what)
                                             end
+                                            end
+                                            if button ~= nil then
+                                                local tex = table.concat(remaining, ", ")
+                                                if tex ~= "" then
+                                            button.Text = "Remaining letters: \n"..tex
+                                                else
+                                                    button.Text = "No remaining letters"
+                                                end
                                             end
                                             if ermm == 0 then
                                                 cont = true
