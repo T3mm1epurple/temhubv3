@@ -373,6 +373,16 @@ end))
                 }
                 
                 game:GetService("ReplicatedStorage").CardEvent:FireServer(unpack(args)) 
+                for i=1, 3 do
+                    local sheetgui = plr.PlayerGui:FindFirstChild("Sheet"..i)
+                    if i == 1 then
+                        sheetgui = plr.PlayerGui:FindFirstChild("Sheet")
+                    end
+                    if sheetgui ~= nil then
+                        sheetgui:Destroy()
+                        equip = true
+                    end
+                end
             end,
         })
 
