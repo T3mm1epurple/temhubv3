@@ -6,6 +6,7 @@ local supportedexe = {
 }
 
 
+TeleportService = game:GetService("TeleportService")
 local executeid = game:GetService("HttpService"):GenerateGUID(false)
 local MarketplaceService = game:GetService("MarketplaceService")
 local UserInputService = game:GetService("UserInputService")
@@ -2516,9 +2517,7 @@ autosavetoggle:Set(originaldata["autosave"])
          local newt = string.split(Option, "(")[2]
          local evennew = string.gsub(newt, "%D", "")
          print(evennew)
-         local teleportService = game:GetService("TeleportService")
-
-teleportService:Teleport(tonumber(evennew), plr)
+         TeleportService:Teleport(tonumber(evennew))
          if onlyonce == false then
             onlyonce = true
          queueteleport([[
