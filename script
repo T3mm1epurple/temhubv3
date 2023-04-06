@@ -306,7 +306,7 @@ coroutine.resume(coroutine.create(function()
 end))
         
     local Window = Rayfield:CreateWindow({
-       Name = "tem hub v3 (Performance Update)",
+       Name = "tem hub v3 (Performance Update 2)",
        LoadingTitle = "Tem Hub V3",
        LoadingSubtitle = "Da amazing bunker simulator",
        Discord = {
@@ -413,6 +413,7 @@ end))
                                 local cont = false
                                 local failed = {}
                                 if originaldata["mysteryhat"] then
+                                    fireclickdetector(workspace.MysteryHat.ClickDetector)
                                     repeatcount = 2
                                     if MarketplaceService:UserOwnsGamePassAsync(plr.UserId, 12676702) then
                                         repeatcount = 3
