@@ -306,7 +306,7 @@ coroutine.resume(coroutine.create(function()
 end))
         
     local Window = Rayfield:CreateWindow({
-       Name = "tem hub v3 (Performance Update 2)",
+       Name = "tem hub v3 (update like 20 idk)",
        LoadingTitle = "Tem Hub V3",
        LoadingSubtitle = "Da amazing bunker simulator",
        Discord = {
@@ -497,6 +497,7 @@ end))
                                         if originaldata["mysteryhat"] then
                                             mysteryhatattempts += 1
                                         end
+                                        local equip = false
                                         for i=1, repeatcount do
                                             local sheetgui = plr.PlayerGui:FindFirstChild("Sheet"..i)
                                             if i == 1 then
@@ -504,6 +505,7 @@ end))
                                             end
                                             if sheetgui ~= nil then
                                                 sheetgui:Destroy()
+                                                equip = true
                                             end
                                         end
                                     end
@@ -518,6 +520,13 @@ end))
                                         }
                                         
                                         game:GetService("ReplicatedStorage").CardEvent:FireServer(unpack(args))   
+                                        coroutine.resume(coroutine.create(function()
+                                            repeat wait()
+                                            until plr.Backpack:FindFirstChild("BingoCard")
+                                            if equip then
+                                                plr.Backpack.BingoCard.Parent = plr.Character
+                                            end
+                                        end))
                                     --until plr.Backpack:FindFirstChild("BingoCard")
                                     --root.CFrame = pos
                                 end
