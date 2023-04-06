@@ -292,6 +292,7 @@ coroutine.resume(coroutine.create(function()
     while wait(1) do
         if _G.currentexecute ~= executeid then
             scriptrunning = false
+            break
         end
         if scriptrunning then
         local thing = readfile("TemHubV3/timeingame.txt")
@@ -304,7 +305,7 @@ coroutine.resume(coroutine.create(function()
 end))
         
     local Window = Rayfield:CreateWindow({
-       Name = "tem hub v3 (v4.5)",
+       Name = "tem hub v3 (Performance Update)",
        LoadingTitle = "Tem Hub V3",
        LoadingSubtitle = "Da amazing bunker simulator",
        Discord = {
@@ -613,6 +614,7 @@ end))
          local attemptlabel = Bingo:CreateLabel("MYSTERY attempts since execute: ")
          coroutine.resume(coroutine.create(function()
              while wait() do
+                if scriptrunning then
                 attemptlabel:Set("MYSTERY attempts since execute: "..mysteryhatattempts)
                 
                 sinceexelabel:Set("Bingos gotten since script execute: "..bingosgotten)
@@ -627,7 +629,10 @@ end))
                     findinghat = false
                 end
                 findingmylabel:Set("Finding MYSTERY letters: "..tostring(findinghat))
+            else
+                break
              end
+            end
          end))
 
          local Section = Shop:CreateSection("Extras")
@@ -1016,9 +1021,13 @@ end)
  atthispoint:Set(originaldata["autosoda"])
  coroutine.resume(coroutine.create(function()
     while wait() do
+        if scriptrunning then
         if goto4 == true then
             goto4 = false
         atthispoint:Set(false)
+        end
+    else
+        break
         end
     end
 end))
@@ -2550,15 +2559,7 @@ teleportService:Teleport(tonumber(evennew), plr)
 
     local Section = Settings:CreateSection("Other")
 
-    local Label = Settings:CreateLabel("Time using script: 0")
-    coroutine.resume(coroutine.create(function()
-        while wait() do
-            if scriptrunning then
-            local thing = readfile("TemHubV3/timeingame.txt")
-            Label:Set("Time using script: "..convertToHMS(tonumber(thing)))
-            end
-        end
-    end))
+    local timeusinglabel = Settings:CreateLabel("Time using script: 0")
 
     if table.find(admins, plr.UserId) then
     local Admin = Window:CreateTab("Admin", 4483362458)
@@ -2605,6 +2606,33 @@ teleportService:Teleport(tonumber(evennew), plr)
      local plrcount = 0
     coroutine.resume(coroutine.create(function()
         while wait() do
+            if scriptrunning then
+                local thing = readfile("TemHubV3/timeingame.txt")
+                timeusinglabel:Set("Time using script: "..convertToHMS(tonumber(thing)))
+
+                for i, player in pairs(targettable) do
+                    local cont = true
+                    for i, uhh in pairs(game.Players:GetChildren()) do
+                        if table.find(targettable, uhh.Name) then
+                        if uhh.Name == player then
+                            cont = false
+                            end
+                        end
+                    end
+                    if cont then
+                        local yes, no = pcall(function()
+                            targettable[player] = nil
+                            TargetDropdown:Remove(player)
+                        end)
+                    end
+                end
+                for i, player in pairs(game.Players:GetChildren()) do
+                        if not table.find(targettable, player.Name) then
+                        table.insert(targettable, player.Name)
+                        TargetDropdown:Add(player.Name)
+                    end
+            end
+
             for i, player in pairs(plrtable) do
                 local cont = true
                 for i, uhh in pairs(game.Players:GetChildren()) do
@@ -2633,33 +2661,9 @@ teleportService:Teleport(tonumber(evennew), plr)
                 end
                 end
         end
-        end
-    end))
-
-    coroutine.resume(coroutine.create(function()
-        while wait() do
-            for i, player in pairs(targettable) do
-                local cont = true
-                for i, uhh in pairs(game.Players:GetChildren()) do
-                    if table.find(targettable, uhh.Name) then
-                    if uhh.Name == player then
-                        cont = false
-                        end
-                    end
-                end
-                if cont then
-                    local yes, no = pcall(function()
-                        targettable[player] = nil
-                        TargetDropdown:Remove(player)
-                    end)
-                end
-            end
-            for i, player in pairs(game.Players:GetChildren()) do
-                    if not table.find(targettable, player.Name) then
-                    table.insert(targettable, player.Name)
-                    TargetDropdown:Add(player.Name)
-                end
-        end
+    else
+        break
+    end
         end
     end))
 
@@ -2703,6 +2707,7 @@ teleportService:Teleport(tonumber(evennew), plr)
 
     coroutine.resume(coroutine.create(function()
         while wait() do
+            if scriptrunning then
             local yes, no = pcall(function()
                 if control then
                     if controlledplr ~= nil then
@@ -2734,7 +2739,10 @@ teleportService:Teleport(tonumber(evennew), plr)
             if not yes then
                 print(no)
             end
+        else
+            break
         end
+    end
     end))
 
     local Input = Admin:CreateInput({
@@ -2815,7 +2823,11 @@ teleportService:Teleport(tonumber(evennew), plr)
    local Label = Admin:CreateLabel("Players using script in this server: 0")
     coroutine.resume(coroutine.create(function()
         while wait() do
+            if scriptrunning then
             Label:Set("Players using script in this server: "..plrcount)
+            else
+                break
+            end
         end
     end))
     end
