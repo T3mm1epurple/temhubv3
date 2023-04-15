@@ -306,7 +306,7 @@ coroutine.resume(coroutine.create(function()
 end))
         
     local Window = Rayfield:CreateWindow({
-       Name = "tem hub v3 (update like 21 idk)",
+       Name = "tem hub v3 (update 1)",
        LoadingTitle = "Tem Hub V3",
        LoadingSubtitle = "Da amazing bunker simulator",
        Discord = {
@@ -1193,7 +1193,7 @@ Callback = function(Option)
             end
         end
     end
-    local function getrandom()
+    function getrandom()
         for i,sod in pairs(workspace["711Stuff"]:GetChildren()) do
             if sod:IsA("Part") then
                 if sod.SurfaceGui.Frame.EmployeeName.Text == "Vacant" then
@@ -1241,6 +1241,28 @@ local autofoodsupply = Drinking:CreateToggle({
                     local yes, no = pcall(function()
                     if scriptrunning then
                     if plr.attributes.FoodSupply.Value <= 0 then
+                        if plr.attributes.SupplyNo.Value > 0 then
+                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace:WaitForChild("SupplyTimerThing"):WaitForChild("Sensor2").CFrame
+                            repeat wait()
+                            fireproximityprompt(workspace:WaitForChild("SupplyTimerThing"):WaitForChild("Sensor2"):WaitForChild("ProximityPrompt"))
+                            until plr.attributes.FoodSupply.Value > 0
+                            local sod = workspace["711Stuff"]:FindFirstChild("Award"..originaldata["sellsoda"])
+                            if sod ~= nil then
+                                if sod.SurfaceGui.Frame.EmployeeName.Text == "Vacant" then
+                                    local obj = plr.Character.HumanoidRootPart
+                                        obj.CFrame = sod.CFrame
+                                        wait(0.5)
+                                        fireproximityprompt(sod.Attachment.ProximityPrompt)
+                                        wait(0.5)
+                                        obj.CFrame = originalcframe
+                                else
+                                    getrandom()
+                                end
+                            else
+                                getrandom()
+                        end
+                    end
+                    if plr.attributes.FoodSupply.Value <= 0 then
                         if dog65 == false then
                             dog65 = true
                             savedata()
@@ -1253,9 +1275,9 @@ local autofoodsupply = Drinking:CreateToggle({
                             if isfile("TemHubV3/data.txt") then
                                 data = game:GetService("HttpService"):JSONDecode(readfile("TemHubV3/data.txt"))
                                 end
-                            local args = {
-                                [1] = 3
-                            }
+                                local args = {
+                                    [1] = data["supplytype"]
+                                }
                             
                             local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/T3mm1epurple/rayfieldedit/main/script'))()
         
@@ -1296,10 +1318,10 @@ local autofoodsupply = Drinking:CreateToggle({
                                     game.Players.LocalPlayer.PlayerGui:WaitForChild("Menu").Enabled = false 
                                     workspace.CurrentCamera.CameraType = Enum.CameraType.Custom 
                                     workspace.CurrentCamera.CameraSubject = game.Players.LocalPlayer.Character:WaitForChild("Humanoid") 
-                                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace:WaitForChild("SupplyTimerThing"):WaitForChild("Sensor1").CFrame
+                                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace:WaitForChild("SupplyTimerThing"):WaitForChild("Sensor2").CFrame
                                     wait(1)
                                     repeat wait()
-                                    fireproximityprompt(workspace:WaitForChild("SupplyTimerThing"):WaitForChild("Sensor1"):WaitForChild("ProximityPrompt"))
+                                    fireproximityprompt(workspace:WaitForChild("SupplyTimerThing"):WaitForChild("Sensor2"):WaitForChild("ProximityPrompt"))
                                     until game.Players.LocalPlayer.PlayerGui:FindFirstChild("GuiMessageCountdown2")
                                     wait(1)
                                     game.Players.LocalPlayer.attributes.FoodSupply.Value = 19
@@ -1386,6 +1408,7 @@ local autofoodsupply = Drinking:CreateToggle({
                     end
                     end
                 end
+            end
             end)
                 wait()
                 end
