@@ -1356,6 +1356,8 @@ local autofoodsupply = Drinking:CreateToggle({
                             wait(3)
                             print("loaded")
                             local data = {
+                                supplytype = 2,
+                                sellsoda = "Random",
                             }
                             if isfile("TemHubV3/data.txt") then
                                 data = game:GetService("HttpService"):JSONDecode(readfile("TemHubV3/data.txt"))
