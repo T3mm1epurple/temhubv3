@@ -307,7 +307,7 @@ coroutine.resume(coroutine.create(function()
 end))
         
     local Window = Rayfield:CreateWindow({
-       Name = "tem hub v3 (update 2)",
+       Name = "tem hub v3 (update 3)",
        LoadingTitle = "Tem Hub V3",
        LoadingSubtitle = "Da amazing bunker simulator",
        Discord = {
@@ -1247,7 +1247,7 @@ local mentotoggle = Drinking:CreateToggle({
  })
  mentotoggle:Set(originaldata["automentos"])
 
- local Section = Drinking:CreateSection("7/11 Supply (MAY NOT WORK)")
+ local Section = Drinking:CreateSection("7/11 Supply")
 
  local supplytable = {"Random"}
 for i,sod in pairs(workspace["711Stuff"]:GetChildren()) do
@@ -1439,8 +1439,12 @@ local autofoodsupply = Drinking:CreateToggle({
                                     fireproximityprompt(workspace.SupplyTimerThing.Sensor2.ProximityPrompt)
                                     wait(1)
                                     local plr = game.Players.LocalPlayer
-                                    print(data["sellsoda"])
-                                    local Option = data["sellsoda"]
+                                    local Option
+                                    if data["sellsoda"] then
+                                        Option = data["sellsoda"]
+                                    else
+                                        Option = "Random"
+                                    end
                                     local obj = plr.Character.HumanoidRootPart
                                     local originalcframe = obj.CFrame
                         for i,sod in pairs(workspace["711Stuff"]:GetChildren()) do
