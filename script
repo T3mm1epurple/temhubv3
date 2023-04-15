@@ -1260,7 +1260,7 @@ for i,sod in pairs(workspace["711Stuff"]:GetChildren()) do
 local Dropdown = Drinking:CreateDropdown({
 Name = "Soda to sell",
 Options = supplytable,
-Select = false,
+Select = true,
 CurrentOption = originaldata["sellsoda"],
 Flag = nil,
 Callback = function(Option)
