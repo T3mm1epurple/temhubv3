@@ -1164,7 +1164,7 @@ end))
                 plr.Character.HumanoidRootPart.CFrame = workspace["head doc man"].HumanoidRootPart.CFrame
                 wait(1)
                 fireclickdetector(workspace["head doc man"].ClickDetector)
-                wait(12)
+                wait(15)
                 local args = {
                     [1] = 1
                 }
