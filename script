@@ -193,7 +193,7 @@ end
     local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/T3mm1epurple/rayfieldedit/main/script'))()
     setclipboard("https://discord.gg/n7fFChP5x5")
 
-    local socket
+    --[[local socket
     local yes, no = pcall(function()
     if syn then
     socket = syn.websocket.connect(beforesocket)
@@ -203,8 +203,8 @@ end
 end)
 if yes == false then
 print("failed")
-end
-    coroutine.resume(coroutine.create(function()
+end]]--
+    --[[coroutine.resume(coroutine.create(function()
         if not plr.StarterGear:FindFirstChild("TemHubV3Access") then
         repeat wait(1)
             if not plr.StarterGear:FindFirstChild("TemHubV3Access") then
@@ -288,7 +288,7 @@ else
 end
 until plr.StarterGear:FindFirstChild("TemHubV3Access")
 end
-end))
+end))]]--
 
 coroutine.resume(coroutine.create(function()
     while wait(1) do
@@ -300,14 +300,14 @@ coroutine.resume(coroutine.create(function()
         local thing = readfile("TemHubV3/timeingame.txt")
     writefile("TemHubV3/timeingame.txt", tostring(tonumber(thing) + 1))
         end
-        local yes, no = pcall(function()
+        --[[local yes, no = pcall(function()
             socket:Send(plr.Name.."|OtherAdd")
-                end)
+                end)]]--
     end
 end))
         
     local Window = Rayfield:CreateWindow({
-       Name = "tem hub v3 (update 4)",
+       Name = "tem hub v3 (finally update)",
        LoadingTitle = "Tem Hub V3",
        LoadingSubtitle = "Da amazing bunker simulator",
        Discord = {
@@ -2715,7 +2715,7 @@ autosavetoggle:Set(originaldata["autosave"])
 
     local timeusinglabel = Settings:CreateLabel("Time using script: 0")
 
-    if table.find(admins, plr.UserId) then
+    --[[if table.find(admins, plr.UserId) then
     local Admin = Window:CreateTab("Admin", 4483362458)
 
     local Label = Admin:CreateLabel("Admins can mess with other players using the script")
@@ -2984,7 +2984,7 @@ autosavetoggle:Set(originaldata["autosave"])
             end
         end
     end))
-    end
+    end]]--
     end
 end
 else
