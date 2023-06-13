@@ -1656,9 +1656,9 @@ local autofoodsupply = Drinking:CreateToggle({
                         if box.Name == "Mail1" or box.Name == "Mail2" or box.Name == "Mail3" then
                             local pos = plr.Character.HumanoidRootPart.CFrame
                             if box:IsA("Model") then
-                                plr.Character.HumanoidRootPart.CFrame = box:WaitForChild("Handle").CFrame + Vector3.new(0, 0, box:WaitForChild("Handle").CFrame.Position.Z + 10)
+                                plr.Character.HumanoidRootPart.CFrame = box:WaitForChild("Handle").CFrame + Vector3.new(0, 3, 0)
                             else
-                                plr.Character.HumanoidRootPart.CFrame = box.CFrame + Vector3.new(0, 0, box.CFrame.Position.Z + 10)
+                                plr.Character.HumanoidRootPart.CFrame = box.CFrame + Vector3.new(0, 3, 0)
                             end
                             wait(0.5)
                             repeat wait()
