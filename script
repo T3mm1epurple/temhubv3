@@ -3,6 +3,7 @@ local supportedexe = {
     "Synapse",
     "ScriptWare",
     "Krnl",
+    "Fluxus",
 }
 
 
@@ -1247,7 +1248,7 @@ local mentotoggle = Drinking:CreateToggle({
  })
  mentotoggle:Set(originaldata["automentos"])
 
- local Section = Drinking:CreateSection("7/11 Supply")
+ --[====[local Section = Drinking:CreateSection("7/11 Supply")
 
  local supplytable = {"Random"}
 for i,sod in pairs(workspace["711Stuff"]:GetChildren()) do
@@ -1508,7 +1509,7 @@ local autofoodsupply = Drinking:CreateToggle({
             end))
     end,
  })
- autofoodsupply:Set(originaldata["autofoodsupplies"])
+ autofoodsupply:Set(originaldata["autofoodsupplies"])]====]--
 
  local Section = Cleaning:CreateSection("Main")
 
@@ -1636,6 +1637,7 @@ local autofoodsupply = Drinking:CreateToggle({
                 while originaldata[value] == true do
                     local yes, no = pcall(function()
                     if scriptrunning then
+                    game:GetService("ReplicatedStorage"):WaitForChild("MailEvent"):FireServer()
                     local hastool = false
                     for i, tool in pairs(plr.Backpack:GetChildren()) do
                         if tool:FindFirstChild("To") then
@@ -1652,12 +1654,13 @@ local autofoodsupply = Drinking:CreateToggle({
         if box ~= nil then
                         if box.Name == "Mail1" or box.Name == "Mail2" or box.Name == "Mail3" then
                             local pos = plr.Character.HumanoidRootPart.CFrame
-                            repeat wait()
                             if box:IsA("Model") then
                                 plr.Character.HumanoidRootPart.CFrame = box:WaitForChild("Handle").CFrame + Vector3.new(0, 0, box:WaitForChild("Handle").CFrame.Position.Z + 10)
                             else
                                 plr.Character.HumanoidRootPart.CFrame = box.CFrame + Vector3.new(0, 0, box.CFrame.Position.Z + 10)
                             end
+                            wait(0.5)
+                            repeat wait()
             if box:FindFirstChildOfClass("ClickDetector") then
                             fireclickdetector(box:FindFirstChildOfClass("ClickDetector"))
             end
