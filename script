@@ -4,6 +4,7 @@ local supportedexe = {
     "ScriptWare",
     "Krnl",
     "Fluxus",
+    "Electron",
 }
 
 
