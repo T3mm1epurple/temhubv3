@@ -1638,7 +1638,7 @@ local autofoodsupply = Drinking:CreateToggle({
                 while originaldata[value] == true do
                     local yes, no = pcall(function()
                     if scriptrunning then
-                    game:GetService("ReplicatedStorage"):WaitForChild("MailEvent"):FireServer()
+                    --game:GetService("ReplicatedStorage"):WaitForChild("MailEvent"):FireServer()
                     local hastool = false
                     for i, tool in pairs(plr.Backpack:GetChildren()) do
                         if tool:FindFirstChild("To") then
