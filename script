@@ -98,7 +98,8 @@ _G.whitelist = {
         autofoodsupplies = false,
         testbloxy = false,
         destroycard = false,
-        autosick = false
+        autosick = false,
+        extract = false,
         }
 
         --FUNCTIONS
@@ -308,7 +309,7 @@ coroutine.resume(coroutine.create(function()
 end))
         
     local Window = Rayfield:CreateWindow({
-       Name = "tem hub v3 (finally update)",
+       Name = "tem hub v3 (2 month update)",
        LoadingTitle = "Tem Hub V3",
        LoadingSubtitle = "Da amazing bunker simulator",
        Discord = {
@@ -351,8 +352,8 @@ end))
         local Drinking = Window:CreateTab("7/11", 4483362458)  
         local Cleaning = Window:CreateTab("Mop", 4483362458)
         local Delivery = Window:CreateTab("Mail", 4483362458)
-        local FunTab = Window:CreateTab("Fun", 4483362458)
-        local LeaderTab = Window:CreateTab("Leaderboards", 4483362458)
+        --local FunTab = Window:CreateTab("Fun", 4483362458)
+        local LeaderTab = Window:CreateTab("LB", 4483362458)
 
         local Section = Bingo:CreateSection("Main")
 
@@ -1793,7 +1794,7 @@ local autofoodsupply = Drinking:CreateToggle({
  })
  automailtoggle:Set(originaldata["automail"])
 
- local Section = FunTab:CreateSection("Suits")
+ --[[local Section = FunTab:CreateSection("Suits")
 
  local suitspeedslider = FunTab:CreateSlider({
     Name = "Suit change speed",
@@ -1861,7 +1862,7 @@ local autofoodsupply = Drinking:CreateToggle({
         message.Frame.TextLabel.Text = Text
         message.Parent = plr.PlayerGui
     end,
- })
+ })]]--
 
  local Section = LeaderTab:CreateSection("Bingo")
  
@@ -2294,7 +2295,9 @@ end
     end
 
     if mainid == 4684427971 then
+        local Gamble = Window:CreateTab("Gambling", 4483362458)
         local Doctor = Window:CreateTab("Doctor", 4483362458)
+        local Other = Window:CreateTab("Other", 4483362458)
 
         local Button = Doctor:CreateButton({
             Name = "Fast Checkup",
@@ -2344,10 +2347,13 @@ end
              })
             end,
         })
-    end
 
-    if mainid == 5248557397 then
-        local Gamble = Window:CreateTab("Gambling", 4483362458)
+        local Button = Other:CreateButton({
+            Name = "Teleport to floor 4.5",
+            Callback = function()
+                TeleportService:Teleport(8637121738)
+            end,
+        })
 
         local Section = Gamble:CreateSection("Main")
 
@@ -2425,61 +2431,69 @@ end
             end,
          })
          collectokentoggle:Set(originaldata["converttokens"])
-    end
-
-    if mainid == 8637122003 then
-        local consume = Window:CreateTab("Consume test", 4483362458)
-        local part
-        for i, v in pairs(workspace:GetChildren()) do
-            if v.Name == "Part" and v:FindFirstChild("ClickDetector") and v.Anchored == false then
-                part = v
-            end
         end
-        local newclick = part:FindFirstChildOfClass("ClickDetector")
 
-        local Button = consume:CreateButton({
-            Name = "Get test bloxycola (no cost)",
-            Callback = function()
-                fireclickdetector(newclick)
-            end,
-        })
+        if mainid == 8637121738 then
+            local Sample = Window:CreateTab("Sampling", 4483362458)
 
-        local autotestdrink = consume:CreateToggle({
-            Name = "Auto get and drink test bloxycola",
-            CurrentValue = nil,
-            Flag = nil,
-            Callback = function(callback)
-            	local value = "testbloxy"
-                    originaldata[value] = callback
-                    coroutine.resume(coroutine.create(function()
-                        while originaldata[value] == true do
-                            local yes, no = pcall(function()
-                            if scriptrunning then
-                            if plr.Backpack:FindFirstChild("BloxyCola") or plr.Character:FindFirstChild("BloxyCola") then
-                                if plr.Backpack:FindFirstChild("BloxyCola") then
-                                    plr.Backpack.BloxyCola.Parent = plr.Character
-                                end
-                                for i,tool in pairs(plr.Character:GetChildren()) do
-                                    if plr.Character ~= nil and plr.Character:FindFirstChild("Humanoid") then
-                                        if plr.Character.Humanoid.Health > 0 then
-                                    if tool:IsA("Tool") and tool.Name == "BloxyCola" then
-                                        tool:Activate()
-                                    end
-                                end
-                                end
-                            end
-                            else
-                                fireclickdetector(newclick)
-                            end
+            local Label = Sample:CreateLabel("coming soon")
+            --[[local Button = Sample:CreateButton({
+                Name = "Claim Vacant Room",
+                Callback = function()
+                    for i, obj in pairs(workspace.Labs:GetChildren()) do
+                        if obj.Owner.Value == nil then
+                            plr.Character.HumanoidRootPart.CFrame = CFrame.new(obj.Door.RealDoor.Glass.Position)
+                            repeat wait() 
+                            fireproximityprompt(obj.Door.RealDoor.Glass.ProximityPrompt)
+                            until obj.Owner.Value ~= nil
                         end
-                    end)
-                        wait()
                     end
-                    end))
-            end,
-         })
-         autotestdrink:Set(originaldata["testbloxy"])
-    end
+                end,
+            })
+
+            local extracttoggle = Sample:CreateToggle({
+                Name = "Auto Extract",
+                CurrentValue = nil,
+                Flag = nil,
+                Callback = function(callback)
+                    local value = "extract"
+                        originaldata[value] = callback
+                        coroutine.resume(coroutine.create(function()
+                            while originaldata[value] == true do
+                                local yes, no = pcall(function()
+                                if scriptrunning then
+                                for i, obj in pairs(workspace.PossibleSpawns:GetChildren()) do
+                                    if obj:FindFirstChild("SampleNPC") then
+                                        local npc = obj.SampleNPC
+                                        local root = npc.HumanoidRootPart
+                                        local tool = nil
+                                        if plr.Backpack:FindFirstChild("Extractor") then
+                                            tool = plr.Backpack.Extractor
+                                            tool.Parent = plr.Character
+                                        else
+                                            tool = plr.Character:FindFirstChild("Extractor")
+                                        end
+                                        if tool ~= nil then
+                                            if tool.Parent == plr.Character then
+                                                local originalcframe = root.CFrame
+                                                repeat wait()
+                                                    root.CFrame = tool.Union.CFrame
+                                                    tool:Activate()
+                                                until plr.PlayerGui:FindFirstChild("Message")
+                                                root.CFrame = originalcframe
+                                            end
+                                        end
+                                end
+                                end
+                            end
+                        end)
+                            wait()
+                        end
+                        end))
+                end,
+             })
+             extracttoggle:Set(originaldata["extract"])]]--
+        end
     
 
 
@@ -2717,6 +2731,15 @@ autosavetoggle:Set(originaldata["autosave"])
     local Section = Settings:CreateSection("Other")
 
     local timeusinglabel = Settings:CreateLabel("Time using script: 0")
+
+    coroutine.resume(coroutine.create(function()
+        while wait() do
+            if scriptrunning then
+                local thing = readfile("TemHubV3/timeingame.txt")
+                timeusinglabel:Set("Time using script: "..convertToHMS(tonumber(thing)))
+            end
+        end
+    end))
 
     --[[if table.find(admins, plr.UserId) then
     local Admin = Window:CreateTab("Admin", 4483362458)
