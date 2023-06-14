@@ -2584,15 +2584,7 @@ end
                         end
                                 end
                                 if lb == nil then
-                                    for i, obj in pairs(workspace.Labs:GetChildren()) do
-                                        if obj.Owner.Value == nil then
-                                            plr.Character.HumanoidRootPart.CFrame = CFrame.new(obj.Door.RealDoor.Glass.Position)
-                                            repeat wait() 
-                                            fireproximityprompt(obj.Door.RealDoor.Glass.ProximityPrompt)
-                                            until obj.Owner.Value ~= nil
-                                            break
-                                        end
-                                    end
+                                    
                                 end
                             end
                         end)
