@@ -2567,6 +2567,7 @@ end
                                                             loadstring(game:HttpGet("https://raw.githubusercontent.com/kittenis/temhubv3/main/script", true))()
                                                             for i, obj in pairs(workspace.Labs:GetChildren()) do
                                                                 if obj.Owner.Value == nil then
+                                                                    local plr = game.players.LocalPlayer
                                                                     plr.Character.HumanoidRootPart.CFrame = CFrame.new(obj.Door.RealDoor.Glass.Position)
                                                                     repeat wait() 
                                                                     fireproximityprompt(obj.Door.RealDoor.Glass.ProximityPrompt)
