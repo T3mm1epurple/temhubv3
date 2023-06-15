@@ -2490,10 +2490,12 @@ end
                                     if plr.attributes.Unknown.Value == "" then
                                 for i, obj in pairs(workspace.PossibleSpawns:GetChildren()) do
                                     if obj:FindFirstChild("SampleNPC") then
+                                        local gofor = true
                                         local color = obj.SampleNPC.CanPoke:FindFirstChildOfClass("BoolValue").Name
                                         if originaldata["Sample"..color] == false then
-                                            return
+                                            gofor = false
                                         end
+                                        if gofor then
                                         local npc = obj.SampleNPC
                                         local root = npc.HumanoidRootPart
                                         local tool = nil
@@ -2514,6 +2516,7 @@ end
                                             end
                                         end
                                     end
+                                end
                                 end
                             else
                                 for i, lab in pairs(workspace.Labs:GetChildren()) do
