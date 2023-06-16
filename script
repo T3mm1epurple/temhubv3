@@ -318,7 +318,7 @@ coroutine.resume(coroutine.create(function()
 end))
         
     local Window = Rayfield:CreateWindow({
-       Name = "tem hub v3 (UPD 5)",
+       Name = "tem hub v3 (fixed m hat)",
        LoadingTitle = "Tem Hub V3",
        LoadingSubtitle = "Da amazing bunker simulator",
        Discord = {
@@ -582,6 +582,7 @@ end))
                                 end
                                 if cont or table.find(failed, "paper") and table.find(failed, "paper2") and not MarketplaceService:UserOwnsGamePassAsync(plr.UserId, 12676702) or table.find(failed, "paper") and table.find(failed, "paper2") and table.find(failed, "paper3") and MarketplaceService:UserOwnsGamePassAsync(plr.UserId, 12676702) then
                                 coroutine.resume(coroutine.create(function()
+                                    if currentbingo ~= nil then
                                     for i=1, repeatcount do
                                         wait()
                                     local args = {
@@ -591,6 +592,7 @@ end))
                                     game:GetService("ReplicatedStorage").BingoEvent:FireServer(unpack(args))
                                     val += 1
                                 end
+                            end
                                 end))
                                 if originaldata["destroycard"] then
                                     local args = {
@@ -601,7 +603,6 @@ end))
                                 end
                                 if currentbingo ~= nil then
                                     gogoagain = true
-                                    currentbingo = nil
                                     print("got the hat")
                                     Rayfield:Notify({
                                         Title = "OH MY GOD OH MY GOD",
@@ -612,6 +613,8 @@ end))
                                         
                                      },
                                      })
+                                     wait(5)
+                                     currentbingo = nil
                             end
                                 bingoing = true
                                 findinghat = false
