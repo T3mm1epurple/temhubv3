@@ -109,6 +109,7 @@ _G.whitelist = {
         SampleBlue = true,
         SampleOrange = true,
         SamplePink = true,
+        samecostume = true,
         }
 
         --FUNCTIONS
@@ -361,6 +362,7 @@ end))
         local Drinking = Window:CreateTab("7/11", 4483362458)  
         local Cleaning = Window:CreateTab("Mop", 4483362458)
         local Delivery = Window:CreateTab("Mail", 4483362458)
+        local Stalls = Window:CreateTab("Stalls", 4483362458)
         --local FunTab = Window:CreateTab("Fun", 4483362458)
         local LeaderTab = Window:CreateTab("LB", 4483362458)
 
@@ -1815,6 +1817,54 @@ local autofoodsupply = Drinking:CreateToggle({
     end,
  })
  automailtoggle:Set(originaldata["automail"])
+
+ local Button = Stalls:CreateButton({
+    Name = "Claim all stalls",
+    Callback = function()
+        local random = nil
+        if originaldata["samecostume"] then
+            random = math.random(1, 100)
+        end
+        for i, stall in pairs(workspace.ShopStands:GetChildren()) do
+            if not originaldata["samecostume"] then
+                random = math.random(1, 100)
+            end
+            local args = {
+                [1] = "Claim",
+                [2] = random,
+                [3] = stall:WaitForChild("Owner"),
+                [4] = math.random(1000, 2000)
+            }
+            
+            game:GetService("ReplicatedStorage"):WaitForChild("PlayerSuitShopEvent"):FireServer(unpack(args))
+            
+        end
+    end,
+})
+
+local Button = Stalls:CreateButton({
+    Name = "Remove stalls",
+    Callback = function()
+        for i=1, 100 do
+            local args = {
+                [1] = "Stop"
+            }
+            
+            game:GetService("ReplicatedStorage"):WaitForChild("PlayerSuitShopEvent"):FireServer(unpack(args))
+        end
+    end,
+})
+
+    local toggle = Stalls:CreateToggle({
+        Name = "All same costume",
+        CurrentValue = nil,
+        Flag = nil,
+        Callback = function(callback)
+            local value = "samecostume"
+                originaldata[value] = callback
+        end,
+     })
+     toggle:Set(originaldata["samecostume"])
 
  --[[local Section = FunTab:CreateSection("Suits")
 
