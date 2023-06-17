@@ -2449,12 +2449,14 @@ end
                         while originaldata[value] == true do
                             local yes, no = pcall(function()
                             if scriptrunning then
+                                if not plr.Backpack:FindFirstChild("Card") and not plr.Character:FindFirstChild("Card") then
                                 local args = {
                                     [1] = 768,
                                     [2] = tostring(math.random(10, 99))
                                 }
                                 
                                 game:GetService("ReplicatedStorage").BoomEvent:FireServer(unpack(args))   
+                            end
                             end
                         end)
                         wait()
