@@ -617,7 +617,7 @@ end))
                                 end
                                 if cont or table.find(failed, "paper") and table.find(failed, "paper2") and not MarketplaceService:UserOwnsGamePassAsync(plr.UserId, 12676702) or table.find(failed, "paper") and table.find(failed, "paper2") and table.find(failed, "paper3") and MarketplaceService:UserOwnsGamePassAsync(plr.UserId, 12676702) then
                                 coroutine.resume(coroutine.create(function()
-                                    if currentbingo ~= nil then
+                                    if currentbingo ~= nil and not originaldata["destroycard"] then
                                         print("got the hat")
                                         Rayfield:Notify({
                                             Title = "OH MY GOD OH MY GOD",
