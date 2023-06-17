@@ -598,12 +598,14 @@ end))
                             end
                                 end))
                                 if originaldata["destroycard"] then
+                                    if currentbingo == nil then
                                     local args = {
                                         [1] = 2
                                     }
                                     
                                     game:GetService("ReplicatedStorage").CardEvent:FireServer(unpack(args)) 
                                 end
+                            end
                                 if currentbingo ~= nil then
                                     gogoagain = true
                                     print("got the hat")
