@@ -617,8 +617,8 @@ end))
                                         
                                      },
                                      })
-                                     wait(5)
                                      gogoagain = true
+                                     wait(5)
                                      currentbingo = nil
                             end
                                 bingoing = true
