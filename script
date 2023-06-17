@@ -111,6 +111,7 @@ _G.whitelist = {
         SamplePink = true,
         samecostume = true,
         smallbingo = false,
+        bingoui = false,
         }
 
         --FUNCTIONS
@@ -669,6 +670,65 @@ end))
             end,
          })
          smallbing:Set(originaldata["smallbingo"])
+
+         local betterui = Bingo:CreateToggle({
+            Name = "Better bingo ui",
+            CurrentValue = nil,
+            Flag = nil,
+            Callback = function(callback)
+            	local value = "bingoui"
+                    originaldata[value] = callback
+                    coroutine.resume(coroutine.create(function()
+                        while originaldata[value] do
+                            local yes, no = pcall(function()
+                            if scriptrunning then
+                                for i=1, 3 do
+                                    local sheet = plr.PlayerGui:FindFirstChild("Sheet"..i)
+                                    if i == 1 then
+                                        sheet = plr.PlayerGui:FindFirstChild("Sheet")
+                                    end
+                                    if sheet then
+                                        local frame = sheet.Frame.Frame
+                                        if not frame:FindFirstChild("Changed") then
+                                        Instance.new("UICorner", frame)
+                                        local stroke = Instance.new("UIStroke", frame)
+                                        stroke.Thickness = 2
+                                        stroke.ApplyStrokeMode = "Border"
+                                        frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+                                        frame.BackgroundTransparency = 0.5
+                                        Instance.new("UICorner", frame.Stuff.Win)
+                                        local stroke = Instance.new("UIStroke", frame.Stuff.Win)
+                                        stroke.Thickness = 2
+                                        stroke.ApplyStrokeMode = "Border"
+                                        frame.Stuff.Win.BackgroundColor3 = Color3.fromRGB(0,0,0)
+                                        frame.Stuff.Win.BackgroundTransparency = 0.5
+                                        local val = Instance.new("BoolValue", frame)
+                                        for i, but in pairs(frame:GetChildren()) do
+                                            if but:IsA("TextButton") then
+                                                but.TextColor3 = Color3.fromRGB(255, 255, 255)
+                                                Instance.new("UICorner", but)
+                                                if but.Name ~= "13" then
+                                                but.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+                                                end
+                                            end
+                                        end
+                                        for i, line in pairs(frame:GetChildren()) do
+                                            if line.Name == "Line" then
+                                                line.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                                            end
+                                        end
+                                        val.Name = "Changed"
+                                        end
+                                end
+                                end
+                            end
+                        end)
+                        wait()
+                    end
+                end))
+            end,
+         })
+         betterui:Set(originaldata["bingoui"])
 
          local Section = Bingo:CreateSection("MYSTERY Hat")
 
