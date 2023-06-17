@@ -436,6 +436,37 @@ end))
             ["short top y"] = {2, 4, 8, 13, 18},
             }
 
+            local Button = Bingo:CreateButton({
+                Name = "Test mysyery types (go to ffchecker board)",
+                Callback = function()
+                    local board = workspace.FFChecker
+                    for i, letter in pairs(letters) do
+                    for i, button in pairs(board:GetChildren()) do
+                        if button.Color == Color3.fromRGB(75, 151, 75) then
+                            if button:FindFirstChildOfClass("ClickDetector") then
+                                fireclickdetector(button:FindFirstChildOfClass("ClickDetector"))
+                            end
+                        end
+                    end
+
+                    for i, let in pairs(letter) do
+                    local button = board:FindFirstChild(tostring(let))
+                    if button:FindFirstChildOfClass("ClickDetector") then
+                        fireclickdetector(button:FindFirstChildOfClass("ClickDetector"))
+                    end
+                    end
+                    wait(1)
+                end
+                for i, button in pairs(board:GetChildren()) do
+                    if button.Color == Color3.fromRGB(75, 151, 75) then
+                        if button:FindFirstChildOfClass("ClickDetector") then
+                            fireclickdetector(button:FindFirstChildOfClass("ClickDetector"))
+                        end
+                    end
+                end
+                end,
+            })
+
         local bingotggle = Bingo:CreateToggle({
             Name = "Auto bingo",
             CurrentValue = nil,
@@ -531,6 +562,7 @@ end))
                                             if ermm == 0 then
                                                 cont = true
                                                 currentbingo = i
+                                                print("got hat?")
                                             end
                                             if uhhl == uhhlcount then
                                                 wowyou = true
