@@ -110,6 +110,7 @@ _G.whitelist = {
         SampleOrange = true,
         SamplePink = true,
         samecostume = true,
+        smallbingo = false,
         }
 
         --FUNCTIONS
@@ -561,26 +562,19 @@ end))
                                             end
                                         end
                                     end
-                                    --plr.Character.Humanoid.Jump = true
-                                    --wait(.5)
-                                    --local root = plr.Character.HumanoidRootPart
-                                    --local pos = root.CFrame
-                                    --repeat runservice.RenderStepped:Wait() 
-                                --root.CFrame = workspace["mr card man"].HumanoidRootPart.CFrame + Vector3.new(0, -10, 0)
                                         local args = {
                                             [1] = 1
                                         }
                                         
                                         game:GetService("ReplicatedStorage").CardEvent:FireServer(unpack(args))   
                                         coroutine.resume(coroutine.create(function()
-                                            repeat wait()
-                                            until plr.Backpack:FindFirstChild("BingoCard")
-                                            if equip then
+                                            repeat wait() until plr.Backpack:FindFirstChild("BingoCard") or plr.Character:FindFirstChild("BingoCard")
+                                            if equip == true then
+                                                if plr.Backpack:FindFirstChild("BingoCard") then
                                                 plr.Backpack.BingoCard.Parent = plr.Character
+                                                end
                                             end
                                         end))
-                                    --until plr.Backpack:FindFirstChild("BingoCard")
-                                    --root.CFrame = pos
                                 end
                                 if cont or table.find(failed, "paper") and table.find(failed, "paper2") and not MarketplaceService:UserOwnsGamePassAsync(plr.UserId, 12676702) or table.find(failed, "paper") and table.find(failed, "paper2") and table.find(failed, "paper3") and MarketplaceService:UserOwnsGamePassAsync(plr.UserId, 12676702) then
                                 coroutine.resume(coroutine.create(function()
@@ -632,6 +626,49 @@ end))
             end,
          })
          bingotggle:Set(originaldata["autobingo"])
+
+         local smallbing = Bingo:CreateToggle({
+            Name = "Side screen bingo",
+            CurrentValue = nil,
+            Flag = nil,
+            Callback = function(callback)
+            	local value = "smallbingo"
+                    originaldata[value] = callback
+                    coroutine.resume(coroutine.create(function()
+                        while originaldata[value] do
+                            local yes, no = pcall(function()
+                            if scriptrunning then
+                                for i=1, 3 do
+                                    local sheet = plr.PlayerGui:FindFirstChild("Sheet"..i)
+                                    if i == 1 then
+                                        sheet = plr.PlayerGui:FindFirstChild("Sheet")
+                                    end
+                                    if sheet then
+                                        if i == 1 then
+                                            sheet.Frame.Position = UDim2.new(-0.550000012, 0, -0.1, 0)
+                                            local auto = sheet.Frame.Frame:FindFirstChild("Auto")
+                                            if auto then
+                                                auto:Destroy()
+                                            end
+                                        elseif i == 2 then
+                                            sheet.Frame.Position = UDim2.new(-0.350000024, 0, 0.100000001, 0)
+                                            local auto = sheet.Frame.Frame:FindFirstChild("Display")
+                                            if auto then
+                                                auto:Destroy()
+                                            end
+                                        elseif i == 3 then
+                                            sheet.Frame.Position = UDim2.new(-0.449999988, 0, 0.300000012, 0)
+                                        end
+                                    end
+                                end
+                            end
+                        end)
+                        wait()
+                    end
+                end))
+            end,
+         })
+         smallbing:Set(originaldata["smallbingo"])
 
          local Section = Bingo:CreateSection("MYSTERY Hat")
 
