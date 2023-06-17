@@ -3025,6 +3025,7 @@ autosavetoggle:Set(originaldata["autosave"])
             end
 
             for i, gui in pairs(plr.PlayerGui:GetDescendants()) do
+                if not plr.PlayerGui.Chat:FindFirstAncestor(gui) and not plr.PlayerGui.TopbarPlus:FindFirstAncestor(gui) then
                 if gui:IsA("Frame") or gui:IsA("ScrollingFrame") then
                 if gui.BackgroundTransparency < 1 then
                     Instance.new("UICorner", gui)
@@ -3046,6 +3047,7 @@ autosavetoggle:Set(originaldata["autosave"])
                     gui.BackgroundTransparency = 0.5
                     gui.TextColor3 = Color3.fromRGB(255, 255, 255)
                 end
+            end
             end
         end,
     })
