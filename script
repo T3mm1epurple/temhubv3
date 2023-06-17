@@ -321,7 +321,7 @@ coroutine.resume(coroutine.create(function()
 end))
         
     local Window = Rayfield:CreateWindow({
-       Name = "tem hub v3 (fixed m hat)",
+       Name = "tem hub v3 (FIXED AGAIN)",
        LoadingTitle = "Tem Hub V3",
        LoadingSubtitle = "Da amazing bunker simulator",
        Discord = {
@@ -607,7 +607,6 @@ end))
                                 end
                             end
                                 if currentbingo ~= nil then
-                                    gogoagain = true
                                     print("got the hat")
                                     Rayfield:Notify({
                                         Title = "OH MY GOD OH MY GOD",
@@ -619,6 +618,7 @@ end))
                                      },
                                      })
                                      wait(5)
+                                     gogoagain = true
                                      currentbingo = nil
                             end
                                 bingoing = true
