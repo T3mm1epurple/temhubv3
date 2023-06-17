@@ -112,6 +112,7 @@ _G.whitelist = {
         samecostume = true,
         smallbingo = false,
         bingoui = false,
+        yandt = false,
         }
 
         --FUNCTIONS
@@ -434,6 +435,8 @@ end))
             ["new y rl"] = {5, 7, 9, 13, 17, 21},
             ["new y long"] = {1, 5, 7, 9, 13, 17, 21},
             ["short top y"] = {2, 4, 8, 13, 18},
+            ["right e"] = {3,4,5,8,13,14,15,18,23,24,25},
+            R = {1,2,3,4,6,10,11,12,13,14,16,20,21,25}
             }
 
             local Button = Bingo:CreateButton({
@@ -513,6 +516,7 @@ end))
                                             uhhl += 1
                                         end
                                             for what, letter in pairs(letters) do
+                                                --if string.find(string.lower(what), "t") and originaldata["yandt"] == true or string.find(string.lower(what), "y") and originaldata["yandt"] == true or originaldata["yandt"] == false then
                                                 local count = table.getn(letter)
                                                 local originalnum = 0
                                                 wowyou = false
@@ -708,6 +712,17 @@ end))
             end,
          })
          smallbing:Set(originaldata["smallbingo"])
+
+         --[[local yandtonk = Bingo:CreateToggle({
+            Name = "Only y and t",
+            CurrentValue = nil,
+            Flag = nil,
+            Callback = function(callback)
+            	local value = "yandt"
+                    originaldata[value] = callback
+            end,
+         })
+         yandtonk:Set(originaldata["yandt"])]]--
 
          --[[local betterui = Bingo:CreateToggle({
             Name = "Better bingo ui",
