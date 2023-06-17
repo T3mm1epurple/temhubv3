@@ -432,6 +432,7 @@ end))
             ["new y ll"] = {1, 7, 9, 13, 17, 21},
             ["new y rl"] = {5, 7, 9, 13, 17, 21},
             ["new y long"] = {1, 5, 7, 9, 13, 17, 21},
+            ["short top y"] = {2, 4, 8, 13, 18},
             }
 
         local bingotggle = Bingo:CreateToggle({
