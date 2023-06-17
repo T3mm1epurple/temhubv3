@@ -571,10 +571,9 @@ end))
                                         coroutine.resume(coroutine.create(function()
                                             repeat wait() until plr.Backpack:FindFirstChild("BingoCard") or plr.Character:FindFirstChild("BingoCard")
                                             if equip == true then
-                                                if plr.Backpack:FindFirstChild("BingoCard") then
+                                                repeat wait() until plr.Backpack:FindFirstChild("BingoCard") or plr.Character:FindFirstChild("BingoCard")
                                                 plr.Backpack.BingoCard.Parent = plr.Character
                                                 end
-                                            end
                                         end))
                                 end
                                 if cont or table.find(failed, "paper") and table.find(failed, "paper2") and not MarketplaceService:UserOwnsGamePassAsync(plr.UserId, 12676702) or table.find(failed, "paper") and table.find(failed, "paper2") and table.find(failed, "paper3") and MarketplaceService:UserOwnsGamePassAsync(plr.UserId, 12676702) then
