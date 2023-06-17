@@ -321,7 +321,7 @@ coroutine.resume(coroutine.create(function()
 end))
         
     local Window = Rayfield:CreateWindow({
-       Name = "tem hub v3 (FIXED AGAIN)",
+       Name = "tem hub v3 (final fix)",
        LoadingTitle = "Tem Hub V3",
        LoadingSubtitle = "Da amazing bunker simulator",
        Discord = {
@@ -3001,6 +3001,30 @@ autosavetoggle:Set(originaldata["autosave"])
         Name = "Better UI (buttons broken)",
         Callback = function()
             for i, gui in pairs(game.ReplicatedStorage:GetDescendants()) do
+                if gui:IsA("Frame") or gui:IsA("ScrollingFrame") then
+                if gui.BackgroundTransparency < 1 then
+                    Instance.new("UICorner", gui)
+                    local stroke = Instance.new("UIStroke", gui)
+                    stroke.Thickness = 2
+                    stroke.ApplyStrokeMode = "Border"
+                    gui.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+                    gui.BackgroundTransparency = 0.5
+                    end
+                elseif gui:IsA("TextLabel") then
+                    gui.TextColor3 = Color3.fromRGB(255, 255, 255)
+                    Instance.new("UICorner", gui)
+                elseif gui:IsA("TextButton") then
+                    Instance.new("UICorner", gui)
+                    local stroke = Instance.new("UIStroke", gui)
+                    stroke.Thickness = 2
+                    stroke.ApplyStrokeMode = "Border"
+                    gui.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+                    gui.BackgroundTransparency = 0.5
+                    gui.TextColor3 = Color3.fromRGB(255, 255, 255)
+                end
+            end
+
+            for i, gui in pairs(plr.PlayerGui:GetDescendants()) do
                 if gui:IsA("Frame") or gui:IsA("ScrollingFrame") then
                 if gui.BackgroundTransparency < 1 then
                     Instance.new("UICorner", gui)
