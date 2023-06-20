@@ -2466,6 +2466,19 @@ end
          })
          suitchangetoggle:Set(originaldata["autolottery"])
 
+         local ticketnumber = Lottery:CreateLabel("Ticket number: ")
+         local currentnumber = Lottery:CreateLabel("Chosen number: ")
+         coroutine.resume(coroutine.create(function()
+            while wait() do
+                if scriptrunning then
+                    currentnumber:Set("Chosen number: "..workspace.NUMBERCHOOSER.Model.Model.Number.SurfaceGui.No.Text)
+                    local yes, no = pcall(function()
+                    ticketnumber:Set("Ticket number: "..plr.Character:FindFirstChild("Card").ToolTip or plr.Backpack:FindFirstChild("Card").ToolTip)
+                    end)
+                end
+            end
+         end))
+
          local Section = Lottery:CreateSection("Fun Stuff")
          local sillycardamount = 1
          local getcard = true
