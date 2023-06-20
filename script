@@ -2361,19 +2361,11 @@ Topbar.Hide.MouseButton1Click:Connect(function()
 	end
 end)
 
-local selectedtheme = 1
-
---[[Topbar.Theme.MouseButton1Click:Connect(function()
+Topbar.Theme.MouseButton1Click:Connect(function()
 	if Debounce then return end
-    local ThemeTable = RayfieldLibrary.Theme
-    local count = #ThemeTable
-    selectedtheme += 1
-    if count < selectedtheme then
-        selectedtheme = 1
-    end
-    local newtheme = ThemeTable[selectedtheme]
-    ChangeTheme(selectedtheme)
-end)]]--
+	print("test")
+    
+end)
 
 UserInputService.InputBegan:Connect(function(input, processed)
 	if (input.KeyCode == Enum.KeyCode.RightShift and not processed) then
