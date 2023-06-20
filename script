@@ -2420,12 +2420,17 @@ end
         local Button = Lottery:CreateButton({
             Name = "Get lottery ticket",
             Callback = function()
-                local args = {
-                    [1] = 768,
-                    [2] = tostring(math.random(10, 99))
-                }
-                
-                game:GetService("ReplicatedStorage").BoomEvent:FireServer(unpack(args))   
+                local num = math.random(1, 99)
+                if math.ceil(math.log10(num)) == 1 then
+                    num = "0"..tostring(num)
+                end
+                print(num)
+            local args = {
+                [1] = 768,
+                [2] = tostring(num)
+            }
+            
+            game:GetService("ReplicatedStorage").BoomEvent:FireServer(unpack(args))    
             end,
         })
 
@@ -2450,12 +2455,17 @@ end
                             local yes, no = pcall(function()
                             if scriptrunning then
                                 if not plr.Backpack:FindFirstChild("Card") and not plr.Character:FindFirstChild("Card") then
+                                    local num = math.random(1, 99)
+                                    if #tostring(num) == 1 then
+                                        num = "0"..tostring(num)
+                                    end
+                                    print(num)
                                 local args = {
                                     [1] = 768,
-                                    [2] = tostring(math.random(10, 99))
+                                    [2] = tostring(num)
                                 }
                                 
-                                game:GetService("ReplicatedStorage").BoomEvent:FireServer(unpack(args))   
+                                game:GetService("ReplicatedStorage").BoomEvent:FireServer(unpack(args)) 
                             end
                             end
                         end)
