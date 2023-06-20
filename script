@@ -2421,7 +2421,7 @@ end
             Name = "Get lottery ticket",
             Callback = function()
                 local num = math.random(1, 99)
-                if math.ceil(math.log10(num)) == 1 then
+                if #tostring(num) == 1 then
                     num = "0"..tostring(num)
                 end
                 print(num)
