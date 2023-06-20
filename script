@@ -360,14 +360,14 @@ end))
     end
     
     if mainid == 4050215579 then
-        local Bingo = Window:CreateTab("Bingo", 4483362458)
-        local Shop = Window:CreateTab("Canteen", 4483362458)
-        local Drinking = Window:CreateTab("7/11", 4483362458)  
-        local Cleaning = Window:CreateTab("Mop", 4483362458)
-        local Delivery = Window:CreateTab("Mail", 4483362458)
-        local Stalls = Window:CreateTab("Stalls", 4483362458)
+        local Bingo = Window:CreateTab("Bingo", 13813044220)
+        local Shop = Window:CreateTab("Canteen", 13813054792)
+        local Drinking = Window:CreateTab("7/11", 13813050433)  
+        local Cleaning = Window:CreateTab("Mop", 13813063660)
+        local Delivery = Window:CreateTab("Mail", 13813068267)
+        local Stalls = Window:CreateTab("Stalls", 13813072718)
         --local FunTab = Window:CreateTab("Fun", 4483362458)
-        local LeaderTab = Window:CreateTab("LB", 4483362458)
+        local LeaderTab = Window:CreateTab("LB", 13813078272)
 
         local Section = Bingo:CreateSection("Main")
 
@@ -2413,7 +2413,7 @@ end
     end
 
     if mainid == 4472538305 then
-        local Lottery = Window:CreateTab("Lottery", 4483362458)
+        local Lottery = Window:CreateTab("Tickets", 13813097941)
 
         local Section = Lottery:CreateSection("Extras")
 
@@ -2542,9 +2542,9 @@ end
     end
 
     if mainid == 4684427971 then
-        local Gamble = Window:CreateTab("Gambling", 4483362458)
-        local Doctor = Window:CreateTab("Doctor", 4483362458)
-        local Other = Window:CreateTab("Other", 4483362458)
+        local Gamble = Window:CreateTab("Gambling", 13813106228)
+        local Doctor = Window:CreateTab("Doctor", 13813110399)
+        local Other = Window:CreateTab("Other", 13813123052)
 
         local Button = Doctor:CreateButton({
             Name = "Fast Checkup",
@@ -2691,7 +2691,7 @@ end
         end
 
         if mainid == 8637121738 then
-            local Sample = Window:CreateTab("Sampling", 4483362458)
+            local Sample = Window:CreateTab("Sampling", 13813143227)
 
             local Button = Sample:CreateButton({
                 Name = "Claim Vacant Room",
@@ -2935,7 +2935,7 @@ end
 
 
 
-    local Settings = Window:CreateTab("Settings", 4483362458)
+    local Settings = Window:CreateTab("Settings", 13813033421)
 
     local Label = Settings:CreateLabel("Built in Anti-AFK")
 
