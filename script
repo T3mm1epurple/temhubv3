@@ -439,37 +439,6 @@ end))
             R = {1,2,3,4,6,10,11,12,13,14,16,20,21,25}
             }
 
-            local Button = Bingo:CreateButton({
-                Name = "Test mysyery types (go to ffchecker board)",
-                Callback = function()
-                    local board = workspace.FFChecker
-                    for i, letter in pairs(letters) do
-                    for i, button in pairs(board:GetChildren()) do
-                        if button.Color == Color3.fromRGB(75, 151, 75) then
-                            if button:FindFirstChildOfClass("ClickDetector") then
-                                fireclickdetector(button:FindFirstChildOfClass("ClickDetector"))
-                            end
-                        end
-                    end
-
-                    for i, let in pairs(letter) do
-                    local button = board:FindFirstChild(tostring(let))
-                    if button:FindFirstChildOfClass("ClickDetector") then
-                        fireclickdetector(button:FindFirstChildOfClass("ClickDetector"))
-                    end
-                    end
-                    wait(1)
-                end
-                for i, button in pairs(board:GetChildren()) do
-                    if button.Color == Color3.fromRGB(75, 151, 75) then
-                        if button:FindFirstChildOfClass("ClickDetector") then
-                            fireclickdetector(button:FindFirstChildOfClass("ClickDetector"))
-                        end
-                    end
-                end
-                end,
-            })
-
         local bingotggle = Bingo:CreateToggle({
             Name = "Auto bingo",
             CurrentValue = nil,
@@ -807,6 +776,7 @@ end))
             end,
          })
          mystoggle:Set(originaldata["destroycard"])
+         
 
          --[[local Button = Bingo:CreateButton({
             Name = "Test mystery hat detection",
@@ -824,6 +794,37 @@ end))
          local findingmylabel = Bingo:CreateLabel("Finding MYSTERY letters: false")
 
          local ownshatlabel = Bingo:CreateLabel("Owns hat: ")
+
+         local Button = Bingo:CreateButton({
+            Name = "Test mystery types (go to ffchecker board)",
+            Callback = function()
+                local board = workspace.FFChecker
+                for i, letter in pairs(letters) do
+                for i, button in pairs(board:GetChildren()) do
+                    if button.Color == Color3.fromRGB(75, 151, 75) then
+                        if button:FindFirstChildOfClass("ClickDetector") then
+                            fireclickdetector(button:FindFirstChildOfClass("ClickDetector"))
+                        end
+                    end
+                end
+
+                for i, let in pairs(letter) do
+                local button = board:FindFirstChild(tostring(let))
+                if button:FindFirstChildOfClass("ClickDetector") then
+                    fireclickdetector(button:FindFirstChildOfClass("ClickDetector"))
+                end
+                end
+                wait(1)
+            end
+            for i, button in pairs(board:GetChildren()) do
+                if button.Color == Color3.fromRGB(75, 151, 75) then
+                    if button:FindFirstChildOfClass("ClickDetector") then
+                        fireclickdetector(button:FindFirstChildOfClass("ClickDetector"))
+                    end
+                end
+            end
+            end,
+        })
 
          local Section = Bingo:CreateSection("Values")
 
