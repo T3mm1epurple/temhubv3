@@ -487,12 +487,13 @@ end))
                                 local val = 1
                                 local cont = false
                                 local failed = {}
+
+                                repeatcount = 2
+                                if MarketplaceService:UserOwnsGamePassAsync(plr.UserId, 12676702) then
+                                    repeatcount = 3
+                                end
+
                                 if originaldata["mysteryhat"] then
-                                    fireclickdetector(workspace.MysteryHat.ClickDetector)
-                                    repeatcount = 2
-                                    if MarketplaceService:UserOwnsGamePassAsync(plr.UserId, 12676702) then
-                                        repeatcount = 3
-                                    end
                                     for i=1, repeatcount do
                                         local folder
                                         local sheet
@@ -636,7 +637,7 @@ end))
                                          wait(5)
                                          currentbingo = nil
                                 end
-                                    if currentbingo == nil then
+                                    if currentbingo == nil and originaldata["mysteryhat"] or originaldata["mysteryhat"] == false then
                                     for i=1, repeatcount do
                                         wait()
                                     local args = {
@@ -648,7 +649,7 @@ end))
                                 end
                             end
                                 end))
-                                if originaldata["destroycard"] then
+                                if originaldata["destroycard"] and originaldata["mysteryhat"] then
                                     local args = {
                                         [1] = 2
                                     }
