@@ -2297,14 +2297,14 @@ local Button = Stalls:CreateButton({
         local value = string.split(mainvalidk.Player.Text, ".")
         local place = value[1]
         local player = value[2]
-        local count = string.split(mainvalidk.Score.Text, "$")[2]
+        local count = mainvalidk.Score.Text
         if player == plr.Name then
             if place ~= "1" then
          local beforevalue = workspace.HighScore7.ScoreBlock.SurfaceGui.Frame:FindFirstChild("Name"..tostring(tonumber(place) - 1))
          local value2 = string.split(beforevalue.Player.Text, ".")
         local place2 = value2[1]
         local player2 = value2[2]
-        local count2 = string.split(beforevalue.Score.Text, "$")[2]
+        local count2 = beforevalue.Score.Text
         local convert = tonumber(count2) - tonumber(count)
         cashneed:Set("Cash needed to get to #"..place2..": "..convert)
         allowed = false
@@ -2317,7 +2317,7 @@ local Button = Stalls:CreateButton({
      if allowed then
      local total = #workspace.HighScore7.ScoreBlock.SurfaceGui.Frame:GetChildren()
      local value = workspace.HighScore7.ScoreBlock.SurfaceGui.Frame:FindFirstChild("Name"..total)
-     local count2 = string.split(value.Score.Text, "$")[2]
+     local count2 = value.Score.Text
      local count = tostring(plr.attributes.Cash.Value)
      local convert = tonumber(count2) - tonumber(count)
      cashneed:Set("Cash needed to get to #"..total..": "..convert)
