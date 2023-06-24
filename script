@@ -3129,7 +3129,7 @@ autosavetoggle:Set(originaldata["autosave"])
      disabseattoggle:Set(originaldata["disableseats"])
 
      local laptoptoggle = Settings:CreateToggle({
-        Name = "Auto laptop",
+        Name = "Auto laptop/Tablet",
         CurrentValue = nil,
         Flag = nil,
         Callback = function(callback)
@@ -3141,6 +3141,9 @@ autosavetoggle:Set(originaldata["autosave"])
                         if scriptrunning then
                         if plr.Backpack:FindFirstChild("Laptop") then
                             plr.Backpack.Laptop.Parent = plr.Character           
+                        end
+                        if plr.Backpack:FindFirstChild("Tablet") then
+                            plr.Backpack.Tablet.Parent = plr.Character           
                         end
                     end
                 end)
