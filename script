@@ -109,10 +109,11 @@ _G.whitelist = {
         SampleBlue = true,
         SampleOrange = true,
         SamplePink = true,
-        samecostume = true,
         smallbingo = false,
         bingoui = false,
         yandt = false,
+        autoclaimstall = false,
+        randomsuit = false,
         }
 
         --FUNCTIONS
@@ -365,7 +366,7 @@ end))
         local Drinking = Window:CreateTab("7/11", 13813050433)  
         local Cleaning = Window:CreateTab("Mop", 13813063660)
         local Delivery = Window:CreateTab("Mail", 13813068267)
-        local Stalls = Window:CreateTab("Stalls", 13813072718)
+        --local Stalls = Window:CreateTab("Stalls", 13813072718)
         --local FunTab = Window:CreateTab("Fun", 4483362458)
         local LeaderTab = Window:CreateTab("LB", 13813078272)
 
@@ -1970,53 +1971,38 @@ local autofoodsupply = Drinking:CreateToggle({
  })
  automailtoggle:Set(originaldata["automail"])
 
- local Button = Stalls:CreateButton({
-    Name = "Claim all stalls",
-    Callback = function()
-        local random = nil
-        if originaldata["samecostume"] then
-            random = math.random(1, 100)
-        end
-        for i, stall in pairs(workspace.ShopStands:GetChildren()) do
-            if not originaldata["samecostume"] then
-                random = math.random(1, 100)
-            end
-            local args = {
-                [1] = "Claim",
-                [2] = random,
-                [3] = stall:WaitForChild("Owner"),
-                [4] = math.random(1000, 2000)
-            }
-            
-            game:GetService("ReplicatedStorage"):WaitForChild("PlayerSuitShopEvent"):FireServer(unpack(args))
-            
-        end
+ --[[local toggle = Stalls:CreateToggle({
+    Name = "Auto claim stall",
+    CurrentValue = nil,
+    Flag = nil,
+    Callback = function(callback)
+        local value = "autoclaimstall"
+            originaldata[value] = callback
     end,
-})
+ })
+ toggle:Set(originaldata["autoclaimstall"])
+
+ local toggle = Stalls:CreateToggle({
+    Name = "Random suit",
+    CurrentValue = nil,
+    Flag = nil,
+    Callback = function(callback)
+        local value = "randomsuit"
+            originaldata[value] = callback
+    end,
+ })
+ toggle:Set(originaldata["randomsuit"])
 
 local Button = Stalls:CreateButton({
     Name = "Remove stalls",
     Callback = function()
-        for i=1, 100 do
             local args = {
                 [1] = "Stop"
             }
             
             game:GetService("ReplicatedStorage"):WaitForChild("PlayerSuitShopEvent"):FireServer(unpack(args))
-        end
     end,
-})
-
-    local toggle = Stalls:CreateToggle({
-        Name = "All same costume",
-        CurrentValue = nil,
-        Flag = nil,
-        Callback = function(callback)
-            local value = "samecostume"
-                originaldata[value] = callback
-        end,
-     })
-     toggle:Set(originaldata["samecostume"])
+})]]--
 
  --[[local Section = FunTab:CreateSection("Suits")
 
