@@ -327,7 +327,7 @@ coroutine.resume(coroutine.create(function()
 end))
         
     local Window = Rayfield:CreateWindow({
-       Name = "tem hub v3 (STALLS REVAMP)",
+       Name = "tem hub v3 (STALLS/DUCKGAME)",
        LoadingTitle = "Tem Hub V3",
        LoadingSubtitle = "Da amazing bunker simulator",
        Discord = {
@@ -2735,6 +2735,7 @@ end
                         while originaldata[value] == true do
                             local yes, no = pcall(function()
                             if scriptrunning then
+                                if plr.attributes.Token.Value > 0 then
                                 local part = workspace.Ggame.PlayBut.Part
                             if plr.PlayerGui:FindFirstChild("ProximityPrompts") then
                                 if #plr.PlayerGui:FindFirstChild("ProximityPrompts"):GetChildren() > 0 then
@@ -2751,6 +2752,7 @@ end
                                 plr.Character.HumanoidRootPart.CFrame = CFrame.new(part.Position)
                             end
                         end
+                    end
                     end)
                         wait()
                     end
