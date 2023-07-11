@@ -117,6 +117,7 @@ _G.whitelist = {
         chosensuit = "",
         suitcount = 1,
         suitcost = 850,
+        duckgame = false
         }
 
         --FUNCTIONS
@@ -2576,6 +2577,7 @@ end
 
     if mainid == 4684427971 then
         local Gamble = Window:CreateTab("Gambling", 13813106228)
+        local Duck = Window:CreateTab("Duck game", 14027177277)
         local Doctor = Window:CreateTab("Doctor", 13813110399)
         local Other = Window:CreateTab("Other", 13813123052)
 
@@ -2721,6 +2723,41 @@ end
             end,
          })
          collectokentoggle:Set(originaldata["converttokens"])
+
+         local toggle = Duck:CreateToggle({
+            Name = "Auto duck game (random)",
+            CurrentValue = nil,
+            Flag = nil,
+            Callback = function(callback)
+            	local value = "duckgame"
+                    originaldata[value] = callback
+                    coroutine.resume(coroutine.create(function()
+                        while originaldata[value] == true do
+                            local yes, no = pcall(function()
+                            if scriptrunning then
+                                local part = workspace.Ggame.PlayBut.Part
+                            if plr.PlayerGui:FindFirstChild("ProximityPrompts") then
+                                if #plr.PlayerGui:FindFirstChild("ProximityPrompts"):GetChildren() > 0 then
+                                    fireproximityprompt(part.Attachment.ProximityPrompt)
+                                    local args = {
+                                        [1] = math.random(1, 2)
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage"):WaitForChild("DuckControl"):FireServer(unpack(args))
+                                else
+                                    plr.Character.HumanoidRootPart.CFrame = CFrame.new(part.Position)
+                                end
+                            else
+                                plr.Character.HumanoidRootPart.CFrame = CFrame.new(part.Position)
+                            end
+                        end
+                    end)
+                        wait()
+                    end
+                    end))
+            end,
+         })
+         toggle:Set(originaldata["duckgame"])
         end
 
         if mainid == 8637121738 then
