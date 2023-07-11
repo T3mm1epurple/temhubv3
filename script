@@ -114,6 +114,9 @@ _G.whitelist = {
         yandt = false,
         autoclaimstall = false,
         randomsuit = false,
+        chosensuit = "",
+        suitcount = 1,
+        suitcost = 850,
         }
 
         --FUNCTIONS
@@ -323,7 +326,7 @@ coroutine.resume(coroutine.create(function()
 end))
         
     local Window = Rayfield:CreateWindow({
-       Name = "tem hub v3 (THEMES)",
+       Name = "tem hub v3 (STALLS REVAMP)",
        LoadingTitle = "Tem Hub V3",
        LoadingSubtitle = "Da amazing bunker simulator",
        Discord = {
@@ -339,7 +342,7 @@ end))
           FileName = "TemHubKey",
           SaveKey = true,
           GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
-          Key = {"newkey"}
+          Key = {"okayguyskey"}
        }
     })
 
@@ -366,7 +369,7 @@ end))
         local Drinking = Window:CreateTab("7/11", 13813050433)  
         local Cleaning = Window:CreateTab("Mop", 13813063660)
         local Delivery = Window:CreateTab("Mail", 13813068267)
-        --local Stalls = Window:CreateTab("Stalls", 13813072718)
+        local Stalls = Window:CreateTab("Stalls", 13813072718)
         --local FunTab = Window:CreateTab("Fun", 4483362458)
         local LeaderTab = Window:CreateTab("LB", 13813078272)
 
@@ -1971,108 +1974,132 @@ local autofoodsupply = Drinking:CreateToggle({
  })
  automailtoggle:Set(originaldata["automail"])
 
- --[[local toggle = Stalls:CreateToggle({
+ local suittable = {}
+ local advancedsuittable = {}
+ local sellsuitui = game.ReplicatedStorage:WaitForChild("SellSuit"):Clone()
+ sellsuitui.Enabled = false
+ sellsuitui.Parent = plr.PlayerGui
+
+ for i, obj in pairs(sellsuitui.Frame.ScrollingFrame:GetChildren()) do
+    if obj:IsA("TextLabel") then
+        table.insert(suittable, obj.Text)
+        table.insert(advancedsuittable, {obj.Text, tonumber(obj.Name)})
+    end
+ end
+ sellsuitui:Destroy()
+ plr.Character.Humanoid.WalkSpeed = 16
+
+local Section = Stalls:CreateSection("Main")
+
+ local toggle = Stalls:CreateToggle({
     Name = "Auto claim stall",
     CurrentValue = nil,
     Flag = nil,
     Callback = function(callback)
         local value = "autoclaimstall"
             originaldata[value] = callback
-    end,
- })
- toggle:Set(originaldata["autoclaimstall"])
-
- local toggle = Stalls:CreateToggle({
-    Name = "Random suit",
-    CurrentValue = nil,
-    Flag = nil,
-    Callback = function(callback)
-        local value = "randomsuit"
-            originaldata[value] = callback
-    end,
- })
- toggle:Set(originaldata["randomsuit"])
-
-local Button = Stalls:CreateButton({
-    Name = "Remove stalls",
-    Callback = function()
-            local args = {
-                [1] = "Stop"
-            }
-            
-            game:GetService("ReplicatedStorage"):WaitForChild("PlayerSuitShopEvent"):FireServer(unpack(args))
-    end,
-})]]--
-
- --[[local Section = FunTab:CreateSection("Suits")
-
- local suitspeedslider = FunTab:CreateSlider({
-    Name = "Suit change speed",
-    Range = {1, 100},
-    Increment = 1,
-    Suffix = "Number",
-    CurrentValue = 5,
-    Flag = nil,
-    Callback = function(Value)
-     local value = "suitspeed"
-    originaldata[value] = Value
-    end,
- })
- suitspeedslider:Set(originaldata["suitspeed"])
-
- local suitchangetoggle = FunTab:CreateToggle({
-    Name = "Auto suit change",
-    CurrentValue = nil,
-    Flag = nil,
-    Callback = function(callback)
-        local value = "suitchange"
-            originaldata[value] = callback
             coroutine.resume(coroutine.create(function()
                 while originaldata[value] == true do
                     local yes, no = pcall(function()
                     if scriptrunning then
-                    for i, part in pairs(workspace:GetChildren()) do
-                        if part:FindFirstChildOfClass("Decal") and part:FindFirstChild("Sound") and part:FindFirstChild("ClickDetector") and part:FindFirstChild("Price") then
-                            if originaldata[value] == true then
-                                fireclickdetector(part["ClickDetector"])
-                                wait(5/originaldata["suitspeed"])
-                            else
-                                break
+                        local stall = workspace.ShopStands
+                        local owned = false
+                        for i, obj in pairs(stall:GetChildren()) do
+                            if obj.Owner.Value == plr then
+                                owned = true
+                            end
+                        end
+                        if owned == false then
+                            for i, obj in pairs(stall:GetChildren()) do
+                                if obj.Owner.Value == nil then
+                                    local suitnum = nil
+                                    for i, obj in pairs(advancedsuittable) do
+                                        if obj[1] == originaldata["chosensuit"] then
+                                            suitnum = obj[2]
+                                        end
+                                    end
+                                    if suitnum == nil then
+                                        suitnum = advancedsuittable[math.random(1, #advancedsuittable)][2]
+                                    end
+
+                                    local args = {
+                                        [1] = "Claim",
+                                        [2] = suitnum,
+                                        [3] = obj:WaitForChild("Owner"),
+                                        [4] = originaldata["suitcost"],
+                                        [5] = originaldata["suitcount"],
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage"):WaitForChild("PlayerSuitShopEvent"):FireServer(unpack(args))    
+                                    break               
+                                end
                             end
                         end
                     end
-                end
-            end)
+                end)
                 wait()
                 end
             end))
     end,
  })
- suitchangetoggle:Set(originaldata["suitchange"])
+ toggle:Set(originaldata["autoclaimstall"])
 
- local Section = FunTab:CreateSection("Other")
 
- local Input = FunTab:CreateInput({
-    Name = "Message",
-    PlaceholderText = "Text",
-    RemoveTextAfterFocusLost = true,
-    Callback = function(Text)
-        local message = game.ReplicatedStorage.Message:Clone()
-        message.Title.Text = Text
-        message.Parent = plr.PlayerGui
+ local Dropdown = Stalls:CreateDropdown({
+    Name = "Chosen suit to sell",
+    Options = suittable,
+    CurrentOption = originaldata["chosensuit"] or "",
+    Flag = nil,
+    Select = true,
+    Callback = function(Option)
+        originaldata["chosensuit"] = Option
     end,
  })
 
- local Input = FunTab:CreateInput({
-    Name = "Gui Message",
-    PlaceholderText = "Text",
-    RemoveTextAfterFocusLost = true,
-    Callback = function(Text)
-        local message = game.ReplicatedStorage["GuiMessage"]:Clone()
-        message.Frame.TextLabel.Text = Text
-        message.Parent = plr.PlayerGui
+ local Input = Stalls:CreateInput({
+	Name = "Amount of suits to sell",
+	PlaceholderText = "Input",
+	RemoveTextAfterFocusLost = false,
+	Callback = function(Text)
+        if tonumber(Text) then
+		originaldata["suitcount"] = tonumber(Text)
+        else
+            Rayfield:Notify({
+                Title = "Notification",
+                Content = "Put a number!",
+                Duration = 1,
+                Image = 4483362458,
+                Actions = { -- Notification Buttons
+             },
+             })
+        end
+	end,
+})
+
+local slider = Stalls:CreateSlider({
+    Name = "Suit cost",
+    Range = {300, 2000},
+    Increment = 1,
+    Suffix = "Number",
+    CurrentValue = originaldata["suitcost"] or 850,
+    Flag = nil,
+    Callback = function(Value)
+        originaldata["suitcost"] = Value
     end,
- })]]--
+ })
+
+local Section = Stalls:CreateSection("Other")
+
+local Button = Stalls:CreateButton({
+    Name = "Remove stall",
+    Callback = function()
+        local args = {
+            [1] = "Stop"
+        }
+        
+        game:GetService("ReplicatedStorage"):WaitForChild("PlayerSuitShopEvent"):FireServer(unpack(args))        
+    end,
+})
 
  local Section = LeaderTab:CreateSection("Bingo")
  
