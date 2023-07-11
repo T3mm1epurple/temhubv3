@@ -2745,6 +2745,7 @@ end
                                     }
                                     
                                     game:GetService("ReplicatedStorage"):WaitForChild("DuckControl"):FireServer(unpack(args))
+                                    wait(1)
                                 else
                                     plr.Character.HumanoidRootPart.CFrame = CFrame.new(part.Position)
                                 end
