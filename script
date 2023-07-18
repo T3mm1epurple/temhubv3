@@ -14,6 +14,7 @@ local MarketplaceService = game:GetService("MarketplaceService")
 local UserInputService = game:GetService("UserInputService")
 _G.currentexecute = executeid
 local scriptrunning = true
+local owneringame = false
 local others = false
 
 local gameids = {
@@ -117,7 +118,8 @@ _G.whitelist = {
         chosensuit = "",
         suitcount = 1,
         suitcost = 850,
-        duckgame = false
+        duckgame = false,
+        safemode = false,
         }
 
         --FUNCTIONS
@@ -455,6 +457,7 @@ end))
                     while originaldata[value] do
                         local yes, no = pcall(function()
                         if scriptrunning then
+                            if owneringame == false then
                                 local args = {
                                     [1] = 1
                                 }
@@ -634,10 +637,8 @@ end))
                                 findinghat = false
                             end
                         end
-                    end)
-                    if not yes then
-                    print(no)
                     end
+                    end)
                             wait()
                             end
                         end))
@@ -909,6 +910,7 @@ local autosupplytoggle = Shop:CreateToggle({
                 while originaldata[value] == true do
                     local yes, no = pcall(function()
                     if scriptrunning then
+                        if owneringame == false then
                     if plr.attributes.SupplyShop.Value <= 0 then
                         if dog2 == false then
                             dog2 = true
@@ -1021,6 +1023,7 @@ local autosupplytoggle = Shop:CreateToggle({
                     end
                     end
                 end
+            end
             end)
                 wait()
                 end
@@ -1096,6 +1099,7 @@ local Button = Drinking:CreateButton({
              })
             return
         end
+        if owneringame == false then
         local pos = Vector3.new(0, 0, 0)
         if originaldata["sodamode"] == 3 then
         pos = workspace.RoofP.Position + Vector3.new(0, 10, 0)
@@ -1114,6 +1118,7 @@ local Button = Drinking:CreateButton({
                             end
                         end
                     end
+                end
     end,
 })
 
@@ -1153,6 +1158,7 @@ local atthispoint = Drinking:CreateToggle({
                 while originaldata[value] do
                     local yes, no = pcall(function()
                     if scriptrunning then
+                        if owneringame == false then
                     if plr.attributes.Sick.Value > 0 then
                         goto4 = true
                         originaldata[value] = false
@@ -1224,7 +1230,9 @@ local atthispoint = Drinking:CreateToggle({
                 if plr.Character ~= nil and plr.Character:FindFirstChild("Humanoid") then
                     if plr.Character.Humanoid.Health > 0 then
                     if originaldata["sodamode"] > 1 then
+                        if owneringame == false then
                 plr.Character.HumanoidRootPart.CFrame = CFrame.new(pos)
+                        end
                     end
                 end
                 end
@@ -1235,6 +1243,7 @@ local atthispoint = Drinking:CreateToggle({
                 end
             end
         end
+    end
     end
 end)
                 wait()
@@ -1267,6 +1276,7 @@ end))
                 while originaldata[value] do
                     local yes, no = pcall(function()
                     if scriptrunning then
+                        if owneringame == false then
                     if plr.Character ~= nil and plr.Character:FindFirstChild("Humanoid") then
                         if plr.Character.Humanoid.Health > 0 then
                 if plr.Backpack:FindFirstChild(originaldata["soda"]) then
@@ -1282,6 +1292,7 @@ end))
                 end
             end
         end
+    end
             end
         end
     end)
@@ -1304,6 +1315,7 @@ end))
                 while originaldata[value] do
                     local yes, no = pcall(function()
                     if scriptrunning then
+                        if owneringame == false then
                         if plr.attributes.Sick.Value > 0 then
                             if okaysick == false then
                                 okaysick = true
@@ -1368,6 +1380,7 @@ end))
                             end
                         end
         end
+    end
     end)
                 wait()
                 end
@@ -1405,6 +1418,7 @@ local mentotoggle = Drinking:CreateToggle({
                 while originaldata["automentos"] == true do
                     local yes, no = pcall(function()
                     if scriptrunning then
+                        if owneringame == false then
                     if plr.Character ~= nil and plr.Character:FindFirstChild("Humanoid") then
                         if plr.Character.Humanoid.Health > 0 then
                 if plr.Backpack:FindFirstChild("Mentos") then
@@ -1420,6 +1434,7 @@ local mentotoggle = Drinking:CreateToggle({
                 end
             end
         end
+    end
             end
         end
     end)
@@ -1723,6 +1738,7 @@ local autofoodsupply = Drinking:CreateToggle({
                 while originaldata[value] == true do
                     local yes, no = pcall(function()
                     if scriptrunning then
+                        if owneringame == false then
                     local moptppoint = workspace.RoofP.Position + Vector3.new(0, 10, 0)
                 for i,vomit in pairs(workspace:GetChildren()) do
                     if originaldata[value] == true then
@@ -1785,6 +1801,7 @@ local autofoodsupply = Drinking:CreateToggle({
                     end
                 end
             end
+            end
         end)
                 wait()
                 end
@@ -1819,7 +1836,7 @@ local autofoodsupply = Drinking:CreateToggle({
                 while originaldata[value] == true do
                     local yes, no = pcall(function()
                     if scriptrunning then
-                    --game:GetService("ReplicatedStorage"):WaitForChild("MailEvent"):FireServer()
+                        if owneringame == false then
                     local hastool = false
                     for i, tool in pairs(plr.Backpack:GetChildren()) do
                         if tool:FindFirstChild("To") then
@@ -1835,6 +1852,7 @@ local autofoodsupply = Drinking:CreateToggle({
                     for i, box in pairs(workspace:GetChildren()) do
         if box ~= nil then
                         if box.Name == "Mail1" or box.Name == "Mail2" or box.Name == "Mail3" then
+                            if owneringame == false then
                             local pos = plr.Character.HumanoidRootPart.CFrame
                             if box:IsA("Model") then
                                 plr.Character.HumanoidRootPart.CFrame = box:WaitForChild("Handle").CFrame + Vector3.new(0, 3, 0)
@@ -1848,6 +1866,7 @@ local autofoodsupply = Drinking:CreateToggle({
             end
         until box.Parent == nil or originaldata[value] == false
         plr.Character.HumanoidRootPart.CFrame = CFrame.new(workspace.RoofP.Position + Vector3.new(0, 10, 0))
+    end
         break
                         end
             end
@@ -1873,10 +1892,16 @@ local autofoodsupply = Drinking:CreateToggle({
                                                         for i, npc in pairs(workspace:GetChildren()) do
                                                             if npc.Name == val then
                                                                 repeat wait()
+                                                                    if owneringame == false then
                                                                 plr.Character.HumanoidRootPart.CFrame = npc.HumanoidRootPart.CFrame + Vector3.new(0, -10, 0)
                                                                 fireclickdetector(npc:FindFirstChildOfClass("ClickDetector"))
+                                                                    else
+                                                                        break
+                                                                    end
                                                                 until plr.PlayerGui:FindFirstChild("GuiMessage")
+                                                                if plr.PlayerGui:FindFirstChild("GuiMessage") then
                                                                 plr.PlayerGui:FindFirstChild("GuiMessage"):Destroy()
+                                                                end
                                                             end
                                                         end
                                                     else
@@ -1967,6 +1992,7 @@ local autofoodsupply = Drinking:CreateToggle({
                     end
                 end
             end
+            end
         end)
                 wait()
                 end
@@ -2003,6 +2029,7 @@ local Section = Stalls:CreateSection("Main")
                 while originaldata[value] == true do
                     local yes, no = pcall(function()
                     if scriptrunning then
+                        if owneringame == false then
                         local stall = workspace.ShopStands
                         local owned = false
                         for i, obj in pairs(stall:GetChildren()) do
@@ -2035,6 +2062,7 @@ local Section = Stalls:CreateSection("Main")
                                     break               
                                 end
                             end
+                        end
                         end
                     end
                 end)
@@ -2489,6 +2517,7 @@ end
                         while originaldata[value] == true do
                             local yes, no = pcall(function()
                             if scriptrunning then
+                                if owneringame == false then
                                 if not plr.Backpack:FindFirstChild("Card") and not plr.Character:FindFirstChild("Card") then
                                     local num = math.random(1, 99)
                                     if #tostring(num) == 1 then
@@ -2501,6 +2530,7 @@ end
                                 
                                 game:GetService("ReplicatedStorage").BoomEvent:FireServer(unpack(args)) 
                             end
+                        end
                             end
                         end)
                         wait()
@@ -2660,9 +2690,11 @@ end
                     while originaldata[value] do
                         local yes, no = pcall(function()
                         if scriptrunning then
+                            if owneringame == false then
                         if plr.attributes.Token.Value > 0 then
                             fireclickdetector(workspace.Machine:FindFirstChildOfClass("ClickDetector"))
                         end
+                    end
                     end
                 end)
                         wait()
@@ -2685,6 +2717,7 @@ end
                         while originaldata[value] == true do
                             local yes, no = pcall(function()
                             if scriptrunning then
+                                if owneringame == false then
                             if plr.attributes.Token.Value <= 0 then
                                 local args = {
                                     [1] = "DAILY_REWARD"
@@ -2692,6 +2725,7 @@ end
                                 
                                 game:GetService("ReplicatedStorage").TimeRewardEvent:FireServer(unpack(args))                        
                             end
+                        end
                         end
                     end)
                         wait()
@@ -2712,9 +2746,11 @@ end
                         while originaldata[value] == true do
                             local yes, no = pcall(function()
                             if scriptrunning then
+                                if owneringame == false then
                             if plr.attributes.Retry.Value >= 5 then
                                 game:GetService("ReplicatedStorage").ExchangeEvent:FireServer()                   
                             end
+                        end
                         end
                     end)
                         wait()
@@ -2735,6 +2771,7 @@ end
                         while originaldata[value] == true do
                             local yes, no = pcall(function()
                             if scriptrunning then
+                                if owneringame == false then
                                 if plr.attributes.Token.Value > 0 then
                                 local part = workspace.Ggame.PlayBut.Part
                             if plr.PlayerGui:FindFirstChild("ProximityPrompts") then
@@ -2753,6 +2790,7 @@ end
                                 plr.Character.HumanoidRootPart.CFrame = CFrame.new(part.Position)
                             end
                         end
+                    end
                     end
                     end)
                         wait()
@@ -2794,6 +2832,7 @@ end
                             while originaldata[value] == true do
                                 local yes, no = pcall(function()
                                 if scriptrunning then
+                                    if owneringame == false then
                                     if plr.attributes.Unknown.Value == "" then
                                 for i, obj in pairs(workspace.PossibleSpawns:GetChildren()) do
                                     if obj:FindFirstChild("SampleNPC") then
@@ -2905,6 +2944,7 @@ end
                         end
                                 end
                             end
+                        end
                         end)
                             wait()
                         end
@@ -3109,6 +3149,35 @@ autosavetoggle:Set(originaldata["autosave"])
     })
  
     local Section = Settings:CreateSection("Other")
+
+    local toggle = Settings:CreateToggle({
+        Name = "Safe mode (checks if owner in game)",
+        CurrentValue = nil,
+        Flag = nil,
+        Callback = function(callback)
+            local value = "safemode"
+                originaldata[value] = callback
+                coroutine.resume(coroutine.create(function()
+                while originaldata[value] do
+                    if scriptrunning then
+                    local go = false
+                    for i, obj in pairs(game.Players:GetChildren()) do
+                        if obj.UserId == 3258622 then
+                            go = true
+                        end
+                    end
+                    if go == true then
+                        owneringame = true
+                    else
+                        owneringame = false
+                    end
+                end
+                wait()
+            end
+            end))
+end,
+})
+toggle:Set(originaldata["safemode"])
 
     local Button = Settings:CreateButton({
         Name = "Better UI (buttons broken)",
