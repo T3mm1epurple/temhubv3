@@ -14,7 +14,7 @@ local MarketplaceService = game:GetService("MarketplaceService")
 local UserInputService = game:GetService("UserInputService")
 _G.currentexecute = executeid
 local scriptrunning = true
-local owneringame = false
+local owneringame = true
 local others = false
 
 local gameids = {
