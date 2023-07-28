@@ -3147,9 +3147,8 @@ autosavetoggle:Set(originaldata["autosave"])
             end
         end,
     })
- 
+    owneringame = false
     local Section = Settings:CreateSection("Other")
-
     local toggle = Settings:CreateToggle({
         Name = "Safe mode (checks if owner in game)",
         CurrentValue = nil,
