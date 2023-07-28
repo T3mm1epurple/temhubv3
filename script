@@ -329,7 +329,7 @@ coroutine.resume(coroutine.create(function()
 end))
         
     local Window = Rayfield:CreateWindow({
-       Name = "tem hub v3 (SAFEMODE)",
+       Name = "tem hub v3 (SAFEMODE/SP)",
        LoadingTitle = "Tem Hub V3",
        LoadingSubtitle = "Da amazing bunker simulator",
        Discord = {
@@ -2893,7 +2893,8 @@ end
                                                     fireproximityprompt(lab.Dispose.Main.Attachment.ProximityPrompt)
                                                     until not plr.Character:FindFirstChild("Failed")
                                             end
-                                        else
+                                        end
+                                        if count >= 10 then
                                             if ewrfoij == false then
                                                 ewrfoij = true
                                             savedata()
@@ -2917,13 +2918,12 @@ end
                                                         }
                                                         
                                                         game:GetService("ReplicatedStorage"):WaitForChild("DoctorEvent"):FireServer(unpack(args))  
-                                                        fireclickdetector(workspace.VialForSale.ClickDetector)     
-                                                        wait(3)
+                                                        fireclickdetector(workspace.VialForSale.ClickDetector)
                                                         TeleportService = game:GetService("TeleportService")
                                                         TeleportService:Teleport(8637121738)
                                                         local queueteleport = syn and syn.queue_on_teleport or queue_on_teleport or fluxus and fluxus.queue_on_teleport or function() end   
                                                         queueteleport([=[
-                                                            wait(5)
+                                                            repeat wait() until game.Players.LocalPlayer.Character ~= nil
                                                             _G.erg5437654634t3gbergjwoi4tOITGJERIOGHERg43 = true
                                                             loadstring(game:HttpGet("https://raw.githubusercontent.com/kittenis/temhubv3/main/script", true))()
                                                             for i, obj in pairs(workspace.Labs:GetChildren()) do
