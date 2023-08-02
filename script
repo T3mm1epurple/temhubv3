@@ -120,6 +120,7 @@ _G.whitelist = {
         suitcost = 850,
         duckgame = false,
         safemode = false,
+        dailychips = false,
         }
 
         --FUNCTIONS
@@ -3067,6 +3068,54 @@ end
                 end,
              })
              sampletype:Set(originaldata["SamplePink"])
+        end
+
+        if mainid == 14153631984 then
+            local Chips = Window:CreateTab("Chips", 14285171508)
+
+            local Section = Chips:CreateSection("Extras")
+
+         local collectokentoggle = Chips:CreateToggle({
+            Name = "Auto claim chips",
+            CurrentValue = nil,
+            Flag = nil,
+            Callback = function(callback)
+            	local value = "dailychips"
+                    originaldata[value] = callback
+                    coroutine.resume(coroutine.create(function()
+                        while originaldata[value] == true do
+                            local yes, no = pcall(function()
+                            if scriptrunning then
+                                if owneringame == false then
+                            if plr.attributes.Token.Value <= 0 then
+                                if plr.attributes.TimeLeft.Value <= 0 then
+                                local args = {
+                                    [1] = "DAILY_REWARD"
+                                }
+                                
+                                game:GetService("ReplicatedStorage").TimeRewardEvent:FireServer(unpack(args))  
+                            end                      
+                            end
+                        end
+                        end
+                    end)
+                        wait()
+                    end
+                    end))
+            end,
+         })
+         collectokentoggle:Set(originaldata["dailychips"])
+
+         local Section = Chips:CreateSection("Other")
+
+         local currentnumber = Chips:CreateLabel("Daily chips timer: ")
+         coroutine.resume(coroutine.create(function()
+            while wait() do
+                if scriptrunning then
+                    currentnumber:Set("Daily chips timer: "..convertToHMS(plr.attributes.TimeLeft.Value))
+                end
+            end
+         end))
         end
     
 
