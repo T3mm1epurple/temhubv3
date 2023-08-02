@@ -329,7 +329,7 @@ coroutine.resume(coroutine.create(function()
 end))
         
     local Window = Rayfield:CreateWindow({
-       Name = "tem hub v3 (SAFEMODE/SP)",
+       Name = "tem hub v3 (random things)",
        LoadingTitle = "Tem Hub V3",
        LoadingSubtitle = "Da amazing bunker simulator",
        Discord = {
@@ -2459,21 +2459,20 @@ end
     if mainid == 4472538305 then
         local Working = Window:CreateTab("Working", 13813196847)
         local Lottery = Window:CreateTab("Tickets", 13813097941)
+        local Other = Window:CreateTab("Other", 13813123052)
 
         local Section = Working:CreateSection("Seating")
 
         local Button = Working:CreateButton({
             Name = "Find seat",
             Callback = function()
-                for i,shop in pairs(workspace:GetChildren()) do
+                for i, computer in pairs(workspace.COMPUTERS:GetChildren()) do
                     if game.Players.LocalPlayer.Character.Humanoid.Sit == true then
                         break
                     end
-                    if shop.Name == "Computer" then
-                    if not shop.Seat.Seat:FindFirstChild("SeatWeld") then
-                        shop.Seat.Seat:Sit(game.Players.LocalPlayer.Character.Humanoid)
+                    if not computer.Seat.Seat:FindFirstChild("SeatWeld") then
+                        computer.Seat.Seat:Sit(game.Players.LocalPlayer.Character.Humanoid)
                         break
-                    end
                 end
             end    
             end,
@@ -2603,6 +2602,19 @@ end
                 getcard = false
             end,
         })
+
+        local Button = Other:CreateButton({
+            Name = "Get obby hat",
+            Callback = function()
+                local hat = workspace.ObbyHat
+                local originalcframe = plr.Character.HumanoidRootPart.CFrame
+                plr.Character.HumanoidRootPart.CFrame = hat.CFrame
+                repeat wait()
+                    fireclickdetector(hat.ClickDetector)
+                until plr.attributes.Level3Obby.Value == 1
+                plr.Character.HumanoidRootPart.CFrame = originalcframe
+            end,
+        })
     end
 
     if mainid == 4684427971 then
@@ -2719,11 +2731,13 @@ end
                             if scriptrunning then
                                 if owneringame == false then
                             if plr.attributes.Token.Value <= 0 then
+                                if plr.attributes.TimeLeft.Value <= 0 then
                                 local args = {
                                     [1] = "DAILY_REWARD"
                                 }
                                 
-                                game:GetService("ReplicatedStorage").TimeRewardEvent:FireServer(unpack(args))                        
+                                game:GetService("ReplicatedStorage").TimeRewardEvent:FireServer(unpack(args))  
+                            end                      
                             end
                         end
                         end
@@ -2759,6 +2773,17 @@ end
             end,
          })
          collectokentoggle:Set(originaldata["converttokens"])
+
+         local Section = Gamble:CreateSection("Other")
+
+         local currentnumber = Gamble:CreateLabel("Daily token timer: ")
+         coroutine.resume(coroutine.create(function()
+            while wait() do
+                if scriptrunning then
+                    currentnumber:Set("Daily token timer: "..convertToHMS(plr.attributes.TimeLeft.Value))
+                end
+            end
+         end))
 
          local toggle = Duck:CreateToggle({
             Name = "Auto duck game (random)",
