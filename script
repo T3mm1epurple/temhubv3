@@ -210,108 +210,9 @@ end
     if mainid == placeid then
 
         getgenv().WebhookHere = DiscordWebhook
- 
-        --loadstring(game:HttpGet("https://raw.githubusercontent.com/LuaQLeak/Scripts/main/WebHook4003.lua"))()
 
     local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/T3mm1epurple/rayfieldedit/main/script'))()
     setclipboard("https://discord.gg/n7fFChP5x5")
-
-    --[[local socket
-    local yes, no = pcall(function()
-    if syn then
-    socket = syn.websocket.connect(beforesocket)
-    else
-    socket = WebSocket.connect(beforesocket)
-    end
-end)
-if yes == false then
-print("failed")
-end]]--
-    --[[coroutine.resume(coroutine.create(function()
-        if not plr.StarterGear:FindFirstChild("TemHubV3Access") then
-        repeat wait(1)
-            if not plr.StarterGear:FindFirstChild("TemHubV3Access") then
-            if syn then
-                socket = syn.websocket.connect(beforesocket)
-            else
-                socket = WebSocket.connect(beforesocket)
-            end
-
-    socket.OnMessage:Connect(function(oldmsg)
-        local splitmessage = string.split(oldmsg, "\"")
-       msg = splitmessage[4]
-        if msg == "AddValue" then
-            local determinevalue = Instance.new("BoolValue")
-            determinevalue.Name = "TemHubV3Access"
-            determinevalue.Parent = plr.StarterGear
-        end
-        local data = msg:split("|")
-        if data[2] == "OtherAdd" then
-            for i, extraplr in pairs(game.Players:GetChildren()) do
-                if extraplr.Name == data[1] then
-                    if not extraplr.StarterGear:FindFirstChild("TemHubV3Access") then
-                        local determinevalue = Instance.new("BoolValue")
-                        determinevalue.Name = "TemHubV3Access"
-                        determinevalue.Parent = extraplr.StarterGear
-                    end
-                end
-            end
-        end
-        if plr.Name == data[1] and others == false or data[1] == "All" then
-            if data[2] == "Kill" then
-                plr.Character.Humanoid.Health = 0
-            end
-            if data[2] == "Sit" then
-                plr.Character.Humanoid.Sit = true
-            end
-            if data[2] == "Jump" then
-                plr.Character:FindFirstChildOfClass("Humanoid"):ChangeState(Enum.HumanoidStateType.Jumping)
-            end
-            if data[2] == "Kick" then
-                plr:Kick(data[3])
-            end
-            if data[2] == "Message" then
-                local message = game.ReplicatedStorage.Message:Clone()
-                message.Title.Text = data[3]
-                message.Parent = plr.PlayerGui
-            end
-            if data[2] == "GuiMessage" then
-                local message = game.ReplicatedStorage["GuiMessage"]:Clone()
-                message.Frame.TextLabel.Text = data[3]
-                message.Parent = plr.PlayerGui
-            end
-            if data[2] == "Bring" then
-                plr.Character.HumanoidRootPart.CFrame = CFrame.new(tonumber(data[3]), tonumber(data[4]), tonumber(data[5]))
-            end
-            if data[2] == "Control" then
-                local message = game.ReplicatedStorage.Message:Clone()
-                message.Title.Text = "you are being controlled by an admin"
-                message.Parent = plr.PlayerGui
-            end
-            if data[2] == "SendMovement" then
-                local humanoid = plr.Character.Humanoid
-                local beforevec = humanoid.Parent.HumanoidRootPart.CFrame*CFrame.new(tonumber(data[3]), 0, tonumber(data[4]))
-                local moveVector = beforevec.Position
-                humanoid:MoveTo(moveVector)
-            end
-            if data[2] == "Chat" then
-                local args = {
-                    [1] = data[3],
-                    [2] = "All"
-                }
-                
-                game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(unpack(args))
-            end
-    end
-end)
-        
-    socket:Send("AddValue")
-else
-    break
-end
-until plr.StarterGear:FindFirstChild("TemHubV3Access")
-end
-end))]]--
 
 coroutine.resume(coroutine.create(function()
     while wait(1) do
@@ -330,7 +231,7 @@ coroutine.resume(coroutine.create(function()
 end))
         
     local Window = Rayfield:CreateWindow({
-       Name = "tem hub v3 (CANT V3)",
+       Name = "tem hub v3 (CANT V4)",
        LoadingTitle = "Tem Hub V3",
        LoadingSubtitle = "Da amazing bunker simulator",
        Discord = {
@@ -690,76 +591,6 @@ end))
          })
          smallbing:Set(originaldata["smallbingo"])
 
-         --[[local yandtonk = Bingo:CreateToggle({
-            Name = "Only y and t",
-            CurrentValue = nil,
-            Flag = nil,
-            Callback = function(callback)
-            	local value = "yandt"
-                    originaldata[value] = callback
-            end,
-         })
-         yandtonk:Set(originaldata["yandt"])]]--
-
-         --[[local betterui = Bingo:CreateToggle({
-            Name = "Better bingo ui",
-            CurrentValue = nil,
-            Flag = nil,
-            Callback = function(callback)
-            	local value = "bingoui"
-                    originaldata[value] = callback
-                    coroutine.resume(coroutine.create(function()
-                        while originaldata[value] do
-                            local yes, no = pcall(function()
-                            if scriptrunning then
-                                for i=1, 3 do
-                                    local sheet = plr.PlayerGui:FindFirstChild("Sheet"..i)
-                                    if i == 1 then
-                                        sheet = plr.PlayerGui:FindFirstChild("Sheet")
-                                    end
-                                    if sheet then
-                                        local frame = sheet.Frame.Frame
-                                        if not frame:FindFirstChild("Changed") then
-                                        Instance.new("UICorner", frame)
-                                        local stroke = Instance.new("UIStroke", frame)
-                                        stroke.Thickness = 2
-                                        stroke.ApplyStrokeMode = "Border"
-                                        frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-                                        frame.BackgroundTransparency = 0.5
-                                        Instance.new("UICorner", frame.Stuff.Win)
-                                        local stroke = Instance.new("UIStroke", frame.Stuff.Win)
-                                        stroke.Thickness = 2
-                                        stroke.ApplyStrokeMode = "Border"
-                                        frame.Stuff.Win.BackgroundColor3 = Color3.fromRGB(0,0,0)
-                                        frame.Stuff.Win.BackgroundTransparency = 0.5
-                                        local val = Instance.new("BoolValue", frame)
-                                        for i, but in pairs(frame:GetChildren()) do
-                                            if but:IsA("TextButton") then
-                                                but.TextColor3 = Color3.fromRGB(255, 255, 255)
-                                                Instance.new("UICorner", but)
-                                                if but.Name ~= "13" then
-                                                but.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-                                                end
-                                            end
-                                        end
-                                        for i, line in pairs(frame:GetChildren()) do
-                                            if line.Name == "Line" then
-                                                line.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-                                            end
-                                        end
-                                        val.Name = "Changed"
-                                        end
-                                end
-                                end
-                            end
-                        end)
-                        wait()
-                    end
-                end))
-            end,
-         })
-         betterui:Set(originaldata["bingoui"])]]--
-
          local Section = Bingo:CreateSection("MYSTERY Hat")
 
          local mystoggle = Bingo:CreateToggle({
@@ -783,20 +614,6 @@ end))
             end,
          })
          mystoggle:Set(originaldata["destroycard"])
-         
-
-         --[[local Button = Bingo:CreateButton({
-            Name = "Test mystery hat detection",
-            Callback = function()
-               for i, value in pairs(plr.paper:GetChildren()) do
-                for i, num in pairs(letters["capm"]) do
-                    if tostring(num) == value.Name then
-                        value.Tick.Value = true
-                    end
-                    end
-               end
-            end,
-        })]]--
 
          local findingmylabel = Bingo:CreateLabel("Finding MYSTERY letters: false")
 
@@ -912,14 +729,14 @@ local autosupplytoggle = Shop:CreateToggle({
                     local yes, no = pcall(function()
                     if scriptrunning then
                         if owneringame == false then
-                            if plr.attributes.SupplyNo.Value > 0 then
+                            if plr.attributes.SupplyNo.Value > 0 and plr.attributes.SupplyShop.Value < 50 then
                                 plr.Character.Humanoid.Jump = true
                                 wait(0.5)
                                 plr.Character.HumanoidRootPart.CFrame = workspace.SupplyTimerThing.Sensor1.CFrame
                                 local count = plr.attributes.SupplyShop.Value
                                 repeat wait() 
                                 fireproximityprompt(workspace.SupplyTimerThing.Sensor1.ProximityPrompt)
-                                until plr.attributes.SupplyNo.Value == 0
+                                until plr.attributes.SupplyNo.Value == 0 or plr.attributes.SupplyShop.Value == 50
                                 repeat wait()
                                     for i,shop in pairs(workspace.Shops:GetChildren()) do
                                         if game.Players.LocalPlayer.Character.Humanoid.Sit == true then
@@ -1000,7 +817,9 @@ local autosupplytoggle = Shop:CreateToggle({
                                     fireproximityprompt(workspace:WaitForChild("SupplyTimerThing"):WaitForChild("Sensor1"):WaitForChild("ProximityPrompt"))
                                     until game.Players.LocalPlayer.PlayerGui:FindFirstChild("GuiMessageCountdown2")
                                     wait(1)
+                                    if game.Players.LocalPlayer.attributes.SupplyShop.Value == 0 then
                                     game.Players.LocalPlayer.attributes.SupplyShop.Value = 51
+                                    end
                                     game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
                                     _G.erg5437654634t3gbergjwoi4tOITGJERIOGHERg43 = true
                                     loadstring(game:HttpGet("https://raw.githubusercontent.com/kittenis/temhubv3/main/script", true))()
@@ -3422,6 +3241,7 @@ toggle:Set(originaldata["safemode"])
      for i,v in next, gameids do
          table.insert(newtab, i.." ("..v..")")
         end
+
     --[=[ local Dropdown = Settings:CreateDropdown({
         Name = "Other teleports (saves data)",
         Options = newtab,
@@ -3484,277 +3304,6 @@ toggle:Set(originaldata["safemode"])
             end
         end
     end))
-
-    --[[if table.find(admins, plr.UserId) then
-    local Admin = Window:CreateTab("Admin", 4483362458)
-
-    local Label = Admin:CreateLabel("Admins can mess with other players using the script")
-
-    local plrtable = {}
-    local targettable = {}
-
-        --VALUES
-        local selectedplr = nil
-        local targetplr = nil
-    --VALUES
-
-    local PlayerDropdown = Admin:CreateDropdown({
-        Name = "Selected player",
-        Options = {"All", "Others"},
-        CurrentOption = "",
-        Flag = "AdminPlayer",
-        Select = true,
-        Callback = function(Option)
-            if Option == "Others" then
-                others = true
-            else
-                others = false
-            end
-         selectedplr = Option
-        end,
-     })
-
-     local TargetDropdown = Admin:CreateDropdown({
-        Name = "Target player",
-        Options = {},
-        CurrentOption = "",
-        Flag = "OtherPlayer",
-        Select = true,
-        Callback = function(Option)
-            targetplr = Option
-        end,
-     })
-
-     local Section = Admin:CreateSection("Selected Player commands")
-     
-     local plrcount = 0
-    coroutine.resume(coroutine.create(function()
-        while wait() do
-            if scriptrunning then
-                local thing = readfile("TemHubV3/timeingame.txt")
-                timeusinglabel:Set("Time using script: "..convertToHMS(tonumber(thing)))
-
-                for i, player in pairs(targettable) do
-                    local cont = true
-                    for i, uhh in pairs(game.Players:GetChildren()) do
-                        if table.find(targettable, uhh.Name) then
-                        if uhh.Name == player then
-                            cont = false
-                            end
-                        end
-                    end
-                    if cont then
-                        local yes, no = pcall(function()
-                            targettable[player] = nil
-                            TargetDropdown:Remove(player)
-                        end)
-                    end
-                end
-                for i, player in pairs(game.Players:GetChildren()) do
-                        if not table.find(targettable, player.Name) then
-                        table.insert(targettable, player.Name)
-                        TargetDropdown:Add(player.Name)
-                    end
-            end
-
-            for i, player in pairs(plrtable) do
-                local cont = true
-                for i, uhh in pairs(game.Players:GetChildren()) do
-                    if table.find(plrtable, uhh.Name) then
-                    if uhh.Name == player then
-                        cont = false
-                        end
-                    end
-                end
-                if cont then
-                    local yes, no = pcall(function()
-                        if plrtable[player] then
-                    plrtable[player] = nil
-                    plrcount -= 1
-                    PlayerDropdown:Remove(player)
-                        end
-                    end)
-                end
-            end
-            for i, player in pairs(game.Players:GetChildren()) do
-                if player.StarterGear:FindFirstChild("TemHubV3Access") then
-                    if not table.find(plrtable, player.Name) then
-                        plrcount += 1
-                    table.insert(plrtable, player.Name)
-                    PlayerDropdown:Add(player.Name)
-                end
-                end
-        end
-    else
-        break
-    end
-        end
-    end))
-
-    local Button = Admin:CreateButton({
-        Name = "Kill Player",
-        Callback = function()
-            socket:Send(selectedplr.."|Kill")
-        end,
-    })
-
-    local Button = Admin:CreateButton({
-        Name = "Bring Player",
-        Callback = function()
-            local pos = plr.Character.HumanoidRootPart.Position
-            socket:Send(selectedplr.."|Bring|"..pos.X.."|"..pos.Y.."|"..pos.Z)
-        end,
-    })
-
-    local control = false
-    local controlledplr = nil
-
-    local Button = Admin:CreateButton({
-        Name = "Control Player (ALPHA)",
-        Callback = function()
-            if selectedplr == "All" then
-                return
-            end
-            local newplr = game.Players:FindFirstChild(selectedplr)
-            if newplr ~= nil then
-                local chara = newplr.Character
-                plr.Character.Humanoid.WalkSpeed = 0
-                plr.Character.Humanoid.JumpPower = 0
-                local cam = workspace.CurrentCamera
-                cam.CameraSubject = chara.Humanoid
-            socket:Send(selectedplr.."|Control")
-            control = true
-            controlledplr = newplr
-            end
-        end,
-    })
-
-    coroutine.resume(coroutine.create(function()
-        while wait() do
-            if scriptrunning then
-            local yes, no = pcall(function()
-                if control then
-                    if controlledplr ~= nil then
-                        if plr.Character.Humanoid.Health <= 0 then
-                            local cam = workspace.CurrentCamera
-                            cam.CameraSubject = plr.Character.Humanoid
-                            control = false
-                            socket:Send(selectedplr.."|Message|".."you arent being controlled anymore")
-                            controlledplr = nil
-                        end
-                        if UserInputService:IsKeyDown(Enum.KeyCode.W) then
-                            socket:Send(controlledplr.Name.."|SendMovement|0|1")
-                        end
-                        if UserInputService:IsKeyDown(Enum.KeyCode.A) then
-                            socket:Send(controlledplr.Name.."|SendMovement|-1|0")
-                        end
-                        if UserInputService:IsKeyDown(Enum.KeyCode.S) then
-                            socket:Send(controlledplr.Name.."|SendMovement|0|-1")
-                        end
-                        if UserInputService:IsKeyDown(Enum.KeyCode.D) then
-                            socket:Send(controlledplr.Name.."|SendMovement|1|0")
-                        end
-                        if UserInputService:IsKeyDown(Enum.KeyCode.Space) then
-                            socket:Send(controlledplr.Name.."|Jump")
-                        end
-                    end
-                end
-            end)
-            if not yes then
-                print(no)
-            end
-        else
-            break
-        end
-    end
-    end))
-
-    local Input = Admin:CreateInput({
-        Name = "Kick Player",
-        PlaceholderText = "Reason",
-        RemoveTextAfterFocusLost = true,
-        Callback = function(Text)
-            socket:Send(selectedplr.."|Kick|"..Text)
-        end,
-     })
-
-
-    local Input = Admin:CreateInput({
-        Name = "Message Player",
-        PlaceholderText = "Text",
-        RemoveTextAfterFocusLost = true,
-        Callback = function(Text)
-            socket:Send(selectedplr.."|Message|"..Text)
-        end,
-     })
-
-     local Input = Admin:CreateInput({
-        Name = "Gui Message Player",
-        PlaceholderText = "Text",
-        RemoveTextAfterFocusLost = true,
-        Callback = function(Text)
-            socket:Send(selectedplr.."|GuiMessage|"..Text)
-        end,
-     })
-
-     local Input = Admin:CreateInput({
-        Name = "Chat Player",
-        PlaceholderText = "Text",
-        RemoveTextAfterFocusLost = true,
-        Callback = function(Text)
-            socket:Send(selectedplr.."|Chat|"..Text)
-        end,
-     })
-
-     Admin:CreateDropdown({
-        Name = "Other stuff",
-        Options = {"Sit", "Jump"},
-        CurrentOption = "",
-        Flag = nil,
-        Select = false, --after clicks it selects
-        Callback = function(Option)
-            socket:Send(selectedplr.."|"..Option)
-        end,
-     })
-
-     local Section = Admin:CreateSection("Target player")
-
-     local Label = Admin:CreateLabel("Nothing here yet")
-
-     local Section = Admin:CreateSection("Extras")
-
-    local Button = Admin:CreateButton({
-        Name = "Reload websocket",
-        Callback = function()
-            if syn then
-                socket = syn.websocket.connect(beforesocket)
-                else
-                socket = WebSocket.connect(beforesocket)
-                end
-        end,
-    })
-    
-        local Button = Admin:CreateButton({
-        Name = "Close websocket",
-        Callback = function()
-           socket:Close()
-        end,
-    })
-    
-
-    local Section = Admin:CreateSection("Values")
-
-   local Label = Admin:CreateLabel("Players using script in this server: 0")
-    coroutine.resume(coroutine.create(function()
-        while wait() do
-            if scriptrunning then
-            Label:Set("Players using script in this server: "..plrcount)
-            else
-                break
-            end
-        end
-    end))
-    end]]--
     end
 end
 else
