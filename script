@@ -231,7 +231,7 @@ coroutine.resume(coroutine.create(function()
 end))
         
     local Window = Rayfield:CreateWindow({
-       Name = "tem hub v3 (CANT V4)",
+       Name = "tem hub v3 (CANT V5)",
        LoadingTitle = "Tem Hub V3",
        LoadingSubtitle = "Da amazing bunker simulator",
        Discord = {
@@ -819,6 +819,20 @@ local autosupplytoggle = Shop:CreateToggle({
                                     wait(1)
                                     if game.Players.LocalPlayer.attributes.SupplyShop.Value == 0 then
                                     game.Players.LocalPlayer.attributes.SupplyShop.Value = 51
+                                    else
+                                        repeat wait()
+                                            for i,shop in pairs(workspace.Shops:GetChildren()) do
+                                                if game.Players.LocalPlayer.Character.Humanoid.Sit == true then
+                                                    break
+                                                end
+                                                if shop:FindFirstChild("ShopSeat") then
+                                                if not shop.ShopSeat.SeatShop:FindFirstChild("SeatWeld") then
+                                                    shop.ShopSeat.SeatShop:Sit(game.Players.LocalPlayer.Character.Humanoid)
+                                                    break
+                                                end
+                                            end
+                                        end
+                                    until game.Players.LocalPlayer.Character.Humanoid.Sit == true
                                     end
                                     game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
                                     _G.erg5437654634t3gbergjwoi4tOITGJERIOGHERg43 = true
