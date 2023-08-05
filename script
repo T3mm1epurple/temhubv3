@@ -330,7 +330,7 @@ coroutine.resume(coroutine.create(function()
 end))
         
     local Window = Rayfield:CreateWindow({
-       Name = "tem hub v3 (canteen)",
+       Name = "tem hub v3 (CANT V2)",
        LoadingTitle = "Tem Hub V3",
        LoadingSubtitle = "Da amazing bunker simulator",
        Discord = {
@@ -916,6 +916,7 @@ local autosupplytoggle = Shop:CreateToggle({
                                 plr.Character.Humanoid.Jump = true
                                 wait(0.5)
                                 plr.Character.HumanoidRootPart.CFrame = workspace.SupplyTimerThing.Sensor1.CFrame
+                                local count = plr.attributes.SupplyShop.Value
                                 repeat wait() 
                                 fireproximityprompt(workspace.SupplyTimerThing.Sensor1.ProximityPrompt)
                                 until plr.attributes.SupplyNo.Value == 0
@@ -932,6 +933,9 @@ local autosupplytoggle = Shop:CreateToggle({
                                     end
                                 end
                             until game.Players.LocalPlayer.Character.Humanoid.Sit == true
+                            if count == 0 then
+                                plr.attributes.SupplyShop.Value = 0
+                            end
                             else
                     if plr.attributes.SupplyShop.Value <= 0 then
                         if dog2 == false then
