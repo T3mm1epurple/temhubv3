@@ -933,7 +933,7 @@ local autosupplytoggle = Shop:CreateToggle({
                                     end
                                 end
                             until game.Players.LocalPlayer.Character.Humanoid.Sit == true
-                            if count == 0 then
+                            if count == 51 then
                                 plr.attributes.SupplyShop.Value = 0
                             end
                             else
@@ -1000,7 +1000,7 @@ local autosupplytoggle = Shop:CreateToggle({
                                     fireproximityprompt(workspace:WaitForChild("SupplyTimerThing"):WaitForChild("Sensor1"):WaitForChild("ProximityPrompt"))
                                     until game.Players.LocalPlayer.PlayerGui:FindFirstChild("GuiMessageCountdown2")
                                     wait(1)
-                                    game.Players.LocalPlayer.attributes.SupplyShop.Value = 49
+                                    game.Players.LocalPlayer.attributes.SupplyShop.Value = 51
                                     game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
                                     _G.erg5437654634t3gbergjwoi4tOITGJERIOGHERg43 = true
                                     loadstring(game:HttpGet("https://raw.githubusercontent.com/kittenis/temhubv3/main/script", true))()
