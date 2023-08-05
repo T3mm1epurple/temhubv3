@@ -330,7 +330,7 @@ coroutine.resume(coroutine.create(function()
 end))
         
     local Window = Rayfield:CreateWindow({
-       Name = "tem hub v3 (random things)",
+       Name = "tem hub v3 (canteen)",
        LoadingTitle = "Tem Hub V3",
        LoadingSubtitle = "Da amazing bunker simulator",
        Discord = {
@@ -912,6 +912,27 @@ local autosupplytoggle = Shop:CreateToggle({
                     local yes, no = pcall(function()
                     if scriptrunning then
                         if owneringame == false then
+                            if plr.attributes.SupplyNo.Value > 0 then
+                                plr.Character.Humanoid.Jump = true
+                                wait(0.5)
+                                plr.Character.HumanoidRootPart.CFrame = workspace.SupplyTimerThing.Sensor1.CFrame
+                                repeat wait() 
+                                fireproximityprompt(workspace.SupplyTimerThing.Sensor1.ProximityPrompt)
+                                until plr.attributes.SupplyNo.Value == 0
+                                repeat wait()
+                                    for i,shop in pairs(workspace.Shops:GetChildren()) do
+                                        if game.Players.LocalPlayer.Character.Humanoid.Sit == true then
+                                            break
+                                        end
+                                        if shop:FindFirstChild("ShopSeat") then
+                                        if not shop.ShopSeat.SeatShop:FindFirstChild("SeatWeld") then
+                                            shop.ShopSeat.SeatShop:Sit(game.Players.LocalPlayer.Character.Humanoid)
+                                            break
+                                        end
+                                    end
+                                end
+                            until game.Players.LocalPlayer.Character.Humanoid.Sit == true
+                            else
                     if plr.attributes.SupplyShop.Value <= 0 then
                         if dog2 == false then
                             dog2 = true
@@ -991,7 +1012,6 @@ local autosupplytoggle = Shop:CreateToggle({
                                     })
                                     repeat wait()
                                     until game.Players.LocalPlayer.PlayerGui.GuiMessageCountdown2.Frame.Left.Value <= 0
-                                    game.Players.LocalPlayer.Character.Humanoid.Jump = true
                                     game.Players.LocalPlayer.PlayerGui.GuiMessageCountdown2:Destroy()
                                     StarterGui:SetCore("SendNotification", {
                                         Title = "Auto get supply",
@@ -999,6 +1019,7 @@ local autosupplytoggle = Shop:CreateToggle({
                                         Duration = 5,
                                         Callback = bindable,
                                 })
+                                    --[==[game.Players.LocalPlayer.Character.Humanoid.Jump = true
                                     wait(1)
                                     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.SupplyTimerThing.Sensor1.CFrame
                                     wait(1)
@@ -1016,13 +1037,14 @@ local autosupplytoggle = Shop:CreateToggle({
                                         end
                                     end
                                 end
-                            until game.Players.LocalPlayer.Character.Humanoid.Sit == true
+                            until game.Players.LocalPlayer.Character.Humanoid.Sit == true]==]--
                                     end
                                 ]=])
                                 end
                             ]]) -- script there
                     end
                     end
+                end
                 end
             end
             end)
