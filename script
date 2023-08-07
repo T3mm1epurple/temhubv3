@@ -2974,7 +2974,7 @@ end
          })
          collectokentoggle:Set(originaldata["dailychips"])
 
-         if plr.UserId == 647598508 then
+         --if plr.UserId == 647598508 then
          local Section = Chips:CreateSection("INFINITE MONEY")
 
          local Label = Chips:CreateLabel("YOU NEED ONE CHIP TO DO ALL OF THIS")
@@ -3079,7 +3079,7 @@ end
 end
             end,
         })
-    end
+    --end
 
          local Section = Chips:CreateSection("Other")
 
