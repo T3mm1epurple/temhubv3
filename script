@@ -3045,6 +3045,8 @@ end
 
          local moneycount = 0
 
+         local Label = Chips:CreateLabel("HIGHER NUM HIGHER CHANCE TO BE BANNED")
+
          local cardamounttoggle = Chips:CreateSlider({
             Name = "Money amount",
             Range = {1, 10000},
@@ -3058,10 +3060,8 @@ end
          })
          cardamounttoggle:Set(moneycount)
 
-         local Label = Chips:CreateLabel("HIGHER NUM HIGHER CHANCE TO BE BANNED")
-
          local Button = Chips:CreateButton({
-            Name = "Get money",
+            Name = "Get money (almost immediately)",
             Callback = function()
 for i=1, moneycount do
     if owneringame == false then
