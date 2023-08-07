@@ -122,6 +122,7 @@ _G.whitelist = {
         safemode = false,
         dailychips = false,
         infmoney = false,
+        infchips = false,
         }
 
         --FUNCTIONS
@@ -2999,6 +3000,33 @@ end
             end,
          })
          collectokentoggle:Set(originaldata["infmoney"])
+
+         local collectokentoggle = Chips:CreateToggle({
+            Name = "INFINITE CHIPS WHAT",
+            CurrentValue = nil,
+            Flag = nil,
+            Callback = function(callback)
+            	local value = "infchips"
+                    originaldata[value] = callback
+                    coroutine.resume(coroutine.create(function()
+                        while originaldata[value] == true do
+                            local yes, no = pcall(function()
+                            if scriptrunning then
+                                if owneringame == false then
+                                    local args = {
+                                        [1] = -0.5
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage"):WaitForChild("ChipsEvent"):FireServer(unpack(args))                                                                   
+                        end
+                        end
+                    end)
+                        wait()
+                    end
+                    end))
+            end,
+         })
+         collectokentoggle:Set(originaldata["infchips"])
 
          local Section = Chips:CreateSection("Other")
 
