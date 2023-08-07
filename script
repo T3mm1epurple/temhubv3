@@ -2974,8 +2974,23 @@ end
          })
          collectokentoggle:Set(originaldata["dailychips"])
 
+         local Section = Chips:CreateSection("INFINITE MONEY")
+
+         local Label = Chips:CreateLabel("YOU NEED ONE CHIP TO DO ALL OF THIS")
+
+         local Button = Chips:CreateButton({
+            Name = "Get 1 chip",
+            Callback = function()
+                local args = {
+                    [1] = -0.5
+                }
+                
+                game:GetService("ReplicatedStorage"):WaitForChild("ChipsEvent"):FireServer(unpack(args))  
+            end,
+        })
+
          local collectokentoggle = Chips:CreateToggle({
-            Name = "INFINITE MONEY WHAT",
+            Name = "INFINITE MONEY (slow but you can afk it)",
             CurrentValue = nil,
             Flag = nil,
             Callback = function(callback)
@@ -3028,7 +3043,43 @@ end
          })
          collectokentoggle:Set(originaldata["infchips"])
 
+         local moneycount = 0
+
+         local cardamounttoggle = Chips:CreateSlider({
+            Name = "Money amount",
+            Range = {1, 10000},
+            Increment = 1,
+            Suffix = "Number",
+            CurrentValue = moneycount,
+            Flag = nil,
+            Callback = function(Value)
+                moneycount = Value
+            end,
+         })
+         cardamounttoggle:Set(moneycount)
+
+         local Label = Chips:CreateLabel("HIGHER NUM HIGHER CHANCE TO BE BANNED")
+
+         local Button = Chips:CreateButton({
+            Name = "Get money",
+            Callback = function()
+for i=1, moneycount do
+    if owneringame == false then
+local args = {
+    [1] = 0.5
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("ChipsEvent"):FireServer(unpack(args))
+else
+    break
+end
+end
+            end,
+        })
+
          local Section = Chips:CreateSection("Other")
+
+
 
          local currentnumber = Chips:CreateLabel("Daily chips timer: ")
          coroutine.resume(coroutine.create(function()
