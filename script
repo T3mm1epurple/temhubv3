@@ -2979,17 +2979,6 @@ end
 
          local Label = Chips:CreateLabel("YOU NEED ONE CHIP TO DO ALL OF THIS")
 
-         local Button = Chips:CreateButton({
-            Name = "Get 1 chip",
-            Callback = function()
-                local args = {
-                    [1] = -0.5
-                }
-                
-                game:GetService("ReplicatedStorage"):WaitForChild("ChipsEvent"):FireServer(unpack(args))  
-            end,
-        })
-
          local collectokentoggle = Chips:CreateToggle({
             Name = "INFINITE MONEY",
             CurrentValue = nil,
@@ -3018,33 +3007,6 @@ end
             end,
          })
          collectokentoggle:Set(originaldata["infmoney"])
-
-         local collectokentoggle = Chips:CreateToggle({
-            Name = "INFINITE CHIPS (RISKY OTHER PEOPLE CAN SEE YOUR CHIPS)",
-            CurrentValue = nil,
-            Flag = nil,
-            Callback = function(callback)
-            	local value = "infchips"
-                    originaldata[value] = callback
-                    coroutine.resume(coroutine.create(function()
-                        while originaldata[value] == true do
-                            local yes, no = pcall(function()
-                            if scriptrunning then
-                                if owneringame == false then
-                                    local args = {
-                                        [1] = -0.5
-                                    }
-                                    
-                                    game:GetService("ReplicatedStorage"):WaitForChild("ChipsEvent"):FireServer(unpack(args))                                                                   
-                        end
-                        end
-                    end)
-                        wait()
-                    end
-                    end))
-            end,
-         })
-         collectokentoggle:Set(originaldata["infchips"])
 
          local moneycount = 0
 
