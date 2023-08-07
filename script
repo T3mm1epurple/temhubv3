@@ -2990,7 +2990,7 @@ end
         })
 
          local collectokentoggle = Chips:CreateToggle({
-            Name = "INFINITE MONEY (slow but you can afk it)",
+            Name = "INFINITE MONEY",
             CurrentValue = nil,
             Flag = nil,
             Callback = function(callback)
@@ -3001,11 +3001,13 @@ end
                             local yes, no = pcall(function()
                             if scriptrunning then
                                 if owneringame == false then
+                                    for i=1, 100 do
                                     local args = {
                                         [1] = 0.5
                                     }
                                     
-                                    game:GetService("ReplicatedStorage"):WaitForChild("ChipsEvent"):FireServer(unpack(args))                                                                   
+                                    game:GetService("ReplicatedStorage"):WaitForChild("ChipsEvent"):FireServer(unpack(args))   
+                                end                                                                
                         end
                         end
                     end)
