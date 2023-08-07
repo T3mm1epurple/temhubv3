@@ -121,6 +121,7 @@ _G.whitelist = {
         duckgame = false,
         safemode = false,
         dailychips = false,
+        infmoney = false,
         }
 
         --FUNCTIONS
@@ -231,7 +232,7 @@ coroutine.resume(coroutine.create(function()
 end))
         
     local Window = Rayfield:CreateWindow({
-       Name = "tem hub v3 (CANT V5)",
+       Name = "tem hub v3 (INFINITE MONEY)",
        LoadingTitle = "Tem Hub V3",
        LoadingSubtitle = "Da amazing bunker simulator",
        Discord = {
@@ -2955,14 +2956,12 @@ end
                             local yes, no = pcall(function()
                             if scriptrunning then
                                 if owneringame == false then
-                            if plr.attributes.Token.Value <= 0 then
                                 if plr.attributes.TimeLeft.Value <= 0 then
                                 local args = {
                                     [1] = "DAILY_REWARD"
                                 }
                                 
-                                game:GetService("ReplicatedStorage").TimeRewardEvent:FireServer(unpack(args))  
-                            end                      
+                                game:GetService("ReplicatedStorage").TimeRewardEvent:FireServer(unpack(args))                       
                             end
                         end
                         end
@@ -2973,6 +2972,33 @@ end
             end,
          })
          collectokentoggle:Set(originaldata["dailychips"])
+
+         local collectokentoggle = Chips:CreateToggle({
+            Name = "INFINITE MONEY WHAT",
+            CurrentValue = nil,
+            Flag = nil,
+            Callback = function(callback)
+            	local value = "infmoney"
+                    originaldata[value] = callback
+                    coroutine.resume(coroutine.create(function()
+                        while originaldata[value] == true do
+                            local yes, no = pcall(function()
+                            if scriptrunning then
+                                if owneringame == false then
+                                    local args = {
+                                        [1] = 0.5
+                                    }
+                                    
+                                    game:GetService("ReplicatedStorage"):WaitForChild("ChipsEvent"):FireServer(unpack(args))                                                                   
+                        end
+                        end
+                    end)
+                        wait()
+                    end
+                    end))
+            end,
+         })
+         collectokentoggle:Set(originaldata["infmoney"])
 
          local Section = Chips:CreateSection("Other")
 
