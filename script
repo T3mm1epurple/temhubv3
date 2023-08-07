@@ -3002,7 +3002,7 @@ end
          collectokentoggle:Set(originaldata["infmoney"])
 
          local collectokentoggle = Chips:CreateToggle({
-            Name = "INFINITE CHIPS WHAT",
+            Name = "INFINITE CHIPS (RISKY OTHER PEOPLE CAN SEE YOUR CHIPS)",
             CurrentValue = nil,
             Flag = nil,
             Callback = function(callback)
