@@ -2977,7 +2977,8 @@ end
          --if plr.UserId == 647598508 then
          local Section = Chips:CreateSection("INFINITE MONEY")
 
-         local Label = Chips:CreateLabel("YOU NEED ONE CHIP TO DO ALL OF THIS")
+         local Label = Chips:CreateLabel("YOU NEED ONE CHIP TO DO THIS")
+         local Label = Chips:CreateLabel("IF YOU GO ABOVE 1M YOU MOST LIKELY WILL BE BANNED")
 
          local collectokentoggle = Chips:CreateToggle({
             Name = "INFINITE MONEY",
@@ -2997,7 +2998,8 @@ end
                                     }
                                     
                                     game:GetService("ReplicatedStorage"):WaitForChild("ChipsEvent"):FireServer(unpack(args))   
-                                end                                                                
+                                end                          
+                                plr.PlayerGui.SomethingHappen.Enabled = false
                         end
                         end
                     end)
@@ -3007,40 +3009,6 @@ end
             end,
          })
          collectokentoggle:Set(originaldata["infmoney"])
-
-         local moneycount = 0
-
-         local Label = Chips:CreateLabel("HIGHER NUM HIGHER CHANCE TO BE BANNED")
-
-         local cardamounttoggle = Chips:CreateSlider({
-            Name = "Money amount",
-            Range = {1, 10000},
-            Increment = 1,
-            Suffix = "Number",
-            CurrentValue = moneycount,
-            Flag = nil,
-            Callback = function(Value)
-                moneycount = Value
-            end,
-         })
-         cardamounttoggle:Set(moneycount)
-
-         local Button = Chips:CreateButton({
-            Name = "Get money (almost immediately)",
-            Callback = function()
-for i=1, moneycount do
-    if owneringame == false then
-local args = {
-    [1] = 0.5
-}
-
-game:GetService("ReplicatedStorage"):WaitForChild("ChipsEvent"):FireServer(unpack(args))
-else
-    break
-end
-end
-            end,
-        })
     --end
 
          local Section = Chips:CreateSection("Other")
