@@ -3044,6 +3044,13 @@ end
     --end
 
          local Section = Chips:CreateSection("Other")
+        
+         local Button = Chips:CreateButton({
+            Name = "Teleport outside map",
+            Callback = function()
+                plr.Character.HumanoidRootPart.CFrame = CFrame.new(workspace.ROOOOF.Position + Vector3.new(0, 10, 0))
+            end,
+        })
 
 
 
